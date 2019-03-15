@@ -8,6 +8,7 @@ class App extends Component {
         <header className="App-header">
           A cooler new header
         </header>
+        <p> I am making a change because reasons.</p>
       </div>
     );
   }
