@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 
-class ShopHistory extends Component {
+class Shop extends Component {
     constructor() {
         super()
-        this.state = {}
+        this.state = {
+
+        }
     }
     render() {
         return (
-            <div>Shop History Page</div>
+            <div>Shop Page</div>
         )
     }
 }
-export default ShopHistory
+export default Shop
