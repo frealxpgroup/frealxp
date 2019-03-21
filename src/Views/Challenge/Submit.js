@@ -9,7 +9,7 @@ class Submit extends Component {
                     This is the challenge submit page
                 </h3>
                 <button>select your challenge</button>
-                <input>completion date</input>
+                <input>completion date mm/dd/yyy</input>
                 <input>description</input>
                 <button>upload image</button>
                 <button>submit challenge</button>
