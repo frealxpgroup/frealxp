@@ -24,3 +24,4 @@ module.exports = {
         //PUT user inputs their shipping & billing address if doesn't exist (edit null address that were generated in table when user was created)
     }
 }
+
