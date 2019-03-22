@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+$ourFont: 'Open Sans', sans-serif;
+
+.landing-main{
+    background-image: url('https://isorepublic.com/wp-content/uploads/2018/11/enjoying-the-view-1100x733.jpg');
+    background-color: green;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; 
+    height: 100vh;
+    width: 100vw;
+    // display: flex;
+    h1{
+        font-size: 70px;
+        position: absolute;
+        margin: 30px;
+        font-family: $ourFont;
+    }
+    h2{
+        font-size: 30px;
+        position: absolute;
+        margin: 50px 30px 30px 30px;
+        right: 0px;
+        color: black;
+        font-family: $ourFont;
+    }
+    span{
+        font-size: 70px;
+        font-family: $ourFont;
+        color: white;
+        display: flex;
+        align-items: flex-end; 
+        position: absolute;
+        bottom: 21%;
+        left: 10%;
+        right: 10%;
+        text-align: center;
+    }
+    @media(max-width: 1588px){
+        span{
+            right: 5%
+        }
+    }
+    @media(max-width: 1495px){
+        span{
+
+            font-size: 65px;
+        }
+    }
+    button{
+        position: absolute;
+        bottom: 10%;
+        right: 30%;
+        border: white 1px solid;
+        background-color: transparent;
+        color: white;
+        height: 65px;
+        width: 250px;
+        font-size: 24px;
+    }
+}
