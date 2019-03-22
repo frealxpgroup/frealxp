@@ -12,7 +12,6 @@ module.exports = {
     },  
     checkoutFunction: (req, res) => {
         //PUT to cart, order history tables
-        //
     },
     deleteItem: (req, res) => {
         //delete all items from cart after purchase
