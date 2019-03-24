@@ -1,6 +1,15 @@
 module.exports = {
-    getAllProducts: (req, res) => {
-        //for store front
+    intial: (req, res) => {
+        //for store front, will return all active products
+        const db = req.app.get("db");
+        db.shop.get_all_products()
+        .then(products => {
+            res.status(200).send(products)
+        })
+    },
+    addToCart: (req, res) => {
+        // if  needed, create a cart - then add selected item to the cart.
+        console.log(req.body)
     },
     getUserCart: (req, res) => {
         //Based on user ID

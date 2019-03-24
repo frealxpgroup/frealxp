@@ -33,7 +33,8 @@ app.get(`/history/initial`, fc.getApproved) //get approved challenges for that u
 app.post(`/challenge/submit`, fc.submitChallenge) //create challenge for review
 app.put(`/challenge/review/:id`, fc.reviewChallenge) //add feedback or approve challenge
 
-app.get(`/shop/initial`, sc.getAllProducts) //get all active products
+app.get(`/shop/initial`, sc.intial) //get all active products
+app.post(`/shop/addToCart`, sc.addToCart) // if needed, generate a new cart, then add selcted item to cart
 app.get(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
 app.put(`/shop/quantity/:id`, sc.changeQuantity) //changes the quantity of the item in cart
 
