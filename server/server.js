@@ -35,7 +35,7 @@ app.put(`/challenge/review/:id`, fc.reviewChallenge) //add feedback or approve c
 
 app.get(`/shop/initial`, sc.intial) //get all active products
 app.post(`/shop/addToCart`, sc.addToCart) // if needed, generate a new cart, then add selcted item to cart
-app.get(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
+app.post(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
 app.put(`/shop/quantity/:id`, sc.changeQuantity) //changes the quantity of the item in cart
 
 app.get(`/shop/address`, sc.getAddress) //get address if exists
