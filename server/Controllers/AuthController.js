@@ -1,14 +1,57 @@
 const bcrypt = require('bcryptjs')
 
 module.exports = {
-    register: (req, res) => {
-        //get user login info from req.body
+    register: async (req, res) => {
+        const {email, password, firstName, lastName} = req.body
+        const {session} = req
+        let db = req.app.get('db')
+
+        let checkUser = await db.auth.getUserByEmail({email: email})
+        checkUser = checkUser[0]
+
+        if(checkUser){
+            return res.status(409).send('User already exists. Please enter a new email address')
+        }
+
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(password,salt)
+
+        let newUser = await db.auth.registerUser({email, password: hash, first_name: firstName, last_name: lastName})
+        newUser = newUser[0]
+
+        session.user = {...newUser}
+        console.log(session.user)
+        res.status(200).send(session.user)
     },
-    login: (req, res) => {
-        //get user login info from req.body
+    login: async (req, res) => {
+        const {email, password} = req.body
+        const {session} = req
+
+        let db = req.app.get('db')
+
+        let user = await db.auth.getUserByEmail({email: email})
+        user = user[0]
+
+        if(!user){
+            return res.status(401).send('Invalid Email')
+        }
+
+        const isAuthenticated = bcrypt.compareSync(password, user.password)
+        console.log('Authentication happened?', isAuthenticated)
+        if(!isAuthenticated){
+            return res.status(401).send('Invalid login credentials.  Please try again')
+        }
+
+        delete user.password
+
+        session.user = user
+        console.log(session.user)
+        res.status(200).send(session.user)
+        
     },
     logout: (req, res) => {
-        //destroy the session!!!!!!!!!!!!!
+        req.session.destroy()
+        res.sendStatus(200)
     },  
     editAuth: (req, res) => {
         //get id from req.params
