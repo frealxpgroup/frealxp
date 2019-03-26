@@ -11,23 +11,28 @@ class Shop extends Component {
     super();
     this.state = {
       products: [],
-      userID: 1,
+      userID: 2,
       numItemsInCart: 0,
       cartRef: 0
     };
   }
 
   componentDidMount() {
-
-
-    //componentDidMount order of operations: 1: load products.
+    //componentDidMount order of operations: 
+    // 1: load products.
     // 2: fetch userID. (2.!userinfo: do nothing)
     // (2.userinfo: !activecart: create a new cart and save refid on state.)
     // (2.userinfo: actviecart: save refid on state)
 
-    const {userID} = this.state;
+    this.initialProduct();
 
-    Axios.get("/shop/initial").then(res => {
+    if (this.state.userID) {
+      this.initialCart();
+    }
+  }
+
+  initialProduct = () => {
+    return Axios.get("/shop/initial").then(res => {
       for (let i = 0; i < res.data.length; i++) {
         const e = res.data[i];
         let newArr = this.state.products;
@@ -35,24 +40,33 @@ class Shop extends Component {
         this.setState({ products: newArr });
       }
     });
-    if (userID) {
-        Axios.post('/shop/cart', {userID}).then(res => {
-            // pull all qty and update state (numItemsInCart)
-            let numItemsInCartLocal = 0;
-            res.data.forEach(arr => numItemsInCartLocal += arr['quantity'])
-            this.setState({numItemsInCart: numItemsInCartLocal, cartRef: res.data[0].cart_ref})
-        })
-    }
-  }
+  };
+
+  initialCart = () => {
+    const { userID } = this.state;
+    // pull all qty and update state (numItemsInCart)
+    return Axios.post("/shop/cart", { userID }).then(res => {
+      let numItemsInCartLocal = 0;
+      res.data.forEach(arr => (numItemsInCartLocal += arr["quantity"]));
+      this.setState({
+        numItemsInCart: numItemsInCartLocal,
+        cartRef: res.data[0].cart_ref
+      });
+    });
+  };
 
   addToCart = productID => {
     const { userID, cartRef } = this.state;
     if (userID === 0) {
       alert("please sign in first");
     } else {
-      Axios.post("/shop/addToCart", { productID, userID, cartRef }).then(res => {
-        alert("Item added to cart");
-      });
+      Axios.post("/shop/addToCart", { productID, userID, cartRef }).then(
+        res => {
+          alert("Item added to cart")
+          let newState = this.state.numItemsInCart + 1
+          this.setState({numItemsInCart: newState})
+        }
+      );
     }
   };
 
