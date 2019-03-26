@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+$ourFont: 'Open Sans', sans-serif;
+
+.auth-main{
+    background-image: linear-gradient(white, #CCBF62);
+    height: 100vh;
+    font-size: 48px;
+    font-family: $ourFont;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h1{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        margin: 30px;
+    }
+    .input-box{
+       display: flex;
+       padding: 60px 150px 60px 150px;
+       background-color: #E6E0B6;
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    }
+    .inputs{
+        display: flex;
+        flex-direction: column;
+        input{
+            display: flex;
+            flex-direction: column;
+            border: none;
+            border-bottom: 1px black solid;
+            background-color: transparent;
+            margin-bottom: 35px;
+            height: 20px;
+            font-size: 18px;
+    
+        }
+        input::placeholder{
+            font-style: italic;
+            font-size: 17px;
+        }
+        button{
+            border: black 1px solid;
+            background-color: transparent;
+            color: black;
+            height: 45px;
+            width: 200px;
+            font-size: 20px;
+            margin: 10px;
+        }
+    }
+}
