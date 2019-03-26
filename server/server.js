@@ -8,11 +8,18 @@ const ac = require('./Controllers/AuthController');
 const fc = require('./Controllers/FunctionalController');
 const sc = require('./Controllers/ShopController');
 
-const {SERVER_PORT, CONNECTION_STRING} = process.env
+const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    maxAge: null
+}))
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db',db)
