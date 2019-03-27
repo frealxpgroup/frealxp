@@ -14,6 +14,7 @@ const Product = props => {
     return props.addToCart(id);
   };
 
+
   return (
     <div className="box">
       <div className="title">{name}</div>
@@ -25,9 +26,10 @@ const Product = props => {
           {
             props.addToCart ? 
             <button onClick={addToCartLocal}>add to cart</button> 
-            :
-            <img src="https://static.thenounproject.com/png/592841-200.png" alt="plus sign" />
-            <img src='https://static.thenounproject.com/png/592841-200.png' alt="minus sign" />
+            : <span>
+            <img style={{height: '25px', width: '25px'}} src="https://static.thenounproject.com/png/592841-200.png" alt="plus sign" />
+            <img style={{height: '25px', width: '25px'}} src='https://static.thenounproject.com/png/592841-200.png' alt="minus sign" />
+            </span>
           }
         </span>
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Axios from 'axios';
-import Product from './Product/Product'
+import Axios from "axios";
+import Product from "./Product/Product";
 
 import "./Cart.scss";
 
@@ -9,25 +9,17 @@ class Cart extends Component {
   constructor() {
     super();
     this.state = {
-        userID: 1,
-        cartRef: 0,
-        products: [],
-        numItemsInCart: 0
-    }
+      userID: 1,
+      cartRef: 0,
+      products: [],
+      numItemsInCart: 0
+    };
   }
   componentDidMount() {
-    //componentDidMount order of operations: 
-    // 1: load products.
-    // 2: fetch userID. (2.!userinfo: do nothing)
-    // (2.userinfo: !activecart: create a new cart and save refid on state.)
-    // (2.userinfo: actviecart: save refid on state)
-
-
     if (this.state.userID) {
       this.initialCart();
     }
   }
-
 
   initialCart = () => {
     const { userID } = this.state;
@@ -35,30 +27,38 @@ class Cart extends Component {
     return Axios.post("/shop/cart", { userID }).then(res => {
       let numItemsInCartLocal = 0;
       res.data.forEach(arr => (numItemsInCartLocal += arr["quantity"]));
+      // let localProductsArr = [];
+      // for (let index = 0; index < res.data.length; index++) {
+      //   const element = res.data[index];
+      //   if (!localProductsArr.includes(element)) {
+      //     localProductsArr.push(element)
+      //     console.log(localProductsArr)
+      //   }
+      // }
+      let localProductsArr = []
+      res.data.map((e) => localProductsArr.push(e))
+
       this.setState({
         numItemsInCart: numItemsInCartLocal,
-        cartRef: res.data[0].cart_ref
+        cartRef: res.data[0].cart_ref,
+        products: localProductsArr
       });
     });
   };
 
   render() {
+    console.log(this.state.products)
     const mappedProducts = this.state.products.map(eachProductObj => {
       return (
-        <Product
-          key={eachProductObj.product_id}
-          product={eachProductObj}
-          increment={true}
-          decrement={true}
-        />
+        <Product key={eachProductObj.product_id} product={eachProductObj} />
       );
     });
 
     return (
       <div className="background">
-      <div className="header">
+        <div className="header">
           <div className="menu">
-              <div>cart({this.state.numItemsInCart})</div>
+            <div>cart({this.state.numItemsInCart})</div>
             <div>checkout</div>
             <Link to="/shop/history">
               <div>order history</div>
@@ -68,9 +68,7 @@ class Cart extends Component {
             <h1>FRealXP</h1>
           </Link>
         </div>
-        <div className="body_container">
-            {mappedProducts}
-        </div>
+        <div className="body_container">{mappedProducts}</div>
       </div>
     );
   }
