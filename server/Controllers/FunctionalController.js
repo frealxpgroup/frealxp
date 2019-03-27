@@ -1,12 +1,25 @@
 module.exports = {
     getInitial: (req, res) => {
         //User XP on dashboard. get user login info from req.body
-    }, 
-    getAllChallenges: (req, res) => {
-        //For Challenges page
     },
-    getOneChallenge: (req, res) => {
-        //For Modal.  use sql logic to pull specific data for that user
+    getAllChallenges:  (req, res) => {
+        const db = req.app.get('db');
+        db.challenges.getAllChallenges()
+            .then(challenges => res.status(200).send(challenges))
+            .catch(err => {
+                res.status(500).send({ errorMessage: 'Mistakes were made.' })
+            })
+    },
+    getOneChallenge: async (req, res) => {
+
+        const {challengeInput} = req.body
+        
+        const db = req.app.get('db');
+        const oneChallenge = await db.challenges.getOneChallenge( {category: challengeInput} )
+        
+        
+        res.status(200).send(oneChallenge)
+        
     },
     getApproved: (req, res) => {
         //For User History
@@ -22,5 +35,5 @@ module.exports = {
     },
     getPrizes: (req, res) => {
         //display all prizes
-    }, 
+    },
 }

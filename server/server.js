@@ -27,7 +27,7 @@ app.put(`/auth/edit/:id`, ac.editAuth) //edit user info
 
 app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges
 app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
-app.get(`/challenges/one`, fc.getOneChallenge) //get challenge info for modal
+app.post(`/challenges/one`, fc.getOneChallenge) //get challenge info for modal
 app.get(`/history/initial`, fc.getApproved) //get approved challenges for that user
  
 app.post(`/challenge/submit`, fc.submitChallenge) //create challenge for review
