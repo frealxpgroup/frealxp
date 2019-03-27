@@ -33,8 +33,13 @@ padding: 10px;
     }
 }
 .challengeboardpage{
-    background-image: linear-gradient(black, grey);
+    background-image: linear-gradient(rgb(43, 41, 41), grey);
     background-repeat: repeat;
-    width: 100%;
-    height: 150vh;
+    width: auto;
+    height: 500vh;
+}
+.boardimage{
+    height: 20vh;
+    width: 45vw;
+    opacity: 0.2;
 }

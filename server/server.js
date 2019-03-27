@@ -8,11 +8,18 @@ const ac = require('./Controllers/AuthController');
 const fc = require('./Controllers/FunctionalController');
 const sc = require('./Controllers/ShopController');
 
-const {SERVER_PORT, CONNECTION_STRING} = process.env
+const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    maxAge: null
+}))
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db',db)
@@ -29,12 +36,14 @@ app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges
 app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
 app.post(`/challenges/one`, fc.getOneChallenge) //get challenge info for modal
 app.get(`/history/initial`, fc.getApproved) //get approved challenges for that user
+app.post(`/challenge/accepted`, fc.challengeAccepted) //add the challenge to the tracked challenges table
  
 app.post(`/challenge/submit`, fc.submitChallenge) //create challenge for review
 app.put(`/challenge/review/:id`, fc.reviewChallenge) //add feedback or approve challenge
 
-app.get(`/shop/initial`, sc.getAllProducts) //get all active products
-app.get(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
+app.get(`/shop/initial`, sc.intial) //get all active products
+app.post(`/shop/addToCart`, sc.addToCart) // if needed, generate a new cart, then add selcted item to cart
+app.post(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
 app.put(`/shop/quantity/:id`, sc.changeQuantity) //changes the quantity of the item in cart
 
 app.get(`/shop/address`, sc.getAddress) //get address if exists

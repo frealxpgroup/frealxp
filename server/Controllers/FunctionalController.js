@@ -21,6 +21,12 @@ module.exports = {
         res.status(200).send(oneChallenge)
         
     },
+    challengeAccepted: (req, res) => {
+        const session = req
+        console.log(session)
+    res.status(200).send(session)
+
+    },
     getApproved: (req, res) => {
         //For User History
     },
