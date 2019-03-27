@@ -20,7 +20,7 @@ module.exports = {
         newUser = newUser[0]
 
         session.user = {...newUser}
-        console.log(session.user)
+        console.log(session)
         res.status(200).send(session.user)
     },
     login: async (req, res) => {

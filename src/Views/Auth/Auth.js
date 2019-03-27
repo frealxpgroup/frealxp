@@ -15,7 +15,8 @@ class Auth extends Component {
             password: '',
             verifyPassword: '',
             passwordsMatch: true,
-            sessionUser: {}
+            handleError: '',
+            userSession: {}
         }
     }
     handleToggle = () => {
@@ -25,27 +26,40 @@ class Auth extends Component {
     }
     handleInput = (property, val) => {
         this.setState({
-            [property]: val
+            [property]: val,
+            handleError: ''
         })
-
     }
+
+
     handleRegister = () => {
         const { email, password, firstName, lastName, verifyPassword } = this.state
 
-        if(!email){
-            window.alert('Please enter a valid email address')
+        let emailValid = email.match(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim)
+        if (!emailValid) {
+            this.setState({
+                handleError: 'Please enter a valid email address.'
+            })
             return;
-        } else if(!password){
-            window.alert('Please enter a valid password')
+        } else if (!password) {
+            this.setState({
+                handleError: 'Please enter a password '
+            })
             return;
         } else if (password !== verifyPassword) {
-            window.alert('Passwords do not match. Please fix that')
+            this.setState({
+                handleError: 'Passwords do not match.  Please try again.'
+            })
             return;
-        } else if(!firstName){
-            window.alert('Please enter a first name')
+        } else if (!firstName) {
+            this.setState({
+                handleError: 'Please enter a first name.'
+            })
             return;
-        } else if (!lastName){
-            window.alert('Please enter a last name')
+        } else if (!lastName) {
+            this.setState({
+                handleError: 'Please enter a last name.'
+            })
             return;
         }
 
@@ -58,32 +72,39 @@ class Auth extends Component {
             }).catch(err => {
                 console.log(err)
                 window.alert("User already exists.  Please try again")
-                
+
             }
             )
     }
 
     handleLogin = () => {
-        const {email, password} = this.state
-        if(!email){
-            window.alert('Please enter a valid email address')
+        const { email, password } = this.state
+        let emailValid = email.match(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim)
+        if (!emailValid) {
+            this.setState({
+                handleError: 'Please enter a valid email address.'
+            })
             return;
-        } else if(!password){
-            window.alert('Please enter a valid password')
+        } else if (!password) {
+            this.setState({
+                handleError: 'Please enter a password'
+            })
             return;
         }
-        
-        axios.post('/auth/login', {email, password})
-        .then(res => {
-            this.setState({
-                sessionUser: res.data
+
+        axios.post('/auth/login', { email, password })
+            .then(res => {
+                this.setState({
+                    sessionUser: res.data
+                })
+                this.props.history.push('/dashboard')
+            }).catch(err => {
+                console.log(err)
+                this.setState({
+                    handleError: 'Invalid password. Please try again.'
+                })
             })
-            this.props.history.push('/dashboard')
-        }).catch(err => {
-            console.log(err)
-            window.alert("Invalid username or password.  Please try again.")
-        })
-    } 
+    }
     render() {
         return (
             <div className='auth-main'>
@@ -98,9 +119,11 @@ class Auth extends Component {
                                     <input placeholder='password' type='password' onChange={(e) => this.handleInput('password', e.target.value)} />
                                     <div className='button-div'>
                                         <button onClick={() => this.handleToggle()}>CREATE ACCOUNT</button>
-                                        <button onClick={this.handleLogin}>LOGIN</button>
+                                        {!this.state.handleError
+                                            ? <button onClick={this.handleLogin}>LOGIN</button>
+                                            : <button style={{ 'color': 'grey', 'borderColor': 'grey' }}>LOGIN</button>}
                                     </div>
-
+                                    <p style={{ 'color': 'red', 'fontSize': 17, 'margin': 10, 'textAlign': 'center' }}>{this.state.handleError}</p>
                                 </div>
                                 :
                                 <div className='inputs'>
@@ -111,9 +134,12 @@ class Auth extends Component {
                                     <input placeholder='last name' onChange={(e) => this.handleInput('lastName', e.target.value)} />
                                     <div className='button-div'>
                                         <button onClick={() => this.handleToggle()}>Go Back</button>
-                                        <button onClick={this.handleRegister}>CREATE ACCOUNT</button>
-                                    </div>
+                                        {!this.state.handleError
+                                            ? <button onClick={this.handleRegister}>CREATE ACCOUNT</button>
+                                            : <button style={{ 'color': 'grey', 'borderColor': 'grey' }}>CREATE ACCOUNT</button>}
 
+                                    </div>
+                                    <p style={{ 'color': 'red', 'fontSize': 17, 'margin': 10, 'textAlign': 'center' }}>{this.state.handleError}</p>
                                 </div>
                         }
 
