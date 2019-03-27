@@ -15,6 +15,7 @@ $ourFont: 'Open Sans', sans-serif;
         top: 0px;
         left: 0px;
         margin: 30px;
+        font-size: 70px;
     }
     .input-box{
        display: flex;
@@ -22,6 +23,17 @@ $ourFont: 'Open Sans', sans-serif;
        background-color: #E6E0B6;
        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
+    }
+
+    @media(max-width: 425px){
+        h1{
+            font-size: 45px;
+        }
+        .input-box{
+            background-color: transparent;
+            box-shadow: none;
+            top: 60px;
+        }
     }
     .inputs{
         display: flex;
