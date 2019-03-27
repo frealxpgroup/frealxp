@@ -1,7 +1,7 @@
 import React from "react";
-import "./Product.scss";
+import "./CartItem.scss";
 
-const Product = props => {
+const CartItem = props => {
   const {
     product_id: id,
     product_name: name,
@@ -10,9 +10,14 @@ const Product = props => {
     product_image: image
   } = props.product;
 
-  let addToCartLocal = () => {
-    return props.addToCart(id);
-  };
+
+  let incrementItemLocal = () => {
+      return props.incrementItem(id)
+  }
+
+  let decrementItemLocal = () => {
+      return props.decrementItem(id)
+  }
 
 
   return (
@@ -23,13 +28,12 @@ const Product = props => {
       <div>
         <span>{price}</span>
         <span>
-            <button onClick={addToCartLocal}>add to cart</button> 
+            <button onClick={incrementItemLocal}>+</button> 
+            <button onClick={decrementItemLocal}>-</button> 
         </span>
       </div>
     </div>
   );
 };
 
-export default Product;
-
-// ternary for precense of add item to cart button or the plus and minus buttons.
+export default CartItem;

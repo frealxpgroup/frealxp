@@ -7,7 +7,7 @@ import Board from './Views/Challenge/Board';
 import Review from './Views/Challenge/review';
 import Submit from './Views/Challenge/Submit';
 import ShopHistory from './Views/Shop/History';
-import Cart from './Views/Shop/Cart';
+import Cart from './Views/Shop/Cart/Cart';
 import Checkout from './Views/Shop/Checkout';
 import Shop from './Views/Shop/Shop';
 import History from './Views/History/History';

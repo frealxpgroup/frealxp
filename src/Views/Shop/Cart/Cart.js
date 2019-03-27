@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import Product from "./Product/Product";
+import CartItem from "./CartItem";
 
 import "./Cart.scss";
 
@@ -46,11 +46,19 @@ class Cart extends Component {
     });
   };
 
+  incrementItem = (productID) => {
+    console.log('hit for ' + productID)
+  }
+
+  decrementItem = (productID) => {
+    console.log('reduce ' + productID)
+  }
+
   render() {
     console.log(this.state.products)
     const mappedProducts = this.state.products.map(eachProductObj => {
       return (
-        <Product key={eachProductObj.product_id} product={eachProductObj} />
+        <CartItem key={eachProductObj.product_id} product={eachProductObj} incrementItem={this.incrementItem} decrementItem={this.decrementItem} />
       );
     });
 

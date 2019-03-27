@@ -76,7 +76,6 @@ class Shop extends Component {
   };
 
   render() {
-    console.log(this.state);
     const mappedProducts = this.state.products.map(eachProductObj => {
       return (
         <Product
