@@ -4,7 +4,11 @@ import './Dashboard.scss'
 import Logout from '../../Components/Logout/Logout'
 
 class Dashboard extends Component{
-
+    componentDidMount(){
+        if(!this.props.first_name){
+            this.props.history.push('/')
+        }
+    }
     render(){
         console.log(this.props)
         return (
