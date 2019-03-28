@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 // import AuthInput from './../../Components/AuthInputs/AuthInputs'
 import './Auth.scss'
 import axios from 'axios'
+import { updateEverything } from '../../ducks/reducer'
+import { connect } from 'react-redux'
 
 class Auth extends Component {
     constructor(props) {
@@ -15,8 +17,7 @@ class Auth extends Component {
             password: '',
             verifyPassword: '',
             passwordsMatch: true,
-            handleError: '',
-            userSession: {}
+            handleError: ''
         }
     }
     handleToggle = () => {
@@ -65,9 +66,8 @@ class Auth extends Component {
 
         axios.post('/auth/register', { email, password, firstName, lastName })
             .then(res => {
-                this.setState({
-                    sessionUser: res.data
-                })
+                console.log(res.data)
+                this.props.updateEverything(res.data)
                 this.props.history.push('/dashboard')
             }).catch(err => {
                 console.log(err)
@@ -94,9 +94,8 @@ class Auth extends Component {
 
         axios.post('/auth/login', { email, password })
             .then(res => {
-                this.setState({
-                    sessionUser: res.data
-                })
+                console.log(res.data)
+                this.props.updateEverything(res.data)
                 this.props.history.push('/dashboard')
             }).catch(err => {
                 console.log(err)
@@ -106,6 +105,7 @@ class Auth extends Component {
             })
     }
     render() {
+        console.log("props", this.props)
         return (
             <div className='auth-main'>
                 <h1>FRealXP</h1>
@@ -150,4 +150,12 @@ class Auth extends Component {
         )
     }
 }
-export default Auth
+
+const mapToProps = (reduxState) => {
+    const {first_name} = reduxState
+    return{
+        first_name
+    }
+}
+
+export default connect(mapToProps,{updateEverything})(Auth)

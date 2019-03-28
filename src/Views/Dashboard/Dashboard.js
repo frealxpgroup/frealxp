@@ -1,11 +1,29 @@
-import React from 'react'
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import './Dashboard.scss'
+import Logout from '../../Components/Logout/Logout'
 
-const Dashboard = (props) => {
+class Dashboard extends Component{
 
-    return (
-        <div>
-            <h1 style={{'fontSize':40}}>I am Dashboard!!!</h1>
-        </div>
-    )
+    render(){
+        console.log(this.props)
+        return (
+            <div className='dash-main'>
+                <h1>FRealXP</h1>
+                <p style={{'fontStyle':'italic'}}>“Believe in yourself. You are braver than you think, more talented than you know, and capable of more than you imagine.” -Roy T. Bennett</p>
+                <p>Hi, {this.props.first_name}!</p>
+                <Logout />
+            </div>
+        )
+    }
+
 }
-export default Dashboard
+
+const mapToProps = (reduxState) => {
+    const { first_name, last_name } = reduxState
+    return {
+        first_name, last_name
+    }
+}
+
+export default connect(mapToProps)(Dashboard)
