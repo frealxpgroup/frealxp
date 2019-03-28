@@ -26,6 +26,8 @@ class ChallengeModal extends React.Component {
                 </div>
             )
             }
+            else {return console.error('err');
+            }
         })
         
       return (

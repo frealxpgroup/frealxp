@@ -1,0 +1,1 @@
+select xp from users;
