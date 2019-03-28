@@ -5,17 +5,18 @@ div {
     font-family: $ourFont;
 }
 
-.box {
-    height: 300px;
-    width: 225px;
+.cartitem_box {
+    height: 125px;
+    width: 800px;
     border: solid 1px black;
+    margin-top: 25px;
 
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: space-around;
 	align-items: center;
-    align-content: stretch;
+	align-content: stretch;
     
     text-align: center;
     
@@ -24,8 +25,8 @@ div {
     }
 
     img {
-        height: 150px;
-        width: 150px;
+        height: 75px;
+        width: 75px;
     }
 
     span {
@@ -47,4 +48,23 @@ div {
         cursor: pointer;
         background-color: white;
     }
+}
+
+.cartitem_button_container {
+    height: 100%;
+    display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch; 
+}
+.cartitem_plus_minus_container {
+    width: 100%;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: stretch;
 }

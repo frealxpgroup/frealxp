@@ -63,7 +63,7 @@ class Cart extends Component {
     });
 
     return (
-      <div className="background">
+      <div className="cart_background">
         <div className="header">
           <div className="menu">
             <div>cart({this.state.numItemsInCart})</div>
@@ -76,7 +76,7 @@ class Cart extends Component {
             <h1>FRealXP</h1>
           </Link>
         </div>
-        <div className="body_container">{mappedProducts}</div>
+        <div className="cart_body_container">{mappedProducts}</div>
       </div>
     );
   }

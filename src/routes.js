@@ -6,10 +6,10 @@ import Dashboard from './Views/Dashboard/Dashboard';
 import Board from './Views/Challenge/Board';
 import Review from './Views/Challenge/review';
 import Submit from './Views/Challenge/Submit';
-import ShopHistory from './Views/Shop/History';
+import ShopHistory from './Views/Shop/History/History';
 import Cart from './Views/Shop/Cart/Cart';
 import Checkout from './Views/Shop/Checkout';
-import Shop from './Views/Shop/Shop';
+import Shop from './Views/Shop/ShopPage/Shop';
 import History from './Views/History/History';
 import Edit from './Views/Auth/Edit';
 

@@ -66,7 +66,6 @@ class Shop extends Component {
       } else {
         Axios.post("/shop/addToCart", { productID, userID, cartRef }).then(
           res => {
-            alert("Item added to cart");
             let newState = this.state.numItemsInCart + 1;
             this.setState({ numItemsInCart: newState });
           }

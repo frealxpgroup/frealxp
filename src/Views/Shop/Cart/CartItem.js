@@ -21,16 +21,20 @@ const CartItem = props => {
 
 
   return (
-    <div className="box">
-      <div className="title">{name}</div>
-      <img src={image} alt={name} />
-      <div>{description}</div>
-      <div>
-        <span>{price}</span>
-        <span>
-            <button onClick={incrementItemLocal}>+</button> 
-            <button onClick={decrementItemLocal}>-</button> 
-        </span>
+    <div className="cartitem_box">
+      <img src={props.product_img} alt={props.product_name} />
+      <div className="cartitem_summary_container">
+        <div>T-shirt</div>
+        <div>15.99</div>
+        <div>qty: 4</div>
+      </div>
+      <div> subtotal: $60</div>
+      <div className="cartitem_button_container">
+        <div className="cartitem_plus_minus_container">
+          <div>-</div>
+          <div>+</div>
+        </div>
+        <button>remove</button>
       </div>
     </div>
   );

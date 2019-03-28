@@ -1,22 +1,45 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-$ourFont: 'Open Sans', sans-serif;
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+$ourFont: "Open Sans", sans-serif;
 
-.background {
-background: #FFFFFF;
-background: -moz-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102)rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
-background: -webkit-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
-background: linear-gradient(to bottom, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
+.cart_background {
+  background: #ffffff;
+  background: -moz-linear-gradient(
+    top,
+    #ffffff 0%,
+    rgb(235, 219, 102) rgb(235, 219, 102) 20%,
+    rgb(235, 219, 102) 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    #ffffff 0%,
+    rgb(235, 219, 102) 20%,
+    rgb(235, 219, 102) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    rgb(235, 219, 102) 20%,
+    rgb(235, 219, 102) 100%
+  );
 
-width: 100vw;
-height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
 
-display: flex;
-flex-direction: column;
-flex-wrap: nowrap;
-justify-content: flex-start;
-align-items: center;
-align-content: stretch;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
 
-font-family: $ourFont;
+  font-family: $ourFont;
+}
 
+.cart_body_container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  align-content: stretch;
 }
