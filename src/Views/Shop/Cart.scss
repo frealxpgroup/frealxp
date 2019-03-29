@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+$ourFont: 'Open Sans', sans-serif;
+
+.background {
+background: #FFFFFF;
+background: -moz-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102)rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
+background: -webkit-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
+background: linear-gradient(to bottom, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
+
+width: 100vw;
+height: 100vh;
+
+display: flex;
+flex-direction: column;
+flex-wrap: nowrap;
+justify-content: flex-start;
+align-items: center;
+align-content: stretch;
+
+font-family: $ourFont;
+
+}
