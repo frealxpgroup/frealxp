@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import Axios from 'axios';
+import LineGraph from './LineGraph';
 
 
 
@@ -22,7 +23,7 @@ class History extends Component {
             .then(res => {
                 console.log(res)
                 const averageXP = (list) => {
-                    var sum = 0,
+                    let sum = 0,
                         count = 0,
                         i;
 
@@ -34,10 +35,10 @@ class History extends Component {
                     }
                     return sum / count
                 }
-             const averagedXP = averageXP(res.data)
-             this.setState({
-                 avgXp: averagedXP
-             })
+                const averagedXP = averageXP(res.data)
+                this.setState({
+                    avgXp: averagedXP
+                })
             })
     }
     componentDidMount = () => {
@@ -49,7 +50,7 @@ class History extends Component {
 
         console.log(this.state.xp)
         const ChartData = {
-            labels: [""],
+            labels: [],
             datasets: [
                 {
                     label: "My XP",
@@ -105,12 +106,12 @@ class History extends Component {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true,
+                        beginAtZero: true,
                         min: 0,
-                        max: this.avgXp    
+                        max: this.avgXp
                     }
-                  }]
-               }
+                }]
+            }
         }
 
         return (
@@ -123,6 +124,7 @@ class History extends Component {
                     width={350}
 
                 />
+                <LineGraph />
 
             </div>
         )

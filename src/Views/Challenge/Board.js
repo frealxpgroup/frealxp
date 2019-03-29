@@ -12,7 +12,7 @@ class Board extends Component {
         this.state = {
             challenges: [],
             challengeInput: '',
-            modalShow: false ,
+            modalShow: false,
             id: 0
         }
     }
@@ -40,8 +40,7 @@ class Board extends Component {
             })
     }
     componentDidUpdate = (prevProps, prevState) => {
-       if(prevState.challengeInput !== this.state.challengeInput)
-       {this.getOneChallenge()}
+        if (prevState.challengeInput !== this.state.challengeInput) { this.getOneChallenge() }
     }
     handleChallengeInput = () => {
         this.setState({
@@ -64,30 +63,34 @@ class Board extends Component {
         })
     }
     render() {
-        
+
         let modalClose = () => this.setState({ modalShow: false });
         const mappedChallenges = this.state.challenges.map((challenge, i) => {
 
 
             return (
-                <div className='allchallengesinboard' key={challenge.challenge_id} id={challenge.challenge_id} onClick={() => this.setState({ modalShow: true, id: challenge.challenge_id })} >
-                
+                <div
+                    className='allchallengesinboard'
+                    key={challenge.challenge_id}
+                    id={challenge.challenge_id}
+                    onClick={() => this.setState({ modalShow: true, id: challenge.challenge_id })} >
+
                     <div className='boardchallengebox'>
 
                         <h3 className='boardtitle' > {challenge.challenge_title} </h3>
                         <h2 className='boardpoints' >{challenge.challenge_point_value}</h2>
-                        <img src={challenge.challenge_logos} className='boardimage' alt=''  />
-                        
- 
+                        <img src={challenge.challenge_logos} className='boardimage' alt='' />
+
+
                     </div>
                 </div>
             )
         })
         return (
             <div className='challengeboardpage'>
-                
-                <Dropdown> 
-                
+
+                <Dropdown>
+
                     <DropdownButton id="dropdown-item-button" title="Filter" className='boardfilter'>
                         <Dropdown.Item as="button" onClick={this.handleChallengeInput3} >Outdoors</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={this.handleChallengeInput4} >New Skill</Dropdown.Item>
@@ -95,19 +98,19 @@ class Board extends Component {
                         <Dropdown.Item as="button" onClick={this.handleChallengeInput} >Water Based</Dropdown.Item>
                         <DropdownItem as='button' onClick={this.getAllChallenges}>Get All</DropdownItem>
                     </DropdownButton>
-                      
-                    
 
-             
+
+
+
                 </Dropdown>
                 <ChallengeModal
-          show={this.state.modalShow}
-          onHide={modalClose}
-          challenges={this.state.challenges}
-          id = {this.state.id}
-          challenge_id = {this.state.challenges.challenge_id}
-        />
-        
+                    show={this.state.modalShow}
+                    onHide={modalClose}
+                    challenges={this.state.challenges}
+                    id={this.state.id}
+                    challenge_id={this.state.challenges.challenge_id}
+                />
+
                 {mappedChallenges}
             </div>
 
