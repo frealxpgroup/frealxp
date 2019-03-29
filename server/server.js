@@ -26,7 +26,8 @@ app.post(`/auth/logout`, ac.logout) //destroy user on session
 app.put(`/auth/edit/:id`, ac.editAuth) //edit user info
 
 app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges
-app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
+app.get(`/challenges`, fc.getAllChallenges) //get all challenges in the db
+app.get(`/challenges/user`, fc.getUserChallenges) //gets the users active challeges
 app.get(`/challenges/one`, fc.getOneChallenge) //get challenge info for modal
 app.get(`/history/initial`, fc.getApproved) //get approved challenges for that user
  
