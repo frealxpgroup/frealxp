@@ -1,0 +1,1 @@
+select xp, user_id from users; 
