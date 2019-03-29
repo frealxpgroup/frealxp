@@ -3,32 +3,40 @@ import "./CartItem.scss";
 
 const CartItem = props => {
   const {
-    product_id: id,
-    product_name: name,
-    product_description: description,
+    product_id,
+    product_name,
+    product_description,
     price,
-    product_image: image
-  } = props.product;
+    product_image,
+  } = props.item;
 
+  console.log(props)
 
-  let incrementItemLocal = () => {
-      return props.incrementItem(id)
+  const currentItem = props.allProducts.findIndex(el => el.product_id === props.item.product_id)
+  console.log(currentItem)
+
+  const subtotal = () => {return props.allProducts[currentItem].price * props.item.quantity}
+
+  let incrementItemLocal = (product_id) => {
+      return props.incrementItem(product_id)
   }
 
   let decrementItemLocal = () => {
-      return props.decrementItem(id)
+      return props.decrementItem(product_id)
   }
 
 
   return (
-    <div className="cartitem_box">
-      <img src={props.product_img} alt={props.product_name} />
+    <div>
+    { (currentItem <= 0) ? null :
+    (<div className="cartitem_box">
+      <img src={props.allProducts[currentItem].product_image} alt={props.product_name} />
       <div className="cartitem_summary_container">
-        <div>T-shirt</div>
-        <div>15.99</div>
-        <div>qty: 4</div>
+        <div>{props.allProducts[currentItem].product_name}</div>
+        <div>{props.allProducts[currentItem].price}</div>
+        <div>qty: {props.item.quantity}</div>
       </div>
-      <div> subtotal: $60</div>
+      <div> subtotal: ${subtotal()}</div>
       <div className="cartitem_button_container">
         <div className="cartitem_plus_minus_container">
           <div>-</div>
@@ -36,8 +44,11 @@ const CartItem = props => {
         </div>
         <button>remove</button>
       </div>
-    </div>
+    </div>)
+    }
+  </div>
   );
+
 };
 
 export default CartItem;

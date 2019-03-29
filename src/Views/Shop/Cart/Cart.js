@@ -17,10 +17,22 @@ class Cart extends Component {
     };
   }
   componentDidMount() {
+    this.initialProduct();
     if (this.state.userID) {
       this.initialCart();
     }
   }
+
+  initialProduct = () => {
+    return Axios.get("/shop/initial").then(res => {
+      for (let i = 0; i < res.data.length; i++) {
+        const e = res.data[i];
+        let newArr = this.state.products;
+        newArr.push(e);
+        this.setState({ products: newArr });
+      }
+    });
+  };
 
   initialCart = () => {
     const { userID } = this.state;
@@ -48,9 +60,9 @@ class Cart extends Component {
   }
 
   render() {
-    const mappedProducts = this.state.products.map(eachProductObj => {
+    const mappedProducts = this.state.cartItems.map(eachItemObj => {
       return (
-        <CartItem key={eachProductObj.product_id} product={eachProductObj} incrementItem={this.incrementItem} decrementItem={this.decrementItem} />
+        <CartItem key={eachItemObj.product_id} item={eachItemObj} allProducts={this.state.products} incrementItem={this.incrementItem} decrementItem={this.decrementItem} />
       );
     });
 
