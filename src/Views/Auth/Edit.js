@@ -96,11 +96,11 @@ class Edit extends Component {
                         <div className='editor three'>
                             <h2>Billing Address</h2>
                             <div className='inputs'></div>
-                            <input placeholder='address line 1' defaultValue={this.state.billAddress1}/>
-                            <input placeholder='address line 2' defaultValue={this.state.billAddress2}/>
-                            <input placeholder='city' defaultValue={this.state.billCity}/>
-                            <input placeholder='state' defaultValue={this.state.billState}/>
-                            <input placeholder='zip' defaultValue={this.state.billZip}/>
+                            <input placeholder='address line 1' defaultValue={this.state.billAddress1} onChange={(e) => this.handleInput('billAddress1', e.target.value)}/>
+                            <input placeholder='address line 2' defaultValue={this.state.billAddress2} onChange={(e) => this.handleInput('billAddress2', e.target.value)}/>
+                            <input placeholder='city' defaultValue={this.state.billCity} onChange={(e) => this.handleInput('billCity', e.target.value)}/>
+                            <input placeholder='state' defaultValue={this.state.billState} onChange={(e) => this.handleInput('billState', e.target.value)}/>
+                            <input placeholder='zip' defaultValue={this.state.billZip} onChange={(e) => this.handleInput('billZip', e.target.value)}/>
                             <button onClick={this.handleCancel}>Cancel Changes</button>
                         </div>
 
