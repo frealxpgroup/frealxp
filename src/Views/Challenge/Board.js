@@ -43,7 +43,7 @@ class Board extends Component {
        if(prevState.challengeInput !== this.state.challengeInput)
        {this.getOneChallenge()}
     }
-    handleChallengeInput = (value) => {
+    handleChallengeInput = () => {
         this.setState({
             challengeInput: 'Water Based'
         })
@@ -64,19 +64,18 @@ class Board extends Component {
         })
     }
     render() {
+        
         let modalClose = () => this.setState({ modalShow: false });
         const mappedChallenges = this.state.challenges.map((challenge, i) => {
 
 
             return (
                 <div className='allchallengesinboard' key={challenge.challenge_id} id={challenge.challenge_id} onClick={() => this.setState({ modalShow: true, id: challenge.challenge_id })} >
-                {console.log(this.state.id)}
+                
                     <div className='boardchallengebox'>
 
                         <h3 className='boardtitle' > {challenge.challenge_title} </h3>
-                        {/* <h4 className='boardcategory'>{challenge.category}</h4> */}
                         <h2 className='boardpoints' >{challenge.challenge_point_value}</h2>
-                        {/* <h5 className='boarddescription'>{challenge.description}</h5> */}
                         <img src={challenge.challenge_logos} className='boardimage' alt=''  />
                         
  
@@ -106,25 +105,9 @@ class Board extends Component {
           onHide={modalClose}
           challenges={this.state.challenges}
           id = {this.state.id}
+          challenge_id = {this.state.challenges.challenge_id}
         />
-                {/* <input className='filter' onChange={(e) => { this.handleChallengeInput(e.target.value) }}
-                    type='text'
-                    value={this.state.challengeInput}
-                    placeholder='Water Based'></input>
-                <input className='filter' onChange={(e) => { this.handleChallengeInput2(e.target.value) }}
-                    t ype='text'
-                    value={this.state.challengeInput}
-                    placeholder='Animals'></input>
-                <input className='filter' onChange={(e) => { this.handleChallengeInput3(e.target.value) }}
-                    type='text'
-                    value={this.state.challengeInput}
-                    placeholder='Outdoors'></input>
-                <input className='filter' onChange={(e) => { this.handleChallengeInput4(e.target.value) }}
-                    type='text'
-                    value={this.state.challengeInput}
-                    placeholder='New Skill'></input> */}
-
-                {/* <button className='addbutton' onClick={this.getOneChallenge}></button> */}
+        
                 {mappedChallenges}
             </div>
 
