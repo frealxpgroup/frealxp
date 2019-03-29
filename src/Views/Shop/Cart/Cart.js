@@ -12,7 +12,8 @@ class Cart extends Component {
       userID: 1,
       cartRef: 0,
       products: [],
-      numItemsInCart: 0
+      numItemsInCart: 0,
+      cartItems: []
     };
   }
   componentDidMount() {
@@ -23,25 +24,17 @@ class Cart extends Component {
 
   initialCart = () => {
     const { userID } = this.state;
-    // pull all qty and update state (numItemsInCart)
     return Axios.post("/shop/cart", { userID }).then(res => {
       let numItemsInCartLocal = 0;
       res.data.forEach(arr => (numItemsInCartLocal += arr["quantity"]));
-      // let localProductsArr = [];
-      // for (let index = 0; index < res.data.length; index++) {
-      //   const element = res.data[index];
-      //   if (!localProductsArr.includes(element)) {
-      //     localProductsArr.push(element)
-      //     console.log(localProductsArr)
-      //   }
-      // }
-      let localProductsArr = []
-      res.data.map((e) => localProductsArr.push(e))
-
       this.setState({
         numItemsInCart: numItemsInCartLocal,
-        cartRef: res.data[0].cart_ref,
-        products: localProductsArr
+        cartRef: res.data[0].cart_ref
+      });
+      let cartLocal = [];
+      res.data.forEach(el => cartLocal.push(el));
+      this.setState({
+        cartItems: cartLocal
       });
     });
   };
@@ -55,7 +48,6 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(this.state.products)
     const mappedProducts = this.state.products.map(eachProductObj => {
       return (
         <CartItem key={eachProductObj.product_id} product={eachProductObj} incrementItem={this.incrementItem} decrementItem={this.decrementItem} />
@@ -64,8 +56,8 @@ class Cart extends Component {
 
     return (
       <div className="cart_background">
-        <div className="header">
-          <div className="menu">
+        <div className="cart_header">
+          <div className="cart_menu">
             <div>cart({this.state.numItemsInCart})</div>
             <div>checkout</div>
             <Link to="/shop/history">

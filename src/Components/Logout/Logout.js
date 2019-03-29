@@ -28,7 +28,7 @@ class Logout extends Component{
     }
     render(){
         return(
-            <span onClick={this.handleLogout}>LOGOUT</span>
+            <span className='logout-span' onClick={this.handleLogout}>LOGOUT</span>
         )
     }
 }

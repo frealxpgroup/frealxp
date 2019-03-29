@@ -1,5 +1,3 @@
-// Shop will have two buttons, cart and checkout. Shop will render a list of all available products.
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Shop.scss";
@@ -11,7 +9,7 @@ class Shop extends Component {
     super();
     this.state = {
       products: [],
-      userID: 2,
+      userID: 1,
       cartRef: 0,
       numItemsInCart: 0,
       cartItems: []
@@ -49,25 +47,37 @@ class Shop extends Component {
       res.data.forEach(arr => (numItemsInCartLocal += arr["quantity"]));
       this.setState({
         numItemsInCart: numItemsInCartLocal,
-        cartRef: res.data[0].cart_ref,
-        cartItems: res.data
+        cartRef: res.data[0].cart_ref
+      });
+      let cartLocal = [];
+      res.data.forEach(el => cartLocal.push(el));
+      this.setState({
+        cartItems: cartLocal
       });
     });
   };
 
   addToCart = productID => {
-    const { userID, cartRef } = this.state;
+    const { userID, cartRef, cartItems } = this.state;
     if (userID === 0) {
-      alert("please sign in first");
+      console.log("No user found, please sign in.");
     } else {
-      if (this.state.cartItems.includes(productID)) {
-        //increment the qty for that product
-        console.log('already in cart')
+      let ID = cartItems.findIndex(ID => ID.product_id === productID);
+      if (ID > 0) {
+        // increment item with put request
+        let cartID = cartItems[ID].cart_id
+        let newQty = cartItems[ID].quantity + 1
+        Axios.put('/shop/incrementItem', {cartID, newQty}).then(
+          res => {
+            this.initialCart();
+            console.log(`${productID} successfully incremented.`)
+          }
+        )
       } else {
+        // add item as a new line in the cart
         Axios.post("/shop/addToCart", { productID, userID, cartRef }).then(
           res => {
-            let newState = this.state.numItemsInCart + 1;
-            this.setState({ numItemsInCart: newState });
+            this.initialCart();
           }
         );
       }
@@ -86,9 +96,9 @@ class Shop extends Component {
     });
 
     return (
-      <div className="background">
-        <div className="header">
-          <div className="menu">
+      <div className="shop_background">
+        <div className="shop_header">
+          <div className="shop_menu">
             <Link to="/shop/cart">
               <div>cart({this.state.numItemsInCart})</div>
             </Link>
@@ -101,7 +111,7 @@ class Shop extends Component {
             <h1>FRealXP</h1>
           </Link>
         </div>
-        <div className="body_container">{mappedProducts}</div>
+        <div className="shop_body_container">{mappedProducts}</div>
       </div>
     );
   }

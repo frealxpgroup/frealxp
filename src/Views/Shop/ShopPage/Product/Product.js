@@ -14,16 +14,17 @@ const Product = props => {
     return props.addToCart(id);
   };
 
-
   return (
-    <div className="box">
-      <div className="title">{name}</div>
-      <img src={image} alt={name} />
-      <div>{description}</div>
+    <div className="product_box">
+      <div className="product_title">{name}</div>
+      <img className="product_image" src={image} alt={name} />
+      <div className="product_div">{description}</div>
       <div>
-        <span>{price}</span>
+        <span className="product_span">{price}</span>
         <span>
-            <button onClick={addToCartLocal}>add to cart</button> 
+          <button className="product_button" onClick={addToCartLocal}>
+            add to cart
+          </button>
         </span>
       </div>
     </div>

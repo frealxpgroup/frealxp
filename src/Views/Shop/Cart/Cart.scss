@@ -35,6 +35,28 @@ $ourFont: "Open Sans", sans-serif;
   font-family: $ourFont;
 }
 
+.cart_header {
+    width: 90%;
+    margin-top: 25px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-end;
+	align-content: stretch;
+}
+
+.cart_menu {
+    width: 300px;
+    margin-right: 25px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-end;
+	align-content: stretch;
+}
+
 .cart_body_container {
   display: flex;
   flex-direction: column;

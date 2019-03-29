@@ -11,11 +11,16 @@ module.exports = {
     const db = req.app.get("db");
     const { cartRef, userID, productID } = req.body;
     db.shop
-      .add_item_to_cart({ cartRef, userID, productID })
-      .then(res.sendStatus(200));
+    .add_item_to_cart({ cartRef, userID, productID })
+    .then(res.sendStatus(200));
+  },
+  incrementItem: (req, res) => {
+    const db = req.app.get("db");
+    const { cartID, newQty } = req.body;
+    db.shop.increment_item({ cartID, newQty})
+    .then(res.sendStatus(200));
   },
   getUserCart: (req, res) => {
-    //Based on user ID
     const { userID } = req.body;
     const db = req.app.get("db");
 
@@ -24,7 +29,6 @@ module.exports = {
         let refNum = 0;
         db.shop.get_last_cart_ref().then(refArr => {
           refNum = refArr[0].max + 1;
-        //   console.log({ refNum }, { refArr });
             db.shop.create_cart({ refNum: refNum, userID: userID }).then(cartArr => {
             res.status(200).send(cartArr);
             });
