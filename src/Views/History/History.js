@@ -48,7 +48,7 @@ class History extends Component {
 
     render() {
 
-        console.log(this.state.xp)
+        console.log(this.state.user_id)
         const ChartData = {
             labels: [],
             datasets: [

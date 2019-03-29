@@ -28,6 +28,7 @@ class LineGraph extends Component {
 
     getIdFromTracked = () => {
         const { user_id } = this.state
+        console.log({user_id})
         Axios.get(`/challenge/tracked/one`, { user_id })
             .then(res => {
                 console.log(res)
@@ -44,7 +45,7 @@ class LineGraph extends Component {
 
 
     render() {
-        console.log(this.state.challenge_id)
+        console.log(this.state.user_id)
 
         const data = {
             labels: [

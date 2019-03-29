@@ -32,7 +32,7 @@ module.exports = {
         const {user_id} = req.body
         console.log(user_id)
         const db = req.app.get('db');
-        const idBoth = await db.trackedChallenges.getOneTracked( {user: user_id})
+        const idBoth = await db.trackedChallenges.getOneTracked( [ user_id])
         console.log('idBoth', idBoth)
         
         res.status(200).send(idBoth)
