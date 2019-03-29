@@ -31,8 +31,8 @@ class Submit extends Component {
     //this button will get all the challenges that the user has accepted. The data from the database is put on state.
     getChallengesButton = () => {
         console.log('button hit')
-        axios.get(`/challenges/user`)
-        .then(res => { })
+        // axios.get(`/challenges/user`)
+        // .then(res => { })
 
     }
 
