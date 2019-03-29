@@ -2,19 +2,33 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Axios from 'axios'
+import {connect} from 'react-redux'
 
 class ChallengeModal extends React.Component {
+  constructor(props){
+        super(props)
+        this.state = {
+          challenges: this.props.challenges,
+          user_id: this.props.user_id
+          
+        }
+    }
     
     AddTrackedChallenge = () => {
-        Axios.post(`/challenge/accepted`)
+      const {user_id} = this.state
+      const {id} = this.props
+      
+      console.log(id)
+        Axios.post(`/challenge/accepted`, { user_id, id })
         .then(res => {
-
+          console.log("IT WORKED")
         })
-    }
+      
+  }
 
     render() {
         let {challenges} = this.props
-        console.log(challenges)
+        
         const mappedChallenges = challenges.map((challenge, i) => {
             if(challenge.challenge_id === this.props.id){
             return(
@@ -22,6 +36,7 @@ class ChallengeModal extends React.Component {
                     <h1>{challenge.challenge_title}</h1>
                     <h1>{challenge.description}</h1>
                     <h1>{challenge.challenge_point_value} XP</h1>
+                    <h1>{challenge.challenge_id}</h1>
                     <button onClick={this.AddTrackedChallenge}>Accept</button>
                 </div>
             )
@@ -36,6 +51,7 @@ class ChallengeModal extends React.Component {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -55,5 +71,15 @@ class ChallengeModal extends React.Component {
       );
     }
   }
-  export default ChallengeModal
+
+  const mapToProps = (reduxState) => {
+    const {user_id} = reduxState
+    
+    return{
+        user_id,
+        
+    }
+}
+
+  export default connect(mapToProps)(ChallengeModal)
   

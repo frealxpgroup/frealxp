@@ -51,6 +51,7 @@ module.exports = {
     },
     logout: (req, res) => {
         req.session.destroy()
+        console.log(req.session)
         res.sendStatus(200)
     },
     editAuth: (req, res) => {
@@ -59,7 +60,7 @@ module.exports = {
     },
     getXP: (req, res) => {
         let db = req.app.get('db')
-        db.auth.getXPFromUser()
+            db.auth.getXPFromUser()
             .then(XP => res.status(200).send(XP))
             .catch(err => {
                 res.status(500).send({ errorMessage: 'Mistakes were made.' })

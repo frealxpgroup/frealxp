@@ -1,1 +1,1 @@
-select xp from users;
+select xp, user_id from users; 

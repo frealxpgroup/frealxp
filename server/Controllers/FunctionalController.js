@@ -21,10 +21,11 @@ module.exports = {
         res.status(200).send(oneChallenge)
         
     },
-    challengeAccepted: (req, res) => {
-        const session = req
-        console.log(session)
-    res.status(200).send(session)
+    challengeAccepted: async (req, res) => {
+        const {user_id, id} = req.body
+        const db = req.app.get('db');
+        const acceptedChallenge = await db.trackedChallenges.addTracked( {user: user_id, challenge: id})
+    res.status(200).send(acceptedChallenge)
 
     },
     getApproved: (req, res) => {
