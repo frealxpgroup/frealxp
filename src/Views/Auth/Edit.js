@@ -58,7 +58,12 @@ class Edit extends Component {
     }
 
     handleSave = () => {
-        
+        const {shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id} = this.state
+        axios.put('/shop/address', {shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id})
+        .then(response => {
+            console.log(response)
+
+        })
     }
 
     render() {
@@ -80,12 +85,12 @@ class Edit extends Component {
                         <div className='editor two'>
                             <h2>Shipping Address</h2>
                             <div className='inputs'></div>
-                            <input placeholder='address line 1' defaultValue={this.state.shipAddress1}/>
-                            <input placeholder='address line 2' defaultValue={this.state.shipAddress2}/>
-                            <input placeholder='city' defaultValue={this.state.shipCity}/>
-                            <input placeholder='state' defaultValue={this.state.shipState}/>
-                            <input placeholder='zip' defaultValue={this.state.shipZip}/>
-                            <button>Save Changes</button>
+                            <input placeholder='address line 1' defaultValue={this.state.shipAddress1} onChange={(e) => this.handleInput('shipAddress1', e.target.value)}/>
+                            <input placeholder='address line 2' defaultValue={this.state.shipAddress2} onChange={(e) => this.handleInput('shipAddress2', e.target.value)}/>
+                            <input placeholder='city' defaultValue={this.state.shipCity} onChange={(e) => this.handleInput('shipCity', e.target.value)}/>
+                            <input placeholder='state' defaultValue={this.state.shipState} onChange={(e) => this.handleInput('shipState', e.target.value)}/>
+                            <input placeholder='zip' defaultValue={this.state.shipZip} onChange={(e) => this.handleInput('shipZip', e.target.value)}/>
+                            <button onClick={this.handleSave}>Save Changes</button>
                             
                         </div>
                         <div className='editor three'>

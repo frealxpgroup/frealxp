@@ -47,7 +47,7 @@ app.post(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
 app.put(`/shop/quantity/:id`, sc.changeQuantity) //changes the quantity of the item in cart
 
 app.post(`/shop/address`, sc.getAddress) //get address if exists, passing in user id.  Get user id from redux
-app.put(`/shop/address/`, sc.editAddress) //add user address to null values in table
+app.put(`/shop/address`, sc.editAddress) //add user address to null values in table
 
 app.put(`/shop/cart/:id`, sc.checkoutFunction)
 app.delete(`/shop/cart/:id`, sc.deleteItem) //deletes a product from the car
