@@ -4,30 +4,30 @@ $ourFont: 'Open Sans', sans-serif;
 .allchallengesinboard{
 font: $ourFont;
 
-display: inline-table;
-flex-wrap: nowrap;
-flex-direction: row;
+    display: inline-table;
+    flex-wrap: nowrap;
+    flex-direction: row;
 
-height: 20vh;
-width: 45vw;
-padding: 10px;
-    .boardchallengebox{
-        padding: 10px;
+    height: 20vh;
+    width: 45vw;
+    padding: 10px;
+     .boardchallengebox{
+         padding: 10px;
         border-color: black;
         border-style: solid;
         border-width: 1px;
         color: rgba(238, 217, 98, 0.726);
         background-color: rgba(128, 128, 128, 0.158);
-        .boardtitle{
+         .boardtitle{
             text-align: center;
         }
-        .boardcategory{
+         .boardcategory{
             text-align: center;
         }
-        .boardpoints{
+         .boardpoints{
             text-align: center;
         }
-        .boarddescription{
+         .boarddescription{
             text-align: left;
         }
     }
