@@ -1,1 +1,0 @@
-select * from products where active = true;

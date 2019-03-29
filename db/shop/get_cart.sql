@@ -1,1 +1,0 @@
-select * from cart where user_id = ${userID} and active = true;

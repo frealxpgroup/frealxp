@@ -3,12 +3,13 @@ $ourFont: 'Open Sans', sans-serif;
 
 .landing-main{
     background-image: url('https://isorepublic.com/wp-content/uploads/2018/11/enjoying-the-view-1100x733.jpg');
-    background-color: rgb(58, 167, 134);
+    background-color: green;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover; 
     height: 100vh;
     width: 100vw;
+    // display: flex;
     h1{
         font-size: 70px;
         position: absolute;
@@ -23,25 +24,33 @@ $ourFont: 'Open Sans', sans-serif;
         color: black;
         font-family: $ourFont;
     }
-
     span{
-        font-size: 4vw;
+        font-size: 70px;
         font-family: $ourFont;
         color: white;
         display: flex;
         align-items: flex-end; 
         position: absolute;
-        bottom: 24%;
+        bottom: 21%;
         left: 10%;
         right: 10%;
         text-align: center;
     }
+    @media(max-width: 1588px){
+        span{
+            right: 5%
+        }
+    }
+    @media(max-width: 1495px){
+        span{
 
-  
+            font-size: 65px;
+        }
+    }
     button{
         position: absolute;
         bottom: 10%;
-        right: 28%;
+        right: 30%;
         border: white 1px solid;
         background-color: transparent;
         color: white;
@@ -49,59 +58,4 @@ $ourFont: 'Open Sans', sans-serif;
         width: 250px;
         font-size: 24px;
     }
-    .dots{
-        position: absolute;
-        color: black;
-        margin: 25px 30px 30px 30px;
-        right: 0px;
-        font-size: 40px; 
-        font-weight: bolder;
-    }
-    .dots:hover{
-        cursor: pointer;
-    }
-    @media(min-width: 568px){
-        .dots{
-            display: none;
-        }
-    }
-    @media(max-width: 567px){
-        h2{
-            display: none;
-        }
-    }
-    @media(min-width: 426px){
-
-        .mobile-button{
-            display: none;
-        }
-    }
-    @media(max-width: 425px){
-        h1{
-            font-size: 45px;
-        }
-
- 
-        span{
-            display: none;
-        }
-        .desktop-button{
-            display: none;
-        }
-        button{
-             right: 20%;
-        }
-     }
-
-     @media(max-width: 375px){
-
-        button{
-             right: 16%;
-        }
-     }
-     @media(max-width: 320px){
-         button{
-             right: 11%;
-         }
-     }
 }

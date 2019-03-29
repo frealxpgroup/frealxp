@@ -42,7 +42,7 @@ class Submit extends Component {
                 <h1>FRealXP</h1>
                 <div>
                     <div className="select-challenge" >
-                        <button onClick={this.getChallengesButton} >select your challenge from your challenge list</button>
+                        <button onClick={this.getChallengesButton} >select your challenge</button>
                     </div>
 
 

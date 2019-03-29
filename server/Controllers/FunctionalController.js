@@ -1,34 +1,26 @@
 module.exports = {
     getInitial: (req, res) => {
         //User XP on dashboard. get user login info from req.body
-    },
-    getAllChallenges:  (req, res) => {
-        const db = req.app.get('db');
-        db.challenges.getAllChallenges()
-            .then(challenges => res.status(200).send(challenges))
-            .catch(err => {
-                res.status(500).send({ errorMessage: 'Mistakes were made.' })
-            })
-    },
-    getOneChallenge: async (req, res) => {
+    }, 
+    getAllChallenges: (req, res) => {
+        //For Challenges page for the user to display on the front end
+        
+        const db = req.app.get('db')
 
-        const {challengeInput} = req.body
-        
-        const db = req.app.get('db');
-        const oneChallenge = await db.challenges.getOneChallenge( {category: challengeInput} )
-        
-        
-        res.status(200).send(oneChallenge)
-        
     },
-
     
-    challengeAccepted: async (req, res) => {
-        const {user_id, id} = req.body
-        const db = req.app.get('db');
-        const acceptedChallenge = await db.trackedChallenges.addTracked( {user: user_id, challenge: id})
-    res.status(200).send(acceptedChallenge)
+    
+    getUserChallenges: (req, res) => {
+        //Gets the users tracked challenges. In the Submit view, they will show up in a model for the user to choose to submit.
+        const db = req.app.get('db')
+        const {userId} = req.body
 
+        db.users_challenges({user_id: userId})
+
+    },
+
+    getOneChallenge: (req, res) => {
+        //For Modal.  use sql logic to pull specific data for that user
     },
     getApproved: (req, res) => {
         //For User History  
@@ -44,5 +36,5 @@ module.exports = {
     },
     getPrizes: (req, res) => {
         //display all prizes
-    },
+    }, 
 }
