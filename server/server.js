@@ -30,7 +30,7 @@ massive(CONNECTION_STRING).then(db => {
 app.post(`/auth/register`, ac.register) //create a new user 
 app.post(`/auth/login`, ac.login) //verify user info 
 app.post(`/auth/logout`, ac.logout) //destroy user on session
-app.put(`/auth/edit/:id`, ac.editAuth) //edit user info
+app.put(`/auth/edit/:id`, ac.authEdit) //edit user info
 
 app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges
 app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
@@ -46,8 +46,8 @@ app.post(`/shop/addToCart`, sc.addToCart) // if needed, generate a new cart, the
 app.post(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
 app.put(`/shop/quantity/:id`, sc.changeQuantity) //changes the quantity of the item in cart
 
-app.get(`/shop/address`, sc.getAddress) //get address if exists
-app.put(`/shop/address/:id`, sc.editAddress) //add user address to null values in table
+app.post(`/shop/address`, sc.getAddress) //get address if exists, passing in user id.  Get user id from redux
+app.put(`/shop/address/`, sc.editAddress) //add user address to null values in table
 
 app.put(`/shop/cart/:id`, sc.checkoutFunction)
 app.delete(`/shop/cart/:id`, sc.deleteItem) //deletes a product from the car

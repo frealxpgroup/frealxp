@@ -35,10 +35,14 @@ module.exports = {
     deleteItem: (req, res) => {
         //delete all items from cart after purchase
     },
-    getAddress: (req, res) => {
-        //pull the user address if exists
+    getAddress: async (req, res) => {
+        const {user_id} = req.body
+        const db = req.app.get('db')
+        let address = await db.shop.get_address({user_id: user_id})
+        address = address[0]
+        res.status(200).send(address)
     },
     editAddress: (req, res) => {
-        //PUT user inputs their shipping & billing address if doesn't exist (edit null address that were generated in table when user was created)
+        const {user_id} = req.body
     }
 }

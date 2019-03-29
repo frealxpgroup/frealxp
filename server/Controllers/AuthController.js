@@ -54,8 +54,7 @@ module.exports = {
         console.log(req.session)
         res.sendStatus(200)
     },  
-    editAuth: (req, res) => {
-        //get id from req.params
-        //get updated user profile info from req.body
+    authEdit: (req, res) => {
+
     }
 }
