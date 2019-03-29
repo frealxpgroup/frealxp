@@ -5,7 +5,7 @@ div {
     font-family: $ourFont;
 }
 
-.box {
+.product_box {
     height: 300px;
     width: 225px;
     border: solid 1px black;
@@ -19,31 +19,31 @@ div {
     
     text-align: center;
     
-    div {
+    .product_div {
         padding: 5px;
     }
 
-    img {
+    .product_image {
         height: 150px;
         width: 150px;
     }
 
-    span {
+    .product_span {
         padding-left: 15px;
         padding-right: 15px;
     }
 
-    .title {
+    .product_title {
         font-size: 1.25em;
     }
 
-    button{
+    .product_button{
         border: black .5px solid;
         background-color: transparent;
         font-size: 1em;
     }
 
-    button:hover {
+    .product_button:hover {
         cursor: pointer;
         background-color: white;
     }

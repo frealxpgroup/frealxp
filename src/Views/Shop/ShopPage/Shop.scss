@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 $ourFont: 'Open Sans', sans-serif;
 
-.background {
+.shop_background {
 background: #FFFFFF;
 background: -moz-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102)rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
 background: -webkit-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
@@ -21,7 +21,7 @@ font-family: $ourFont;
 
 }
 
-.header {
+.shop_header {
     display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -35,7 +35,7 @@ font-family: $ourFont;
     margin-right: 25px;
 }
 
-.menu {
+.shop_menu {
     width: 300px;
 
     display: flex;
@@ -54,7 +54,7 @@ h1{
     font-family: $ourFont;
 }
 
-.body_container {
+.shop_body_container {
     height: calc(100vh - 50px);
     min-width: 75vw;
 
@@ -66,12 +66,4 @@ h1{
     align-content: stretch;
 
     padding-top: 70px;
-}
-
-.Product {
-    height: 300px;
-    width: 250px;
-    border: 1px solid black;
-
-    text-align: center;
 }
