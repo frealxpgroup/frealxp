@@ -13,6 +13,7 @@ class LineGraph extends Component {
             challenge_point_value: 0,
             Dates: [],
             allDates: [],
+            allUsers: [],
            
         }
     }
@@ -34,10 +35,24 @@ class LineGraph extends Component {
         Axios.get(`/challenge/tracked/all`)
             .then(res => {
                 console.log(res)
-                // this.setState({
-                //     Dates: res.data
-                // })
+                this.setState({
+                    allDates: res.data
+                })
             })
+    }
+    getAllusers = () => {
+
+        Axios.get(`/auth/all`)
+        .then(res => {
+            this.setState({
+                allUsers: res.data
+            })
+            
+        })
+    }
+    doBoth = () => {
+        this.getAllusers()
+        this.getAllFromTracked()
     }
     
 
@@ -48,7 +63,7 @@ class LineGraph extends Component {
 
     render() {
         
-
+        let count = 0;
         let allJan = 0;
         let allFeb = 0;
         let allMar = 0;
@@ -58,6 +73,10 @@ class LineGraph extends Component {
         console.log(allJan)
         console.log(allFeb)
         console.log(allMar)
+        console.log({count})
+        this.state.allUsers.forEach(() => {
+            count++
+        })
         this.state.allDates.map((allDate, i) => {
             let allDates = new Date(allDate.approved_date)
             let stringyDate = allDates.toString()
@@ -191,7 +210,7 @@ class LineGraph extends Component {
         return (
             <div>
             <button onClick={this.getIdFromTracked}>PUSH ME PLS</button>
-            <button onClick={this.getAllFromTracked}>PUSH All PLS</button>
+            <button onClick={this.doBoth}>PUSH All PLS</button>
             <Line data={data} options={options} />
             
             

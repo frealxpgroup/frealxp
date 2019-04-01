@@ -29,19 +29,19 @@ module.exports = {
 
     },
     getUserChallengeDate: async (req, res) => {
-        console.log(req.body)
+        
         const  {user_id}  = req.body
-        console.log(user_id)
+        
         const db = req.app.get('db');
         const idBoth = await db.trackedChallenges.getOneTracked([user_id])
-        console.log('idBoth', idBoth)
+        
 
         res.status(200).send(idBoth)
     },
     getAllChallengeDates: async (req, res) => {
         const db = req.app.get('db')
         const allDates = await db.trackedChallenges.getAllDates()
-        console.log(allDates)
+        
         res.status(200).send(allDates)
         
     },
