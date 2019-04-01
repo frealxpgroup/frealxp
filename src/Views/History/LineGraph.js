@@ -156,7 +156,7 @@ class LineGraph extends Component {
                     // borderDash: [5, 5]
                 }, {
                     hidden: true,
-                    label: 'hidden dataset',
+                    label: 'Average Challenges completed this month',
                     data: [
                         allJan/count, allFeb/count, allMar/count
                     ]
