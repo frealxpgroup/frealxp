@@ -51,18 +51,55 @@ class Cart extends Component {
     });
   };
 
-  incrementItem = (productID) => {
-    console.log('hit for ' + productID)
-  }
+  incrementItem = productID => {
+    const { cartItems } = this.state;
+    //axios call to change quantity for cart_ref to quantity + 1
+    const foundItem = cartItems.find(
+      cartItem => cartItem.product_id === productID
+    );
+    let foundCartID = foundItem.cart_id;
+    let foundQty = foundItem.quantity;
+    let newQty = foundQty + 1;
+    Axios.put("/shop/changeQuantity", { foundCartID, newQty }).then(res => {
+      this.initialCart();
+    });
+  };
 
-  decrementItem = (productID) => {
-    console.log('reduce ' + productID)
-  }
+  decrementItem = productID => {
+    //axios call to change quantity for cart_ref to quantity - 1
+    const { cartItems } = this.state;
+    const foundItem = cartItems.find(cartItem => cartItem.product_id === productID);
+    let foundCartID = foundItem.cart_id;
+    let foundQty = foundItem.quantity;
+    let newQty = foundQty - 1;
+    Axios.put("/shop/changeQuantity", { foundCartID, newQty }).then(res => {
+      this.initialCart();
+    });
+  };
+
+  removeItem = productID => {
+    //axios call to delete the row from the cart by cart_id
+    const { cartItems } = this.state;
+    const foundItem = cartItems.find(
+      cartItem => cartItem.product_id === productID
+    );
+    let foundCartID = foundItem.cart_id;
+    Axios.delete(`/shop/cart/${foundCartID}`).then(res => {
+      this.initialCart();
+    });
+  };
 
   render() {
     const mappedProducts = this.state.cartItems.map(eachItemObj => {
       return (
-        <CartItem key={eachItemObj.product_id} item={eachItemObj} allProducts={this.state.products} incrementItem={this.incrementItem} decrementItem={this.decrementItem} />
+        <CartItem
+          key={eachItemObj.product_id}
+          item={eachItemObj}
+          allProducts={this.state.products}
+          incrementItem={this.incrementItem}
+          decrementItem={this.decrementItem}
+          removeItem={this.removeItem}
+        />
       );
     });
 
