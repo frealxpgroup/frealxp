@@ -16,6 +16,7 @@ class Submit extends Component {
             selectedChallenge: "",
             description: ""
         };
+        //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
 
