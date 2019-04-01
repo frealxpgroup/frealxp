@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+$ourFont: 'Open Sans', sans-serif;
+
+.submit-main{
+    background-image: url(https://files.slack.com/files-pri/T039C2PUY-FH7SJKQ5U/achievements.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; 
+    height: 100vh;
+    width: 100vw;
+    
+    h1{
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;        
+    }
+
+    
+    .date{
+        display: flex;
+        justify-content: center;
+    }
+
+    .select-challenge{
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .text-box-input{
+        // padding: 0px 100px 180px 0px ;
+        // text-align: left;
+        // line-height: 1.5;
+
+        padding: 2px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #999;
+    }
+    
+    .description-box{
+        display: flex;
+        justify-content: center;
+        padding: 10px 0px 10px 0px;
+        height: 200px;  
+        
+
+    }
+     
+
+    .upload-submit{
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+}
+
