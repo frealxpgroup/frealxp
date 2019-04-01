@@ -9,6 +9,7 @@ const initialState = {
     }
 
     const UPDATE_EVERYTHING = 'UPDATE_EVERYTHING';
+    const UPDATE_USER = 'UPDATE_USER'
 
 export function updateEverything(everythingObj) {
     return {
@@ -17,11 +18,18 @@ export function updateEverything(everythingObj) {
     }
 }
 
+export function updateUser(userObj){
+    return {
+        type: UPDATE_USER,
+        payload: userObj
+    }
+}
+
 export default function reducer(state= initialState, action){
     switch(action.type) {
         case UPDATE_EVERYTHING:
-        return Object.assign({}, state, action.payload);
+            return Object.assign({}, state, action.payload);
         default: 
-        return state
+            return state
     }
 }

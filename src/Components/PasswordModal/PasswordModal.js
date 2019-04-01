@@ -1,21 +1,36 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import './PasswordModal.scss'
+import axios from 'axios';
 
 class PasswordModal extends React.Component {
     constructor(props){
         super(props)
 
         this.state={
+            email: this.props.email,
             currentPassword: '',
             newPassword: '',
-            verifyNewPassword: '',
-            Error: 'Test Error'
+            verifyPassword: '',
+            error: ''
         }
     }
 
-    handleGetUser = () => {
-        
+    handleInput = (prop, val) => {
+        this.setState({ [prop]: val })
+        console.log(this.state[prop])
+    }
+
+    handleChangePassword = () => {
+        const {email, currentPassword, newPassword, verifyPassword} = this.state
+        axios.put('/auth/password', {email, password: currentPassword, newPassword, verifyPassword})
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => 
+            this.setState({
+                error: err
+            }))
     }
     render() {
         return (
@@ -32,15 +47,16 @@ class PasswordModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='inputs-password'>
-                        <input placeholder='Current Password' defaultValue={this.state.currentPassword}/>
-                        <input placeholder='New Password' defaultValue={this.state.newPassword}/>
-                        <input placeholder='Verify New Password' defaultValue={this.state.verifyNewPassword}/>
+                        <input placeholder='Current Password' onChange={(e) => this.handleInput('password', e.target.value)} />
+                        <input placeholder='New Password' onChange={(e) => this.handleInput('newPassword', e.target.value)} />
+                        <input placeholder='Verify New Password' onChange={(e) => this.handleInput('verifyPassword', e.target.value)} />
                     </div>
-                    <p>{this.state.Error}</p>
+                    
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <button >Save New Password</button>
+                    <p style={{'color':'red'}}>{this.state.Error}</p>
+                    <button onClick={this.handleChangePassword}>Save New Password</button>
                     <button onClick={this.props.onHide}>Cancel</button>
                 </Modal.Footer>
             </Modal>

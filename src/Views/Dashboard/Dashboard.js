@@ -14,19 +14,24 @@ class Dashboard extends Component {
         console.log(this.props)
         return (
             <div className='dash-main'>
-                <h1>FRealXP</h1>
+                <h1>Welcome, {this.props.first_name}!</h1>
                 <Logout className='logout' />
                 <div className='box left'>
-                    <h2>Lvl {this.props.xp}</h2>
+                    <h2>My XP: {this.props.xp}</h2>
+                    <h2>My Challenges:</h2>
+                    <h3></h3>
                 </div>
                 <div className='box right name'>
-                    <h2>{this.props.first_name}'s Dash</h2>
+                    
                     <div>
                         <Link to='/auth/edit'><h3>Edit Account Info</h3></Link>
                         <Link to='/history'><h3>My History</h3></Link>
                         <Link to='/challenge/board'><h3>Challenge Board</h3></Link>
                         <Link to='/shop'><h3>Shop</h3></Link>
                     </div>
+
+                </div>
+                <div className='box right quote'>
 
                 </div>
 

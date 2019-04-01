@@ -30,7 +30,8 @@ massive(CONNECTION_STRING).then(db => {
 app.post(`/auth/register`, ac.register) //create a new user 
 app.post(`/auth/login`, ac.login) //verify user info 
 app.post(`/auth/logout`, ac.logout) //destroy user on session
-app.put(`/auth/edit/:id`, ac.editAuth) //edit user info
+app.put(`/auth/edit`, ac.editAuth) //edit user info
+app.put(`/auth/password`, ac.editPassword)
 app.get(`/user/history`, ac.getXP)
 
 app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges

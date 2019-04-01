@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import './Edit.scss'
 import { connect } from 'react-redux'
+import { updateEverything } from '../../ducks/reducer'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Logout from '../../Components/Logout/Logout'
-import PasswordModal from '../../Components/PasswordModal/PasswordModal'
+// import PasswordModal from '../../Components/PasswordModal/PasswordModal'
 
 class Edit extends Component {
     constructor(props) {
@@ -51,29 +53,35 @@ class Edit extends Component {
         console.log(this.state[prop])
     }
 
-    handleReset = () => {
-        this.setState({ modalShow: true })
-    }
+    // handleReset = () => {
+    //     this.setState({ modalShow: true })
+    // }
 
     handleCancel = () => {
         window.location.reload()
     }
 
     handleSave = () => {
-        const { shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id } = this.state
+        const { shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id, first_name, last_name, email } = this.state
         axios.put('/shop/address', { shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id })
             .then(response => {
                 console.log(response)
 
             })
+        axios.put('/auth/edit', { first_name, last_name, email, user_id })
+            .then(response => {
+                console.log(response.data)
+                this.props.updateEverything(response.data)
+            })
+        
     }
 
     render() {
         console.log(this.state.user_id)
-        let modalClose = () => this.setState({ modalShow: false });
+        // let modalClose = () => this.setState({ modalShow: false });
         return (
             <div className='edit-main'>
-                <h1>FRealXP</h1>
+                <Link to='/dashboard'><h1>FRealXP</h1></Link>
                 <Logout />
                 <div className='input-box'>
                     <div className='editor one'>
@@ -81,9 +89,9 @@ class Edit extends Component {
                         <div className='img-circle'><div id='background'>Upload Image</div></div>
                         <div className='inputs'></div>
                         <input type='text' title='first name' placeholder='first name' onChange={(e) => this.handleInput('first_name', e.target.value)} defaultValue={this.state.first_name} />
-                        <input placeholder='last name' defaultValue={this.state.last_name} />
-                        <input placeholder='email' defaultValue={this.state.email} />
-                        <button onClick={this.handleReset}>Reset Password</button>
+                        <input placeholder='last name' onChange={(e) => this.handleInput('last_name', e.target.value)} defaultValue={this.state.last_name} />
+                        <input placeholder='email' onChange={(e) => this.handleInput('email', e.target.value)} defaultValue={this.state.email} />
+                        <Link to='/dashboard'><button>Back to Dash</button></Link>
                     </div>
                     <div className='editor two'>
                         <h2>Shipping Address</h2>
@@ -108,11 +116,11 @@ class Edit extends Component {
                     </div>
 
                 </div>
-                <PasswordModal
+                {/* <PasswordModal
                     show={this.state.modalShow}
                     onHide={modalClose}
                     email={this.state.email}
-                />
+                /> */}
             </div>
         )
     }
@@ -125,4 +133,4 @@ const mapToProps = (reduxState) => {
     }
 }
 
-export default connect(mapToProps)(Edit)
+export default connect(mapToProps, { updateEverything })(Edit)
