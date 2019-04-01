@@ -38,7 +38,7 @@ app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
 app.post(`/challenges/one`, fc.getOneChallenge) //get challenge info for modal
 app.get(`/history/initial`, fc.getApproved) //get approved challenges for that user
 app.post(`/challenge/accepted`, fc.challengeAccepted) //add the challenge to the tracked challenges table
-app.get(`/challenge/tracked/one`, fc.getUserChallengeDate) // select the approved date for each challenge that is on tracker based on user
+app.post(`/challenge/tracked/one`, fc.getUserChallengeDate) // select the approved date for each challenge that is on tracker based on user
 
 
 app.post(`/challenge/submit`, fc.submitChallenge) //create challenge for review

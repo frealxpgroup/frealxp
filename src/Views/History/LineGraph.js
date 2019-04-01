@@ -11,6 +11,7 @@ class LineGraph extends Component {
             user_id: this.props.user_id,
             challenge_id: 0,
             challenge_point_value: 0,
+            Dates: [],
             Jan: [],
             Feb: [],
             Mar: [],
@@ -29,15 +30,15 @@ class LineGraph extends Component {
     getIdFromTracked = () => {
         const { user_id } = this.state
         console.log({user_id})
-        Axios.get(`/challenge/tracked/one`, { user_id })
+        Axios.post(`/challenge/tracked/one`, { user_id })
             .then(res => {
                 console.log(res)
-
+                this.setState({
+                    Dates: res.data
+                })
             })
     }
-    componentDidMount = () => {
-        this.getIdFromTracked()
-    }
+    
 
 
 
@@ -120,7 +121,11 @@ class LineGraph extends Component {
 
 
         return (
+            <div>
+            <button onClick={this.getIdFromTracked}>PUSH ME PLS</button>
             <Line data={data} options={options} />
+            <h1>{this.state.Dates}</h1>
+            </div>
         )
     }
 }

@@ -2,7 +2,7 @@ module.exports = {
     getInitial: (req, res) => {
         //User XP on dashboard. get user login info from req.body
     },
-    getAllChallenges:  (req, res) => {
+    getAllChallenges: (req, res) => {
         const db = req.app.get('db');
         db.challenges.getAllChallenges()
             .then(challenges => res.status(200).send(challenges))
@@ -12,29 +12,30 @@ module.exports = {
     },
     getOneChallenge: async (req, res) => {
 
-        const {challengeInput} = req.body
-        
+        const { challengeInput } = req.body
+
         const db = req.app.get('db');
-        const oneChallenge = await db.challenges.getOneChallenge( {category: challengeInput} )
-        
-        
+        const oneChallenge = await db.challenges.getOneChallenge({ category: challengeInput })
+
+
         res.status(200).send(oneChallenge)
-        
+
     },
     challengeAccepted: async (req, res) => {
-        const {user_id, id} = req.body
+        const { user_id, id } = req.body
         const db = req.app.get('db');
-        const acceptedChallenge = await db.trackedChallenges.addTracked( {user: user_id, challenge: id})
-    res.status(200).send(acceptedChallenge)
+        const acceptedChallenge = await db.trackedChallenges.addTracked({ user: user_id, challenge: id })
+        res.status(200).send(acceptedChallenge)
 
     },
     getUserChallengeDate: async (req, res) => {
-        const {user_id} = req.body
+        console.log(req.body)
+        const  {user_id}  = req.body
         console.log(user_id)
         const db = req.app.get('db');
-        const idBoth = await db.trackedChallenges.getOneTracked( [ user_id])
+        const idBoth = await db.trackedChallenges.getOneTracked([user_id])
         console.log('idBoth', idBoth)
-        
+
         res.status(200).send(idBoth)
     },
     getApproved: (req, res) => {
