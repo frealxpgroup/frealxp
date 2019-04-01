@@ -13,16 +13,20 @@ class Board extends Component {
             challenges: [],
             challengeInput: '',
             modalShow: false,
-            id: 0
+            id: 0,
+            challenge_title: ''
         }
     }
     getAllChallenges = () => {
         Axios.get(`/challenges`)
             .then(res => {
-
+                console.log(res.data)
                 this.setState({
-                    challenges: res.data
+                    challenges: res.data,
+                    
+            
                 })
+                
             })
     }
     componentDidMount = () => {
@@ -63,17 +67,17 @@ class Board extends Component {
         })
     }
     render() {
-
+        console.log(this.state.challenge_title)
         let modalClose = () => this.setState({ modalShow: false });
         const mappedChallenges = this.state.challenges.map((challenge, i) => {
-
+            
 
             return (
                 <div
                     className='allchallengesinboard'
                     key={challenge.challenge_id}
                     id={challenge.challenge_id}
-                    onClick={() => this.setState({ modalShow: true, id: challenge.challenge_id })} >
+                    onClick={() => this.setState({ modalShow: true, id: challenge.challenge_id, challenge_title: challenge.challenge_title })} >
 
                     <div className='boardchallengebox'>
 
@@ -109,6 +113,7 @@ class Board extends Component {
                     challenges={this.state.challenges}
                     id={this.state.id}
                     challenge_id={this.state.challenges.challenge_id}
+                    challenge_title={this.state.challenge_title}
                 />
 
                 {mappedChallenges}

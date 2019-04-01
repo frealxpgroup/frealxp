@@ -11,15 +11,18 @@ class ChallengeModal extends React.Component {
           challenges: this.props.challenges,
           user_id: this.props.user_id
           
+          
         }
     }
     
     AddTrackedChallenge = () => {
       const {user_id} = this.state
       const {id} = this.props
+      const {challenge_title} = this.props
       
       console.log(id)
-        Axios.post(`/challenge/accepted`, { user_id, id })
+      console.log(challenge_title)
+        Axios.post(`/challenge/accepted`, { user_id, id, challenge_title })
         .then(res => {
           console.log("IT WORKED")
         })
