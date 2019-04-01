@@ -70,17 +70,19 @@ class LineGraph extends Component {
         let newJan = 0;
         let newFeb = 0;
         let newMar = 0;
-        console.log(allJan)
-        console.log(allFeb)
-        console.log(allMar)
-        console.log({count})
-        this.state.allUsers.forEach(() => {
+        // console.log(allJan)
+        // console.log(allFeb)
+        // console.log(allMar)
+        // console.log(this.state.allUsers)
+        this.state.allUsers.map((allUser, i) => {
+            
             count++
         })
+        console.log({count})
         this.state.allDates.map((allDate, i) => {
             let allDates = new Date(allDate.approved_date)
             let stringyDate = allDates.toString()
-            console.log(stringyDate)
+            // console.log(stringyDate)
             
 
             if (stringyDate.includes('Jan')){
@@ -109,7 +111,7 @@ class LineGraph extends Component {
          this.state.Dates.map((date, i) => {
             let myDate = new Date(date.approved_date)
             let stringDate = myDate.toString()
-            console.log(stringDate)
+            // console.log(stringDate)
 
             if (stringDate.includes('Jan')){
                  newJan++
@@ -156,7 +158,7 @@ class LineGraph extends Component {
                     hidden: true,
                     label: 'hidden dataset',
                     data: [
-                        allJan, allFeb, allMar
+                        allJan/count, allFeb/count, allMar/count
                     ]
                 }, {
                     hidden: true,
