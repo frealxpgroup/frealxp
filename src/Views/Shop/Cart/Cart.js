@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import CartItem from "./CartItem";
+import Checkout from "./../../../Components/Stripe/Checkout";
 
 import "./Cart.scss";
 
@@ -9,18 +10,25 @@ class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      userID: 1,
+      userID: 2,
       cartRef: 0,
-      products: [],
+      products: [{price: 0}],
       numItemsInCart: 0,
-      cartItems: []
+      cartItems: [],
+      cartSum: 0
     };
   }
   componentDidMount() {
-    this.initialProduct();
-    if (this.state.userID) {
-      this.initialCart();
-    }
+    this.initialProduct().then(() => {
+      if (this.state.userID) {
+        this.initialCart().then(() => {
+          console.log(this.state.cartItems)
+          if (this.state.cartItems.length > 0) {
+            this.initialTotal();
+          }
+        });
+      }
+    })
   }
 
   initialProduct = () => {
@@ -51,6 +59,26 @@ class Cart extends Component {
     });
   };
 
+  initialTotal = () => {
+    for (let index = 0; index < this.state.cartItems.length; index++) {
+      const eachItemObj = this.state.cartItems[index];
+      let productID = eachItemObj.product_id;
+      let productsIndex = this.state.products.findIndex(
+        el => el.product_id === productID
+      );
+   
+        let productPrice = this.state.products[productsIndex].price;
+        let productQty = eachItemObj.quantity;
+        let multiplier = (a, b) => a * b;
+        let localTotal =
+          this.state.cartSum + multiplier(productPrice, productQty);
+        this.setState({
+          cartSum: localTotal
+        });
+      
+    }
+  };
+
   incrementItem = productID => {
     const { cartItems } = this.state;
     //axios call to change quantity for cart_ref to quantity + 1
@@ -68,7 +96,9 @@ class Cart extends Component {
   decrementItem = productID => {
     //axios call to change quantity for cart_ref to quantity - 1
     const { cartItems } = this.state;
-    const foundItem = cartItems.find(cartItem => cartItem.product_id === productID);
+    const foundItem = cartItems.find(
+      cartItem => cartItem.product_id === productID
+    );
     let foundCartID = foundItem.cart_id;
     let foundQty = foundItem.quantity;
     let newQty = foundQty - 1;
@@ -108,10 +138,11 @@ class Cart extends Component {
         <div className="cart_header">
           <div className="cart_menu">
             <div>cart({this.state.numItemsInCart})</div>
-            <div>checkout</div>
-            <Link to="/shop/history">
-              <div>order history</div>
-            </Link>
+            <Checkout
+              grandTotal={this.state.cartSum}
+              cartID={this.state.cartItems[0]}
+            />
+            <Link to="/shop/history" />
           </div>
           <Link to="/">
             <h1>FRealXP</h1>

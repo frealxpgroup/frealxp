@@ -9,7 +9,7 @@ class Shop extends Component {
     super();
     this.state = {
       products: [],
-      userID: 1,
+      userID: 2,
       cartRef: 0,
       numItemsInCart: 0,
       cartItems: []
@@ -54,6 +54,7 @@ class Shop extends Component {
       this.setState({
         cartItems: cartLocal
       });
+      
     });
   };
 
@@ -101,9 +102,7 @@ class Shop extends Component {
             <Link to="/shop/cart">
               <div>cart({this.state.numItemsInCart})</div>
             </Link>
-            <div>checkout</div>
             <Link to="/shop/history">
-              <div>order history</div>
             </Link>
           </div>
           <Link to="/">

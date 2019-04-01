@@ -12,9 +12,10 @@ const CartItem = props => {
 
   const currentItem = props.allProducts.findIndex(el => el.product_id === props.item.product_id)
 
-
-  const subtotal = () => {return props.allProducts[currentItem].price * props.item.quantity}
-
+  const subtotal = () => {
+      return props.allProducts[currentItem].price * props.item.quantity
+    }
+  
   let incrementItemLocal = () => {
       return props.incrementItem(product_id)
   }
@@ -26,7 +27,6 @@ const CartItem = props => {
   let removeItemLocal = () => {
     return props.removeItem(product_id)
   }
-
 
   return (
     <div>

@@ -40,13 +40,16 @@ module.exports = {
       }
     });
   },
-  checkoutFunction: (req, res) => {
-    //PUT to cart, order history tables
-  },
   deleteItem: (req, res) => {
     const {cartID} = req.params
     const db = req.app.get("db");
     db.shop.delete_cart_item({cartID})
+    .then(res.sendStatus(200))
+  },
+  deleteCart: (req, res) => {
+    const {cartRef} = req.params
+    const db = req.app.get("db");
+    db.shop.delete_cart({cartRef})
     .then(res.sendStatus(200))
   },
   getAddress: async (req, res) => {
