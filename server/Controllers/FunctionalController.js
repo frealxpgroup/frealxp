@@ -38,6 +38,13 @@ module.exports = {
 
         res.status(200).send(idBoth)
     },
+    getAllChallengeDates: async (req, res) => {
+        const db = req.app.get('db')
+        const allDates = await db.trackedChallenges.getAllDates()
+        console.log(allDates)
+        res.status(200).send(allDates)
+        
+    },
     getApproved: (req, res) => {
         //For User History
     },

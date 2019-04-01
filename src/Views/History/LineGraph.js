@@ -12,18 +12,8 @@ class LineGraph extends Component {
             challenge_id: 0,
             challenge_point_value: 0,
             Dates: [],
-            Jan: [],
-            Feb: [],
-            Mar: [],
-            Apr: [],
-            May: [],
-            Jun: [],
-            Jul: [],
-            Aug: [],
-            Sep: [],
-            Oct: [],
-            Nov: [],
-            Dec: []
+            allDates: [],
+           
         }
     }
 
@@ -38,6 +28,17 @@ class LineGraph extends Component {
                 })
             })
     }
+    getAllFromTracked = () => {
+        
+        
+        Axios.get(`/challenge/tracked/all`)
+            .then(res => {
+                console.log(res)
+                // this.setState({
+                //     Dates: res.data
+                // })
+            })
+    }
     
 
 
@@ -46,46 +47,67 @@ class LineGraph extends Component {
 
 
     render() {
-        console.log(this.state.user_id)
-//         var date_test = new Date("2011-07-14 11:23:00".replace(/-/g,"/"));
-// console.log(date_test);
-        const mappedDates = this.state.Dates.map((date, i) => {
-            let myDate = new Date(date.approved_date)
-            let stringDate = myDate.toString()
+        
 
-            let newJan = 0;
-            let newFeb = 0;
-            let newMar = 0;
-            if (stringDate.includes('Jan')){
-                return newJan =+ 1
+        let allJan = 0;
+        let allFeb = 0;
+        let allMar = 0;
+        let newJan = 0;
+        let newFeb = 0;
+        let newMar = 0;
+        console.log(allJan)
+        console.log(allFeb)
+        console.log(allMar)
+        this.state.allDates.map((allDate, i) => {
+            let allDates = new Date(allDate.approved_date)
+            let stringyDate = allDates.toString()
+            console.log(stringyDate)
+            
+
+            if (stringyDate.includes('Jan')){
+                 allJan++
             }
-            else if (stringDate.includes('Feb')){
-                return newFeb =+ 1
+            else if (stringyDate.includes('Feb')){
+                 allFeb++
             }
-            else if (stringDate.includes('Mar')){
-                return newMar =+ 1
+            else if (stringyDate.includes('Mar')){
+                 allMar++
             }
-            this.setState({
-                Jan: newJan,
-                Feb: newFeb,
-                Mar: newMar
-            })
 
            
-            // console.log(myDate)
-            console.log( typeof stringDate)
-            console.log( newJan)
-            console.log( newFeb)
-            console.log( newMar)
             
-            // console.log(dateChanger)
+            return (
+                <div>
+                   <h2>{allDate.approved_date}</h2> 
+                    
+
+
+                </div>
+                
+            )
+        })
+       
+         this.state.Dates.map((date, i) => {
+            let myDate = new Date(date.approved_date)
+            let stringDate = myDate.toString()
+            console.log(stringDate)
+
+            if (stringDate.includes('Jan')){
+                 newJan++
+            }
+            else if (stringDate.includes('Feb')){
+                 newFeb++
+            }
+            else if (stringDate.includes('Mar')){
+                 newMar++
+            }
+
+           
+            
             return (
                 <div>
                    <h2>{date.approved_date}</h2> 
-                    <h3>{console.log( typeof stringDate)}</h3>
-                    <h4>{console.log( newJan)}</h4>
-                    <p>{console.log( newFeb)}</p>
-                    <p>{console.log( newMar)}</p>
+                    
 
 
                 </div>
@@ -105,19 +127,20 @@ class LineGraph extends Component {
             ],
             datasets: [
                 {
-                    label: "My First dataset",
+                    label: "Challenges completed",
                     data: [
-                        90, 20, 30
+                        newJan, newFeb, newMar
                     ],
-                    fill: false,
-                    borderDash: [5, 5]
+                    // fill: false,
+                    // borderDash: [5, 5]
                 }, {
                     hidden: true,
                     label: 'hidden dataset',
                     data: [
-                        10, 20, 30
+                        allJan, allFeb, allMar
                     ]
                 }, {
+                    hidden: true,
                     label: "My Second dataset",
                     data: [
                         20, 30, 70
@@ -157,7 +180,7 @@ class LineGraph extends Component {
                         },
                         ticks: {
                             suggestedMin: 0,
-                            suggestedMax: 100
+                            suggestedMax: 5
                         }
                     }
                 ]
@@ -168,9 +191,10 @@ class LineGraph extends Component {
         return (
             <div>
             <button onClick={this.getIdFromTracked}>PUSH ME PLS</button>
+            <button onClick={this.getAllFromTracked}>PUSH All PLS</button>
             <Line data={data} options={options} />
-            <h1>{mappedDates}</h1>
-            <h2>{console.log(mappedDates)}</h2>
+            
+            
             </div>
         )
     }
