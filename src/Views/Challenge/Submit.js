@@ -14,13 +14,22 @@ class Submit extends Component {
             startDate: new Date(),
             userChallenges: [],
             selectedChallenge: "",
-            description: ""
+            description: "",
+            user_id: 3
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
 
     //methods
+
+    //This will handle any input values that need to update state. Currently being used to update this.state.description
+    handleChange(prop,val){
+        console.log(val)
+        this.setState({
+            [prop]: val
+        })
+    }
 
     //handles date selection
     handleCalendarChange(date) {
@@ -29,15 +38,30 @@ class Submit extends Component {
         });
     }
 
-    //this button will get all the challenges that the user has accepted. The data from the database is put on state.
-    getChallengesButton = () => {
-        console.log('button hit')
-        // axios.get(`/challenges/user`)
-        // .then(res => { })
-
+    handleImageUpload = () => {
+        console.log("Upload image button hit")
     }
 
+    //this button will get all the challenges that the user has accepted. The data from the database is put on state.
+    getChallengesButton = () => {
+        const {user_id} = this.state
+
+        //need to setup redux so that I can pass the logged in user_id to req.body
+        axios.get(`/challenges/user`, {user_id})
+        .then(res => { this.setState({userChallenges: res}) })
+        console.log("this is the user's tracked challenges: ", this.state.userChallenges)
+        console.log('this is the type of the users tracked challenges:', typeof this.state.userChallenges)
+    }
+
+    handleSubmitChallenge = () => {
+        //this will be a post request to send the data over to the db tracker table
+        console.log('submit challenge button hit')
+    }
+
+
+
     render() {
+        console.log(this.state.startDate)
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
@@ -65,13 +89,14 @@ class Submit extends Component {
                             cols="33"
                             type="text"
                             placeholder="description"
+                            onChange={e => this.handleChange('description', e.target.value)}
 
                         />
                     </div>
                     
                     <div className="upload-submit" >
-                        <button>upload image</button>
-                        <button>submit challenge</button>
+                        <button onClick = {this.handleImageUpload}>upload image</button>
+                        <button onClick = {this.handleSubmitChallenge}>submit challenge</button>
                     </div>
 
                 </div>
