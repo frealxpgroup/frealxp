@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 $ourFont: 'Open Sans', sans-serif;
 
-span{
+.logout{
     font-size: 25px;
     position: absolute;
     margin: 50px 30px 30px 30px;
@@ -10,6 +10,6 @@ span{
     font-family: $ourFont;
 }
 
-span:hover{
+.logout:hover{
     cursor: pointer;
 }
