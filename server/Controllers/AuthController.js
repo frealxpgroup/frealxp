@@ -55,8 +55,8 @@ module.exports = {
         res.sendStatus(200)
     },
     editAuth: (req, res) => {
-        //get id from req.params
-        //get updated user profile info from req.body
+        const {email, password, firstName, lastName} = req.body
+        
     },
     getXP: (req, res) => {
         let db = req.app.get('db')
