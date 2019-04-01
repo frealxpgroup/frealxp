@@ -1,0 +1,1 @@
+select max(cart_ref) from cart;
