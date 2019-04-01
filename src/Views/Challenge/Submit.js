@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker'
 import axios from 'axios'
 import '../../Views/Challenge/Submit.scss'
 import { connect } from 'react-redux'
+import SubmitModal from './SubmitModal'
 
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,7 +18,8 @@ class Submit extends Component {
             userChallenges: [],
             selectedChallenge: "",
             description: "",
-            user_id: this.props.user_id
+            user_id: this.props.user_id,
+            modalShow: false
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
@@ -40,6 +42,7 @@ class Submit extends Component {
         });
     }
 
+    //this will handle the user's image upload
     handleImageUpload = () => {
         console.log("Upload image button hit")
     }
@@ -50,7 +53,12 @@ class Submit extends Component {
 
         //need to setup redux so that I can pass the logged in user_id to req.body
         axios.post(`/challenge/tracked/one`, { user_id })
-            .then(res => { this.setState({ userChallenges: res.data }) })
+            .then(res => { 
+                this.setState({ 
+                    userChallenges: res.data,
+                    modalShow: true
+                }) 
+            })
     }
 
     handleSubmitChallenge = () => {
@@ -62,12 +70,23 @@ class Submit extends Component {
 
     render() {
         console.log("this is the user's tracked challenges: ", this.state.userChallenges)
+
+        let modalClose = () => this.setState({ modalShow: false });
+
+
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
                 <div>
                     <div className="select-challenge" >
+
                         <button onClick={this.getChallengesButton} >select your challenge</button>
+
+                        <SubmitModal
+                            show={this.state.modalShow}
+                            onHide={modalClose}
+                            userChallenges={this.state.userChallenges}
+                        />
                     </div>
 
 
@@ -106,7 +125,7 @@ class Submit extends Component {
 }
 
 const mapToProps = (reduxState) => {
-    const {user_id} = reduxState
+    const { user_id } = reduxState
     return {
         user_id
     }
