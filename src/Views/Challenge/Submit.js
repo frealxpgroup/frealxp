@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import axios from 'axios'
 import '../../Views/Challenge/Submit.scss'
+import { connect } from 'react-redux'
+
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -15,7 +17,7 @@ class Submit extends Component {
             userChallenges: [],
             selectedChallenge: "",
             description: "",
-            user_id: 3
+            user_id: this.props.user_id
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
@@ -24,7 +26,7 @@ class Submit extends Component {
     //methods
 
     //This will handle any input values that need to update state. Currently being used to update this.state.description
-    handleChange(prop,val){
+    handleChange(prop, val) {
         console.log(val)
         this.setState({
             [prop]: val
@@ -44,13 +46,11 @@ class Submit extends Component {
 
     //this button will get all the challenges that the user has accepted. The data from the database is put on state.
     getChallengesButton = () => {
-        const {user_id} = this.state
+        const { user_id } = this.state
 
         //need to setup redux so that I can pass the logged in user_id to req.body
-        axios.get(`/challenges/user`, {user_id})
-        .then(res => { this.setState({userChallenges: res}) })
-        console.log("this is the user's tracked challenges: ", this.state.userChallenges)
-        console.log('this is the type of the users tracked challenges:', typeof this.state.userChallenges)
+        axios.post(`/challenge/tracked/one`, { user_id })
+            .then(res => { this.setState({ userChallenges: res.data }) })
     }
 
     handleSubmitChallenge = () => {
@@ -61,7 +61,7 @@ class Submit extends Component {
 
 
     render() {
-        console.log(this.state.startDate)
+        console.log("this is the user's tracked challenges: ", this.state.userChallenges)
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
@@ -82,10 +82,10 @@ class Submit extends Component {
 
                     </div>
 
-                    <div className= "description-box" >
+                    <div className="description-box" >
                         <textarea
 
-                            className = "text-box-input"
+                            className="text-box-input"
                             cols="33"
                             type="text"
                             placeholder="description"
@@ -93,10 +93,10 @@ class Submit extends Component {
 
                         />
                     </div>
-                    
+
                     <div className="upload-submit" >
-                        <button onClick = {this.handleImageUpload}>upload image</button>
-                        <button onClick = {this.handleSubmitChallenge}>submit challenge</button>
+                        <button onClick={this.handleImageUpload}>upload image</button>
+                        <button onClick={this.handleSubmitChallenge}>submit challenge</button>
                     </div>
 
                 </div>
@@ -105,4 +105,11 @@ class Submit extends Component {
     }
 }
 
-export default Submit
+const mapToProps = (reduxState) => {
+    const {user_id} = reduxState
+    return {
+        user_id
+    }
+}
+
+export default connect(mapToProps)(Submit)
