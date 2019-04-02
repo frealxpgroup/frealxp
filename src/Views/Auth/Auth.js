@@ -4,6 +4,7 @@ import './Auth.scss'
 import axios from 'axios'
 import { updateEverything } from '../../ducks/reducer'
 import { connect } from 'react-redux'
+import { validateRegister } from './AuthLogic'
 
 class Auth extends Component {
     constructor(props) {
@@ -36,33 +37,42 @@ class Auth extends Component {
     handleRegister = () => {
         const { email, password, firstName, lastName, verifyPassword } = this.state
 
-        let emailValid = email.match(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim)
-        if (!emailValid) {
+        let returnError = validateRegister(email, password, firstName, lastName, verifyPassword)
+
+        if(returnError){
             this.setState({
-                handleError: 'Please enter a valid email address.'
-            })
-            return;
-        } else if (!password) {
-            this.setState({
-                handleError: 'Please enter a password '
-            })
-            return;
-        } else if (password !== verifyPassword) {
-            this.setState({
-                handleError: 'Passwords do not match.  Please try again.'
-            })
-            return;
-        } else if (!firstName) {
-            this.setState({
-                handleError: 'Please enter a first name.'
-            })
-            return;
-        } else if (!lastName) {
-            this.setState({
-                handleError: 'Please enter a last name.'
+                handleError: returnError
             })
             return;
         }
+        
+        // let emailValid = email.match(/^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim)
+        // if (!emailValid) {
+        //     this.setState({
+        //         handleError: 'Please enter a valid email address.'
+        //     })
+        //     return;
+        // } else if (!password) {
+        //     this.setState({
+        //         handleError: 'Please enter a password '
+        //     })
+        //     return;
+        // } else if (password !== verifyPassword) {
+        //     this.setState({
+        //         handleError: 'Passwords do not match.  Please try again.'
+        //     })
+        //     return;
+        // } else if (!firstName) {
+        //     this.setState({
+        //         handleError: 'Please enter a first name.'
+        //     })
+        //     return;
+        // } else if (!lastName) {
+        //     this.setState({
+        //         handleError: 'Please enter a last name.'
+        //     })
+        //     return;
+        // }
 
         axios.post('/auth/register', { email, password, firstName, lastName })
             .then(res => {
