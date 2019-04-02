@@ -22,26 +22,27 @@ module.exports = {
 
     },
     challengeAccepted: async (req, res) => {
-        const { user_id, id } = req.body
+        const { user_id, id, challenge_title } = req.body
         const db = req.app.get('db');
-        const acceptedChallenge = await db.trackedChallenges.addTracked({ user: user_id, challenge: id })
+        const acceptedChallenge = await db.trackedChallenges.addTracked({ user: user_id, challenge: id, challengeTitle: challenge_title })
+        console.log(acceptedChallenge)
         res.status(200).send(acceptedChallenge)
 
     },
     getUserChallengeDate: async (req, res) => {
-        console.log(req.body)
+        
         const  {user_id}  = req.body
-        console.log(user_id)
+        
         const db = req.app.get('db');
         const idBoth = await db.trackedChallenges.getOneTracked([user_id])
-        console.log('idBoth', idBoth)
+        
 
         res.status(200).send(idBoth)
     },
     getAllChallengeDates: async (req, res) => {
         const db = req.app.get('db')
         const allDates = await db.trackedChallenges.getAllDates()
-        console.log(allDates)
+        
         res.status(200).send(allDates)
         
     },

@@ -32,7 +32,8 @@ app.post(`/auth/register`, ac.register) //create a new user
 app.post(`/auth/login`, ac.login) //verify user info 
 app.post(`/auth/logout`, ac.logout) //destroy user on session
 app.put(`/auth/edit/:id`, ac.editAuth) //edit user info
-app.get(`/user/history`, ac.getXP)
+app.get(`/user/history`, ac.getXP) //gets all the user xps
+app.get(`/auth/all`, ac.getAllUserIDs) //gets all the user ids
 
 app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges
 app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
