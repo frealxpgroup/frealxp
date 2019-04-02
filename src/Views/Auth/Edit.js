@@ -28,7 +28,6 @@ class Edit extends Component {
         const {user_id} = this.state
         axios.post(`/shop/address`, {user_id})
         .then(res => {
-            console.log(res.data)
             this.setState({
                 shipAddress1: res.data.shipping_line_one,
                 shipAddress2: res.data.shipping_line_two,
@@ -46,7 +45,6 @@ class Edit extends Component {
 
     handleInput = (prop, val) => {
         this.setState({[prop]: val})
-        console.log(this.state[prop])
     }
 
     handleBack = () => {
@@ -61,13 +59,10 @@ class Edit extends Component {
         const {shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id} = this.state
         axios.put('/shop/address', {shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id})
         .then(response => {
-            console.log(response)
-
         })
     }
 
     render() {
-        console.log(this.state.user_id)
         return (
             <div className='edit-main'>
                 <h1>FRealXP</h1>
