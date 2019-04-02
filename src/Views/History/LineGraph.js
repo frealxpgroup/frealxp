@@ -13,6 +13,7 @@ class LineGraph extends Component {
             challenge_point_value: 0,
             Dates: [],
             allDates: [],
+            allUsers: [],
            
         }
     }
@@ -34,10 +35,24 @@ class LineGraph extends Component {
         Axios.get(`/challenge/tracked/all`)
             .then(res => {
                 console.log(res)
-                // this.setState({
-                //     Dates: res.data
-                // })
+                this.setState({
+                    allDates: res.data
+                })
             })
+    }
+    getAllusers = () => {
+
+        Axios.get(`/auth/all`)
+        .then(res => {
+            this.setState({
+                allUsers: res.data
+            })
+            
+        })
+    }
+    doBoth = () => {
+        this.getAllusers()
+        this.getAllFromTracked()
     }
     
 
@@ -48,20 +63,26 @@ class LineGraph extends Component {
 
     render() {
         
-
+        let count = 0;
         let allJan = 0;
         let allFeb = 0;
         let allMar = 0;
         let newJan = 0;
         let newFeb = 0;
         let newMar = 0;
-        console.log(allJan)
-        console.log(allFeb)
-        console.log(allMar)
+        // console.log(allJan)
+        // console.log(allFeb)
+        // console.log(allMar)
+        // console.log(this.state.allUsers)
+        this.state.allUsers.map((allUser, i) => {
+            
+            count++
+        })
+        console.log({count})
         this.state.allDates.map((allDate, i) => {
             let allDates = new Date(allDate.approved_date)
             let stringyDate = allDates.toString()
-            console.log(stringyDate)
+            // console.log(stringyDate)
             
 
             if (stringyDate.includes('Jan')){
@@ -90,7 +111,7 @@ class LineGraph extends Component {
          this.state.Dates.map((date, i) => {
             let myDate = new Date(date.approved_date)
             let stringDate = myDate.toString()
-            console.log(stringDate)
+            // console.log(stringDate)
 
             if (stringDate.includes('Jan')){
                  newJan++
@@ -135,9 +156,9 @@ class LineGraph extends Component {
                     // borderDash: [5, 5]
                 }, {
                     hidden: true,
-                    label: 'hidden dataset',
+                    label: 'Average Challenges completed this month',
                     data: [
-                        allJan, allFeb, allMar
+                        allJan/count, allFeb/count, allMar/count
                     ]
                 }, {
                     hidden: true,
@@ -191,7 +212,7 @@ class LineGraph extends Component {
         return (
             <div>
             <button onClick={this.getIdFromTracked}>PUSH ME PLS</button>
-            <button onClick={this.getAllFromTracked}>PUSH All PLS</button>
+            <button onClick={this.doBoth}>PUSH All PLS</button>
             <Line data={data} options={options} />
             
             
