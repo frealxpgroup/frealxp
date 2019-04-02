@@ -20,7 +20,7 @@ class Dashboard extends Component {
                     <h2>Welcome, {this.props.first_name}!</h2>
                     <h2>My XP: {this.props.xp}</h2>
                     <h2>My Challenges:</h2>
-                    <h3></h3>
+                    
                     <Link to='/challenge/submit'><button>Submit a Challenge</button></Link>
                 </div>
                 <div className='right'>
@@ -33,7 +33,7 @@ class Dashboard extends Component {
                     </div>
                     <div className='middle box'>
                         <h3>My Photos</h3>
-                        <img className='photo' src='http://www.iconarchive.com/download/i43804/itzikgur/my-seven/Pictures-Nikon.ico'/>
+                        <img className='photo' src='http://www.iconarchive.com/download/i43804/itzikgur/my-seven/Pictures-Nikon.ico' alt=''/>
                     </div>
 
                     <div className='bottom box'>
