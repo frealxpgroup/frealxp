@@ -16,7 +16,7 @@ class Submit extends Component {
         this.state = {
             startDate: new Date(),
             userChallenges: [],
-            selectedChallenge: "",
+            selectedChallenge: null,
             description: "",
             user_id: this.props.user_id,
             modalShow: false
@@ -50,8 +50,6 @@ class Submit extends Component {
     //this button will get all the challenges that the user has accepted. The data from the database is put on state.
     getChallengesButton = () => {
         const { user_id } = this.state
-
-        //need to setup redux so that I can pass the logged in user_id to req.body
         axios.post(`/challenge/tracked/one`, { user_id })
             .then(res => { 
                 this.setState({ 
@@ -61,8 +59,8 @@ class Submit extends Component {
             })
     }
 
+    //this will be a post request to send the data over to the db tracker table
     handleSubmitChallenge = () => {
-        //this will be a post request to send the data over to the db tracker table
         console.log('submit challenge button hit')
     }
 
@@ -85,7 +83,7 @@ class Submit extends Component {
                         <SubmitModal
                             show={this.state.modalShow}
                             onHide={modalClose}
-                            userChallenges={this.state.userChallenges}
+                            userchallenges={this.state.userChallenges}
                         />
                     </div>
 

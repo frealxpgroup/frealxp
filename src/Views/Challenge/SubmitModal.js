@@ -4,14 +4,17 @@ import Button from 'react-bootstrap/Button'
 
 
 class SubmitModal extends React.Component{
+    handleButtonClick = () => {
+        console.log('add button clicked')
+    }
 
     render(){
-        let challengeDisplay = this.props.userChallenges.map((val, ind) => {
+        let challengeDisplay = this.props.userchallenges.map((val, ind) => {
             return (
                 <div key={ind} >
                     {console.log(val)}
                     <div>{val.title}</div>
-                    <div><button>Select</button></div>
+                    <div><button onClick={this.handleButtonClick}>Select</button></div>
                 </div>
             )
         })
@@ -20,7 +23,7 @@ class SubmitModal extends React.Component{
             <Modal {...this.props} aria-labelledby="contained-modal-title-vcenter">
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                  Choose a vehicle
+                  Select Challenge 
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body >
