@@ -4,10 +4,6 @@ import "./CartItem.scss";
 const CartItem = props => {
   const {
     product_id,
-    product_name,
-    product_description,
-    price,
-    product_image,
   } = props.item;
 
   const currentItem = props.allProducts.findIndex(el => el.product_id === props.item.product_id)

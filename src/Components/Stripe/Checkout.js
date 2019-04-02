@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import './Checkout.scss'
-import { Link } from 'react-router-dom'
 
 class Checkout extends Component {
  constructor(props) {
@@ -22,7 +21,7 @@ class Checkout extends Component {
 
 
  render() {
-   let emptyArr = []
+  //  let emptyArr = []
    return (
 
      <div>

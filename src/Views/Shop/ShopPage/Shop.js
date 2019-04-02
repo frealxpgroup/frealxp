@@ -74,7 +74,6 @@ class Shop extends Component {
           console.log(`${productID} successfully incremented.`);
         });
       } else {
-        console.log("item not in cart");
         Axios.post("/shop/addToCart", { productID, userID, cartRef }).then(
           res => {
             this.initialCart();

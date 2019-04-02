@@ -12,7 +12,9 @@ module.exports = {
     const { cartRef, userID, productID } = req.body;
     db.shop
       .add_item_to_cart({ cartRef, userID, productID })
-      .then(res.sendStatus(200));
+      .then(() => {db.shop.delete_null()})
+      .then(res.sendStatus(200))
+      
   },
   changeQuantity: (req, res) => {
     const db = req.app.get("db");

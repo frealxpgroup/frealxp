@@ -22,7 +22,6 @@ class Cart extends Component {
     this.initialProduct().then(() => {
       if (this.state.userID) {
         this.initialCart().then(() => {
-          console.log(this.state.cartItems)
           if (this.state.cartItems.length > 0) {
             this.initialTotal();
           }
