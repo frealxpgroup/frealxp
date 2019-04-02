@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 
 
 class SubmitModal extends React.Component{
+  
     handleButtonClick = () => {
         console.log('add button clicked')
     }

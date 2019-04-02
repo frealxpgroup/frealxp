@@ -47,7 +47,8 @@ class Submit extends Component {
         console.log("Upload image button hit")
     }
 
-    //this button will get all the challenges that the user has accepted. The data from the database is put on state.
+    //this button will get all the challenges that the user has accepted. 
+    //The data from the database is put on state.
     getChallengesButton = () => {
         const { user_id } = this.state
         axios.post(`/challenge/tracked/one`, { user_id })
@@ -62,10 +63,12 @@ class Submit extends Component {
     //this will be a post request to send the data over to the db tracker table
     handleSubmitChallenge = () => {
         console.log('submit challenge button hit')
+        const {user_id, description, startDate, selectedChallenge } = this.state
+        axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
     }
 
 
-
+    //end of methods, start of render
     render() {
         console.log("this is the user's tracked challenges: ", this.state.userChallenges)
 
