@@ -54,9 +54,48 @@ module.exports = {
         console.log(req.session)
         res.sendStatus(200)
     },
-    editAuth: (req, res) => {
-        //get id from req.params
-        //get updated user profile info from req.body
+    editAuth: async (req, res) => {
+        const {email, first_name, last_name, user_id} = req.body
+        let db = req.app.get('db')
+
+        await db.auth.updateUser({first_name, last_name, email, user_id})
+
+        let getUser = await db.auth.getUserByEmail({ email: email })
+        getUser = getUser[0]
+
+        const { session } = req
+
+        session.user = getUser
+
+        res.status(200).send(getUser)
+
+    },
+    editPassword: async (req, res) => {
+        const {email, password, newPassword, verifyPassword} = req.body
+        const db = req.app.get('db')
+
+        let user = await db.auth.getUserByEmail({ email: email })
+        user = user[0]
+
+        const isAuthenticated = bcrypt.compareSync(password, user.password)
+        if (!isAuthenticated) {
+            return res.status(401).send('Invalid login credentials.  Please try again')
+        }
+
+        if(newPassword !== verifyPassword){
+            return res.status(409).send('New passwords do not match')
+        }
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(newPassword, salt)
+
+        await db.auth.updatePassword({password: hash, email})
+
+        const { session } = req
+
+        session.user = user
+
+        res.status(200).send(session.user)
+
     },
     getXP: (req, res) => {
         let db = req.app.get('db')
