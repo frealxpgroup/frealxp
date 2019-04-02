@@ -70,7 +70,7 @@ module.exports = {
     getAllUserIDs: async (req, res) => {
         let db = req.app.get('db')
        const allUsers = await db.auth.getAllUserIDs()
-       console.log(allUsers)
+       
        res.status(200).send(allUsers)
     }
 }
