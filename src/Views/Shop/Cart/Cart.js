@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import CartItem from "./CartItem";
 import Checkout from "./../../../Components/Stripe/Checkout";
+import {initialProductLogic} from "./CartLogic";
 
 import "./Cart.scss";
 
@@ -12,7 +13,7 @@ class Cart extends Component {
     this.state = {
       userID: 2,
       cartRef: 0,
-      products: [{price: 0}],
+      products: [{ price: 0 }],
       numItemsInCart: 0,
       cartItems: [],
       cartSum: 0
@@ -27,17 +28,12 @@ class Cart extends Component {
           }
         });
       }
-    })
+    });
   }
 
   initialProduct = () => {
     return Axios.get("/shop/initial").then(res => {
-      for (let i = 0; i < res.data.length; i++) {
-        const e = res.data[i];
-        let newArr = this.state.products;
-        newArr.push(e);
-        this.setState({ products: newArr });
-      }
+      this.setState({ products: initialProductLogic(res.data) });
     });
   };
 
@@ -65,16 +61,15 @@ class Cart extends Component {
       let productsIndex = this.state.products.findIndex(
         el => el.product_id === productID
       );
-   
-        let productPrice = this.state.products[productsIndex].price;
-        let productQty = eachItemObj.quantity;
-        let multiplier = (a, b) => a * b;
-        let localTotal =
-          this.state.cartSum + multiplier(productPrice, productQty);
-        this.setState({
-          cartSum: localTotal
-        });
-      
+
+      let productPrice = this.state.products[productsIndex].price;
+      let productQty = eachItemObj.quantity;
+      let multiplier = (a, b) => a * b;
+      let localTotal =
+        this.state.cartSum + multiplier(productPrice, productQty);
+      this.setState({
+        cartSum: localTotal
+      });
     }
   };
 
