@@ -79,7 +79,7 @@ app.post(`/challenge/tracked/one`, fc.getUserChallengeDate) // select the approv
 app.get(`/challenge/tracked/all`, fc.getAllChallengeDates)
 
 
-app.post(`/challenge/submit`, fc.submitChallenge) //create challenge for review
+app.put(`/challenge/submit`, fc.submitChallenge) //create challenge for review
 app.put(`/challenge/review/:id`, fc.reviewChallenge) //add feedback or approve challenge
 
 app.get(`/shop/initial`, sc.intial) //get all active products
