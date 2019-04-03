@@ -12,12 +12,15 @@ module.exports = {
     const { cartRef, userID, productID } = req.body;
     db.shop
       .add_item_to_cart({ cartRef, userID, productID })
-      .then(res.sendStatus(200));
+      .then(() => {db.shop.delete_null()})
+      .then(res.sendStatus(200))
+      
   },
-  incrementItem: (req, res) => {
+  changeQuantity: (req, res) => {
     const db = req.app.get("db");
-    const { cartID, newQty } = req.body;
-    db.shop.increment_item({ cartID, newQty }).then(res.sendStatus(200));
+    const { foundCartID, newQty } = req.body;
+    db.shop.change_quantity({ foundCartID, newQty })
+    .then(res.sendStatus(200));
   },
   getUserCart: (req, res) => {
     const { userID } = req.body;
@@ -39,16 +42,17 @@ module.exports = {
       }
     });
   },
-  changeQuantity: (req, res) => {
-    //PUT request, edit cart item qty
-    //get id from req.params
-    //get updated quantity from req.body
-  },
-  checkoutFunction: (req, res) => {
-    //PUT to cart, order history tables
-  },
   deleteItem: (req, res) => {
-    //delete all items from cart after purchase
+    const {cartID} = req.params
+    const db = req.app.get("db");
+    db.shop.delete_cart_item({cartID})
+    .then(res.sendStatus(200))
+  },
+  deleteCart: (req, res) => {
+    const {cartRef} = req.params
+    const db = req.app.get("db");
+    db.shop.delete_cart({cartRef})
+    .then(res.sendStatus(200))
   },
   getAddress: async (req, res) => {
     const { user_id } = req.body;
