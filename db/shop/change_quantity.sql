@@ -1,3 +1,3 @@
 update cart
 set quantity = ${newQty}
-where cart_id = ${cartID};
+where cart_id = ${foundCartID};
