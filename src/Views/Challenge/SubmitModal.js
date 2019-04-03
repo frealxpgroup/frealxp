@@ -13,7 +13,6 @@ class SubmitModal extends React.Component{
         let challengeDisplay = this.props.userchallenges.map((val, ind) => {
             return (
                 <div key={ind} >
-                    {console.log(val)}
                     <div>{val.title}</div>
                     <div><button onClick={this.handleButtonClick}>Select</button></div>
                 </div>

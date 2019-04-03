@@ -16,7 +16,7 @@ class Submit extends Component {
         this.state = {
             startDate: new Date(),
             userChallenges: [],
-            selectedChallenge: null,
+            selectedChallenge: '',
             description: "",
             user_id: this.props.user_id,
             modalShow: false
@@ -25,9 +25,9 @@ class Submit extends Component {
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
 
-    //methods
+    //START OF METHODS
 
-    //This will handle any input values that need to update state. Currently being used to update this.state.description
+    //Handles input values. Currently being used to update this.state.description
     handleChange(prop, val) {
         console.log(val)
         this.setState({
@@ -35,45 +35,49 @@ class Submit extends Component {
         })
     }
 
-    //handles date selection
+    //Handles date selection
     handleCalendarChange(date) {
         this.setState({
             startDate: date
         });
     }
-
-    //this will handle the user's image upload
-    handleImageUpload = () => {
-        console.log("Upload image button hit")
-    }
-
-    //this button will get all the challenges that the user has accepted. 
-    //The data from the database is put on state.
-    getChallengesButton = () => {
+    
+    //Grabs the user's tracked challenges and puts on state when the pages loads
+    componentDidMount= () => {
         const { user_id } = this.state
+        
         axios.post(`/challenge/tracked/one`, { user_id })
-            .then(res => { 
-                this.setState({ 
-                    userChallenges: res.data,
-                    modalShow: true
-                }) 
-            })
+        .then(res => {
+            this.setState({ 
+                userChallenges: res.data,
+            }) 
+        })
+        console.log(this.state.userChallenges)
+    }
+    
+    //Shows the modal of the user's tracked challenges
+    getChallengesButton= () => {
+        this.setState({
+            modalShow: true
+        })         
     }
 
-    //this will be a post request to send the data over to the db tracker table
+    //Submit button for user. This will send applicable data to backend/db
     handleSubmitChallenge = () => {
         console.log('submit challenge button hit')
-        const {user_id, description, startDate, selectedChallenge } = this.state
-        axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
+
+
+        const {user_id, description, startDate, selectedChallenge, userChallenges } = this.state
+        console.log(userChallenges[0])
+
+        // axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
+        // .then(res => {console.log('good to go')})
     }
 
 
-    //end of methods, start of render
+    //END OF METHODS, START OF RENDER
     render() {
-        console.log("this is the user's tracked challenges: ", this.state.userChallenges)
-
         let modalClose = () => this.setState({ modalShow: false });
-
 
         return (
             <div className="submit-main">
