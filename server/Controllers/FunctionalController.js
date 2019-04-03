@@ -25,7 +25,7 @@ module.exports = {
         const { user_id, id, challenge_title } = req.body
         const db = req.app.get('db');
         const acceptedChallenge = await db.trackedChallenges.addTracked({ user: user_id, challenge: id, challengeTitle: challenge_title })
-        console.log(acceptedChallenge)
+        
         res.status(200).send(acceptedChallenge)
 
     },
