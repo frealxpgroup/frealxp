@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Shop.scss";
 import Axios from "axios";
+import { connect } from "react-redux";
 import Product from "./Product/Product";
 
 class Shop extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       products: [],
-      userID: 2,
+      userID: this.props.user_id,
       cartRef: 0,
       numItemsInCart: 0,
       cartItems: []
@@ -113,4 +114,14 @@ class Shop extends Component {
     );
   }
 }
-export default Shop;
+
+const mapToProps = (reduxState) => {
+  const {user_id} = reduxState
+  
+  return{
+      user_id,
+      
+  }
+}
+
+export default connect(mapToProps)(Shop)

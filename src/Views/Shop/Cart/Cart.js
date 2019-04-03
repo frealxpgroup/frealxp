@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import CartItem from "./CartItem";
 import Checkout from "./../../../Components/Stripe/Checkout";
+import { connect } from "react-redux";
 import {initialProductLogic} from "./CartLogic";
 
 import "./Cart.scss";
 
 class Cart extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      userID: 2,
+      userID: this.props.user_id,
       cartRef: 0,
       products: [{ price: 0 }],
       numItemsInCart: 0,
@@ -61,15 +62,17 @@ class Cart extends Component {
       let productsIndex = this.state.products.findIndex(
         el => el.product_id === productID
       );
-
-      let productPrice = this.state.products[productsIndex].price;
-      let productQty = eachItemObj.quantity;
-      let multiplier = (a, b) => a * b;
-      let localTotal =
-        this.state.cartSum + multiplier(productPrice, productQty);
-      this.setState({
-        cartSum: localTotal
-      });
+        if (productsIndex !== -1) {
+          let productPrice = this.state.products[productsIndex].price;
+    
+          let productQty = eachItemObj.quantity;
+          let multiplier = (a, b) => a * b;
+          let localTotal =
+            this.state.cartSum + multiplier(productPrice, productQty);
+          this.setState({
+            cartSum: localTotal
+          });
+        }
     }
   };
 
@@ -148,4 +151,13 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+const mapToProps = (reduxState) => {
+  const {user_id} = reduxState
+  
+  return{
+      user_id,
+      
+  }
+}
+
+export default connect(mapToProps)(Cart)
