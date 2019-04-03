@@ -122,6 +122,7 @@ class Edit extends Component {
                     email={this.state.email}
                 /> */}
             </div>
+
         )
     }
 }

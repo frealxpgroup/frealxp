@@ -2,15 +2,12 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import axios from 'axios'
 import '../../Views/Challenge/Submit.scss'
-<<<<<<< HEAD
 import { v4 as randomString } from 'uuid';
 import Dropzone from 'react-dropzone';
 import { GridLoader } from 'react-spinners';
-=======
 import { connect } from 'react-redux'
 import SubmitModal from './SubmitModal'
 
->>>>>>> master
 
 import "react-datepicker/dist/react-datepicker.css";
 
