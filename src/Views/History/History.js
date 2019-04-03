@@ -46,9 +46,7 @@ class History extends Component {
                 {
                     label: "My XP",
                     backgroundColor: '#4280A4',
-                    
                     data: [this.state.xp],
-                   
                     borderWidth: 3,
                     
                 },
