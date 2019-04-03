@@ -16,10 +16,11 @@ class Submit extends Component {
         this.state = {
             startDate: new Date(),
             userChallenges: [],
-            selectedChallenge: '',
+            selectedChallenge: 'select your challenge',
             description: "",
             user_id: this.props.user_id,
-            modalShow: false
+            modalShow: false,
+            title: ''
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
@@ -52,7 +53,6 @@ class Submit extends Component {
                 userChallenges: res.data,
             }) 
         })
-        console.log(this.state.userChallenges)
     }
     
     //Shows the modal of the user's tracked challenges
@@ -65,33 +65,37 @@ class Submit extends Component {
     //Submit button for user. This will send applicable data to backend/db
     handleSubmitChallenge = () => {
         console.log('submit challenge button hit')
-
-
-        const {user_id, description, startDate, selectedChallenge, userChallenges } = this.state
-        console.log(userChallenges[0])
-
-        // axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
-        // .then(res => {console.log('good to go')})
+        const {user_id, description, startDate, selectedChallenge, } = this.state
+        //axios.post(`/challenge/submit/one`, {descript, startDate, user_id, cid = 7 or 4 or any})
     }
 
 
     //END OF METHODS, START OF RENDER
     render() {
         let modalClose = () => this.setState({ modalShow: false });
+        console.log(this.state.userChallenges)
+
+        let challengeDisplay = this.state.userChallenges.map((val, ind) => {
+            return (
+
+                <div key={ind} >
+                    <div onClick={this.handleButtonClick} >{val.title}</div>
+                </div>
+            )
+        })  
 
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
                 <div>
                     <div className="select-challenge" >
-
-                        <button onClick={this.getChallengesButton} >select your challenge</button>
+                        <button onClick={this.getChallengesButton} >Select Your Challenge</button>
 
                         <SubmitModal
                             show={this.state.modalShow}
-                            onHide={modalClose}
-                            userchallenges={this.state.userChallenges}
+                            onHide={modalClose}  
                         />
+
                     </div>
 
 

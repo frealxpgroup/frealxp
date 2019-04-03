@@ -45,6 +45,7 @@ app.get(`/challenge/tracked/all`, fc.getAllChallengeDates)
 
 
 app.post(`/challenge/submit`, fc.submitChallenge) //create challenge for review
+app.post(`/challenge/submit/one`, fc.submitOneChallenge)//this have the user send the completed(update db) challenge to the tracker 
 app.put(`/challenge/review/:id`, fc.reviewChallenge) //add feedback or approve challenge
 
 app.get(`/shop/initial`, sc.intial) //get all active products

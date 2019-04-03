@@ -53,6 +53,10 @@ module.exports = {
         //POST user submission
         //get data from req.body (like the challenge title, picture, user, etc)
     },
+    submitOneChallenge:(req,res) => {
+        const db = req.app.get('db')
+        
+    },
     reviewChallenge: (req, res) => {
         //PUT request, allows judges to approve or deny submissions
         //get id from req.params
