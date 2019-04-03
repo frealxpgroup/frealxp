@@ -20,7 +20,9 @@ class ChallengeModal extends React.Component {
       const {user_id} = this.state
       const {id} = this.props
       const {challenge_title} = this.props
-      
+      console.log(user_id)
+      console.log(id)
+      console.log(challenge_title)
       
         Axios.post(`/challenge/accepted`, { user_id, id, challenge_title })
         .then(res => {
@@ -65,7 +67,7 @@ class ChallengeModal extends React.Component {
           <Modal.Body>
             
             {mappedChallenges}
-            <Button onClick={this.AddTrackedChallenge} onClick={this.props.onHide}>Accept</Button>
+            <button onClick={this.AddTrackedChallenge}>Accept</button>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.props.onHide}>Close</Button>
@@ -73,6 +75,7 @@ class ChallengeModal extends React.Component {
         </Modal>
       );
     }
+
   }
 
   const mapToProps = (reduxState) => {
