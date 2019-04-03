@@ -1,0 +1,1 @@
+delete from cart where cart_ref = ${cartRef};

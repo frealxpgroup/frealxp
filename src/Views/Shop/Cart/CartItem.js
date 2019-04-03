@@ -4,20 +4,15 @@ import "./CartItem.scss";
 const CartItem = props => {
   const {
     product_id,
-    product_name,
-    product_description,
-    price,
-    product_image,
   } = props.item;
 
-  console.log(props)
-
   const currentItem = props.allProducts.findIndex(el => el.product_id === props.item.product_id)
-  console.log(currentItem)
 
-  const subtotal = () => {return props.allProducts[currentItem].price * props.item.quantity}
-
-  let incrementItemLocal = (product_id) => {
+  const subtotal = () => {
+      return props.allProducts[currentItem].price * props.item.quantity
+    }
+  
+  let incrementItemLocal = () => {
       return props.incrementItem(product_id)
   }
 
@@ -25,10 +20,13 @@ const CartItem = props => {
       return props.decrementItem(product_id)
   }
 
+  let removeItemLocal = () => {
+    return props.removeItem(product_id)
+  }
 
   return (
     <div>
-    { (currentItem <= 0) ? null :
+    { (currentItem === -1 || props.item.quantity === 0) ? null :
     (<div className="cartitem_box">
       <img src={props.allProducts[currentItem].product_image} alt={props.product_name} />
       <div className="cartitem_summary_container">
@@ -39,10 +37,10 @@ const CartItem = props => {
       <div> subtotal: ${subtotal()}</div>
       <div className="cartitem_button_container">
         <div className="cartitem_plus_minus_container">
-          <div>-</div>
-          <div>+</div>
+          <div className='plus_button' onClick={decrementItemLocal}>-</div>
+          <div className='minus_button' onClick={incrementItemLocal}>+</div>
         </div>
-        <button>remove</button>
+        <button onClick={removeItemLocal}>remove</button>
       </div>
     </div>)
     }

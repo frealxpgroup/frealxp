@@ -9,7 +9,7 @@ class Shop extends Component {
     super();
     this.state = {
       products: [],
-      userID: 1,
+      userID: 2,
       cartRef: 0,
       numItemsInCart: 0,
       cartItems: []
@@ -54,6 +54,7 @@ class Shop extends Component {
       this.setState({
         cartItems: cartLocal
       });
+      
     });
   };
 
@@ -62,19 +63,17 @@ class Shop extends Component {
     if (userID === 0) {
       console.log("No user found, please sign in.");
     } else {
-      let ID = cartItems.findIndex(ID => ID.product_id === productID);
-      if (ID > 0) {
-        // increment item with put request
-        let cartID = cartItems[ID].cart_id
-        let newQty = cartItems[ID].quantity + 1
-        Axios.put('/shop/incrementItem', {cartID, newQty}).then(
-          res => {
-            this.initialCart();
-            console.log(`${productID} successfully incremented.`)
-          }
-        )
+      // let itemObj = cartItems.find(item => item.product_id === productID);
+      // console.log({ cartItems }, { productID });
+      if (cartItems.findIndex(el => el.product_id === productID) !== -1) {
+        let foundCartItem = cartItems.find(el => el.product_id === productID)
+        let newQty = foundCartItem.quantity + 1;
+        let foundCartID = foundCartItem.cart_id
+        Axios.put("/shop/changeQuantity", { foundCartID, newQty }).then(res => {
+          this.initialCart();
+          console.log(`${productID} successfully incremented.`);
+        });
       } else {
-        // add item as a new line in the cart
         Axios.post("/shop/addToCart", { productID, userID, cartRef }).then(
           res => {
             this.initialCart();
@@ -102,9 +101,7 @@ class Shop extends Component {
             <Link to="/shop/cart">
               <div>cart({this.state.numItemsInCart})</div>
             </Link>
-            <div>checkout</div>
             <Link to="/shop/history">
-              <div>order history</div>
             </Link>
           </div>
           <Link to="/">
