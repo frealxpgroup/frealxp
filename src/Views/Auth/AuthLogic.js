@@ -10,5 +10,5 @@ export function validateRegister(email, password, firstName, lastName, verifyPas
         return 'Please enter a first name.';
     } else if (!lastName) {
         return 'Please enter a last name.';
-    }
+    } 
 }
