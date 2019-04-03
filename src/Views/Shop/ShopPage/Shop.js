@@ -114,7 +114,6 @@ class Shop extends Component {
     );
   }
 }
-<<<<<<< HEAD
 
 const mapToProps = (reduxState) => {
   const {user_id} = reduxState
@@ -126,6 +125,3 @@ const mapToProps = (reduxState) => {
 }
 
 export default connect(mapToProps)(Shop)
-=======
-export default Shop;
->>>>>>> master
