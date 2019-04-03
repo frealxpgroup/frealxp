@@ -4,7 +4,7 @@ import Axios from "axios";
 import CartItem from "./CartItem";
 import Checkout from "./../../../Components/Stripe/Checkout";
 import { connect } from "react-redux";
-import {initialProductLogic} from "./CartLogic";
+import { initialProductLogic } from "./CartLogic";
 
 import "./Cart.scss";
 
@@ -62,17 +62,17 @@ class Cart extends Component {
       let productsIndex = this.state.products.findIndex(
         el => el.product_id === productID
       );
-        if (productsIndex !== -1) {
-          let productPrice = this.state.products[productsIndex].price;
-    
-          let productQty = eachItemObj.quantity;
-          let multiplier = (a, b) => a * b;
-          let localTotal =
-            this.state.cartSum + multiplier(productPrice, productQty);
-          this.setState({
-            cartSum: localTotal
-          });
-        }
+      if (productsIndex !== -1) {
+        let productPrice = this.state.products[productsIndex].price;
+
+        let productQty = eachItemObj.quantity;
+        let multiplier = (a, b) => a * b;
+        let localTotal =
+          this.state.cartSum + multiplier(productPrice, productQty);
+        this.setState({
+          cartSum: localTotal
+        });
+      }
     }
   };
 
@@ -151,13 +151,12 @@ class Cart extends Component {
   }
 }
 
-const mapToProps = (reduxState) => {
-  const {user_id} = reduxState
-  
-  return{
-      user_id,
-      
-  }
-}
+const mapToProps = reduxState => {
+  const { user_id } = reduxState;
 
-export default connect(mapToProps)(Cart)
+  return {
+    user_id
+  };
+};
+
+export default connect(mapToProps)(Cart);
