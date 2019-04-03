@@ -3,15 +3,37 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './Dashboard.scss'
 import Logout from '../../Components/Logout/Logout'
+import axios from 'axios'
 
 class Dashboard extends Component {
+    constructor(props){
+        super(props)
+
+        this.state = {
+            challenges: []
+        }
+    }
     componentDidMount() {
         if (!this.props.first_name) {
             this.props.history.push('/')
         }
+        const {user_id} = this.props
+        axios.post(`/challenge/tracked/one`, {user_id})
+        .then(res => {
+            // console.log(res.data)
+            this.setState({
+                challenges: res.data
+            })
+            console.log(this.state.challenges)
+        })
     }
     render() {
         console.log(this.props)
+        let mappedChallenges = this.state.challenges.map(el => {
+            return( <div>-{el.title}</div>)
+        })
+      
+
         return (
             <div className='dash-main'>
                 <h1>FRealXP</h1>
@@ -20,7 +42,8 @@ class Dashboard extends Component {
                     <h2>Welcome, {this.props.first_name}!</h2>
                     <h2>My XP: {this.props.xp}</h2>
                     <h2>My Challenges:</h2>
-                    <h3></h3>
+                    {mappedChallenges}
+                    
                     <Link to='/challenge/submit'><button>Submit a Challenge</button></Link>
                 </div>
                 <div className='right'>
@@ -31,10 +54,10 @@ class Dashboard extends Component {
                         <Link to='/shop'><h3>Shop</h3></Link>
                         
                     </div>
-                    <div className='middle box'>
+                    {/* <div className='middle box'>
                         <h3>My Photos</h3>
-                        <img className='photo' src='http://www.iconarchive.com/download/i43804/itzikgur/my-seven/Pictures-Nikon.ico'/>
-                    </div>
+                        <img className='photo' src='http://www.iconarchive.com/download/i43804/itzikgur/my-seven/Pictures-Nikon.ico' alt=''/>
+                    </div> */}
 
                     <div className='bottom box'>
                         <p>“Believe in yourself. You are braver than you think, more talented than you know, and capable of more than you imagine.” -Roy T. Bennett</p>
@@ -52,9 +75,9 @@ class Dashboard extends Component {
 }
 
 const mapToProps = (reduxState) => {
-    const { first_name, last_name, xp } = reduxState
+    const { first_name, last_name, xp, user_id } = reduxState
     return {
-        first_name, last_name, xp
+        first_name, last_name, xp, user_id
     }
 }
 

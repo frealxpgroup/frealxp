@@ -33,6 +33,10 @@ class Edit extends Component {
         axios.post(`/shop/address`, { user_id })
             .then(res => {
                 console.log(res.data)
+                if(!res.data){
+                    axios.post('/shop/address/add', {user_id})
+            
+                }
                 this.setState({
                     shipAddress1: res.data.shipping_line_one,
                     shipAddress2: res.data.shipping_line_two,
@@ -46,6 +50,7 @@ class Edit extends Component {
                     billZip: res.data.billing_zip
                 })
             })
+      
     }
 
     handleInput = (prop, val) => {
@@ -62,6 +67,7 @@ class Edit extends Component {
     }
 
     handleSave = () => {
+        
         const { shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id, first_name, last_name, email } = this.state
         axios.put('/shop/address', { shipAddress1, shipAddress2, shipCity, shipState, shipZip, billAddress1, billAddress2, billCity, billState, billZip, user_id })
             .then(response => {
@@ -122,6 +128,7 @@ class Edit extends Component {
                     email={this.state.email}
                 /> */}
             </div>
+
         )
     }
 }

@@ -8,7 +8,9 @@ const ac = require('./Controllers/AuthController');
 const fc = require('./Controllers/FunctionalController');
 const sc = require('./Controllers/ShopController');
 
-const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, STRIPE_SECRET_KEY} = process.env
+const aws = require('aws-sdk');
+
+const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, STRIPE_SECRET_KEY} = process.env
 const stripe = require('stripe')(STRIPE_SECRET_KEY)
 
 const app = express();
@@ -27,6 +29,39 @@ massive(CONNECTION_STRING).then(db => {
     app.listen(SERVER_PORT, () => 
     {console.log(`But that is not this day! This day we fight! For Frodo at port ${SERVER_PORT}`)})
 })
+
+app.get('/sign-s3', (req, res) => {
+
+    aws.config = {
+      region: 'us-west-1',
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY
+    }
+    
+    const s3 = new aws.S3();
+    const fileName = req.query['file-name'];
+    const fileType = req.query['file-type'];
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType,
+      ACL: 'public-read'
+    };
+  
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+      if(err){
+        console.log(err);
+        return res.end();
+      }
+      const returnData = {
+        signedRequest: data,
+        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      };
+  
+      return res.send(returnData)
+    });
+  });
 
 app.post(`/auth/register`, ac.register) //create a new user 
 app.post(`/auth/login`, ac.login) //verify user info 
@@ -53,6 +88,7 @@ app.put(`/shop/changeQuantity`, sc.changeQuantity)
 app.post(`/shop/cart`, sc.getUserCart) //sql command; get cart by user_id
 
 app.post(`/shop/address`, sc.getAddress) //get address if exists, passing in user id.  Get user id from redux
+app.post('/shop/address/add', sc.addAddress) //if address doesn't exist, create a blank one assigned to user_id
 app.put(`/shop/address`, sc.editAddress) //add user address to null values in table
 
 app.delete(`/shop/delete/:cartRef`, sc.deleteCart)

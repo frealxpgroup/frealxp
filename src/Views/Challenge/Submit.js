@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import axios from 'axios'
 import '../../Views/Challenge/Submit.scss'
+import { v4 as randomString } from 'uuid';
+import Dropzone from 'react-dropzone';
+import { GridLoader } from 'react-spinners';
 import { connect } from 'react-redux'
 import SubmitModal from './SubmitModal'
 
@@ -16,8 +19,10 @@ class Submit extends Component {
         this.state = {
             startDate: new Date(),
             userChallenges: [],
-            selectedChallenge: null,
             description: "",
+            isUploading: false,
+            url: '',
+            selectedChallenge: null,
             user_id: this.props.user_id,
             modalShow: false
         };
@@ -67,11 +72,63 @@ class Submit extends Component {
         axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
     }
 
+    getSignedRequest = ([file]) => {
+        this.setState({ isUploading: true });
+        // We are creating a file name that consists of a random string, and the name of the file that was just uploaded with the spaces removed and hyphens inserted instead. This is done using the .replace function with a specific regular expression. This will ensure that each file uploaded has a unique name which will prevent files from overwriting other files due to duplicate names.
+        const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`;
+
+        // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
+        axios
+            .get('/sign-s3', {
+                params: {
+                    'file-name': fileName,
+                    'file-type': file.type,
+                },
+            })
+            .then(response => {
+                const { signedRequest, url } = response.data;
+                this.uploadFile(file, signedRequest, url);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    uploadFile = (file, signedRequest, url) => {
+        const options = {
+            headers: {
+                'Content-Type': file.type,
+            },
+        };
+
+        axios
+            .put(signedRequest, file, options)
+            .then(response => {
+                this.setState({ isUploading: false, url });
+                // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+            })
+            .catch(err => {
+                this.setState({
+                    isUploading: false,
+                });
+                if (err.response.status === 403) {
+                    alert(
+                        `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
+                        err.stack
+                        }`
+                    );
+                } else {
+                    alert(`ERROR: ${err.status}\n ${err.stack}`);
+                }
+            });
+    };
+
+        
 
     //end of methods, start of render
     render() {
         console.log("this is the user's tracked challenges: ", this.state.userChallenges)
-
+        const { url, isUploading } = this.state;
         let modalClose = () => this.setState({ modalShow: false });
 
 
@@ -113,11 +170,53 @@ class Submit extends Component {
 
                         />
                     </div>
+                    {!url
+                        ? <div className='dropzone'>
+                            <Dropzone
+                                onDropAccepted={this.getSignedRequest}
+                                style={{
+                                    position: 'relative',
+                                    width: 250,
+                                    height: 250,
+                                    borderWidth: 7,
+                                    marginTop: 100,
+                                    borderColor: 'rgb(102, 102, 102)',
+                                    borderStyle: 'dashed',
+                                    borderRadius: 5,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    fontSize: 28,
+                                }}
+                                accept="image/*"
+                                multiple={false}
+                            >
+                                {/* {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>} */}
+                                {({ getRootProps }) => (
+                                    <div {...getRootProps()}>
+                                        {isUploading ? <GridLoader
+                                        /> : <p>Drop Challenge Image Here</p>}
+                                    </div>
+                                )}
+                            </Dropzone>
+
+
+                        </div>
+                        : <img className='dropzone' src={url} alt="" />
+                
+                       
+
+                    }
+
+                    
 
                     <div className="upload-submit" >
-                        <button onClick={this.handleImageUpload}>upload image</button>
                         <button onClick={this.handleSubmitChallenge}>submit challenge</button>
                     </div>
+                </div>
+                <div>
+
+
 
                 </div>
             </div>
