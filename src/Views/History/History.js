@@ -4,6 +4,8 @@ import { Bar } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import LineGraph from './LineGraph';
+import './History.scss'
+import {averageXP} from './GraphLogic'
 
 
 
@@ -21,21 +23,9 @@ class History extends Component {
     getAllXP = () => {
         Axios.get(`/user/history`)
             .then(res => {
-                console.log(res)
-                const averageXP = (list) => {
-                    let sum = 0,
-                        count = 0,
-                        i;
-
-                    for (i = 0; i < list.length; i++) {
-
-                        sum += list[i].xp;
-                        ++count;
-
-                    }
-                    return sum / count
-                }
+                
                 const averagedXP = averageXP(res.data)
+                
                 this.setState({
                     avgXp: averagedXP
                 })
@@ -48,28 +38,33 @@ class History extends Component {
 
     render() {
 
-        console.log(this.state.user_id)
+        
         const ChartData = {
-            labels: [],
+            labels: ["Xp"],
             datasets: [
                 {
                     label: "My XP",
-                    backgroundColor: 'rgb(205, 249, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: '#4280A4',
+                    
                     data: [this.state.xp],
+                   
+                    borderWidth: 3,
+                    
                 },
+                
                 {
                     label: "World Average",
                     fillColor: `rgba(151,187,205,0.5)`,
                     strokeColor: "rgba(151,187,205,0.8)",
                     highlightFill: "rgba(151,187,205,0.75)",
                     highlightStroke: "rgba(151,187,205,1)",
-                    backgroundColor: '#0B33EE',
+                    backgroundColor: 'rgb(183, 47, 47)',
                     data: [this.state.avgXp]
                 }
             ]
         }
-        const chartOptions = {
+        const chartOptions =
+         {
             //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
             scaleBeginAtZero: true,
 
@@ -115,16 +110,16 @@ class History extends Component {
         }
 
         return (
-            <div >
-                history
-                    < Bar
+            <div className='bckground' >
+                
+                <LineGraph />
+                    < Bar 
                     data={ChartData}
                     options={chartOptions}
                     height={100}
                     width={350}
 
                 />
-                <LineGraph />
 
             </div>
         )
