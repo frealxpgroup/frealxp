@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import axios from 'axios'
 import '../../Views/Challenge/Submit.scss'
+<<<<<<< HEAD
 import { v4 as randomString } from 'uuid';
 import Dropzone from 'react-dropzone';
 import { GridLoader } from 'react-spinners';
+=======
+import { connect } from 'react-redux'
+import SubmitModal from './SubmitModal'
+
+>>>>>>> master
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -16,16 +22,26 @@ class Submit extends Component {
         this.state = {
             startDate: new Date(),
             userChallenges: [],
-            selectedChallenge: "",
             description: "",
             isUploading: false,
-            url: ''
+            url: '',
+            selectedChallenge: null,
+            user_id: this.props.user_id,
+            modalShow: false
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
 
     //methods
+
+    //This will handle any input values that need to update state. Currently being used to update this.state.description
+    handleChange(prop, val) {
+        console.log(val)
+        this.setState({
+            [prop]: val
+        })
+    }
 
     //handles date selection
     handleCalendarChange(date) {
@@ -34,12 +50,29 @@ class Submit extends Component {
         });
     }
 
-    //this button will get all the challenges that the user has accepted. The data from the database is put on state.
-    getChallengesButton = () => {
-        console.log('button hit')
-        // axios.get(`/challenges/user`)
-        // .then(res => { })
+    //this will handle the user's image upload
+    handleImageUpload = () => {
+        console.log("Upload image button hit")
+    }
 
+    //this button will get all the challenges that the user has accepted. 
+    //The data from the database is put on state.
+    getChallengesButton = () => {
+        const { user_id } = this.state
+        axios.post(`/challenge/tracked/one`, { user_id })
+            .then(res => { 
+                this.setState({ 
+                    userChallenges: res.data,
+                    modalShow: true
+                }) 
+            })
+    }
+
+    //this will be a post request to send the data over to the db tracker table
+    handleSubmitChallenge = () => {
+        console.log('submit challenge button hit')
+        const {user_id, description, startDate, selectedChallenge } = this.state
+        axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
     }
 
     getSignedRequest = ([file]) => {
@@ -93,14 +126,28 @@ class Submit extends Component {
             });
     };
 
+        
+
+    //end of methods, start of render
     render() {
+        console.log("this is the user's tracked challenges: ", this.state.userChallenges)
         const { url, isUploading } = this.state;
+        let modalClose = () => this.setState({ modalShow: false });
+
+
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
                 <div>
                     <div className="select-challenge" >
+
                         <button onClick={this.getChallengesButton} >select your challenge</button>
+
+                        <SubmitModal
+                            show={this.state.modalShow}
+                            onHide={modalClose}
+                            userchallenges={this.state.userChallenges}
+                        />
                     </div>
 
 
@@ -122,6 +169,7 @@ class Submit extends Component {
                             cols="33"
                             type="text"
                             placeholder="description"
+                            onChange={e => this.handleChange('description', e.target.value)}
 
                         />
                     </div>
@@ -166,7 +214,7 @@ class Submit extends Component {
                     
 
                     <div className="upload-submit" >
-                        <button>submit challenge</button>
+                        <button onClick={this.handleSubmitChallenge}>submit challenge</button>
                     </div>
                 </div>
                 <div>
@@ -179,4 +227,11 @@ class Submit extends Component {
     }
 }
 
-export default Submit
+const mapToProps = (reduxState) => {
+    const { user_id } = reduxState
+    return {
+        user_id
+    }
+}
+
+export default connect(mapToProps)(Submit)
