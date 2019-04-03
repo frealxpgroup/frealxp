@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Axios from 'axios'
 import {connect} from 'react-redux'
+import './Modal.scss'
 
 class ChallengeModal extends React.Component {
   constructor(props){
@@ -20,8 +21,7 @@ class ChallengeModal extends React.Component {
       const {id} = this.props
       const {challenge_title} = this.props
       
-      console.log(id)
-      console.log(challenge_title)
+      
         Axios.post(`/challenge/accepted`, { user_id, id, challenge_title })
         .then(res => {
           console.log("IT WORKED")
@@ -36,11 +36,11 @@ class ChallengeModal extends React.Component {
             if(challenge.challenge_id === this.props.id){
             return(
                 <div key={challenge.challenge_id}>
-                    <h1>{challenge.challenge_title}</h1>
-                    <h1>{challenge.description}</h1>
-                    <h1>{challenge.challenge_point_value} XP</h1>
-                    <h1>{challenge.challenge_id}</h1>
-                    <button onClick={this.AddTrackedChallenge}>Accept</button>
+                    <h1 className='modaltitle'>{challenge.challenge_title}</h1>
+                    <h2 className='modaldescription'>{challenge.description}</h2>
+                    <h1 className='modalpoints'>{challenge.challenge_point_value} XP</h1>
+                    
+                    
                 </div>
             )
             }
@@ -58,14 +58,14 @@ class ChallengeModal extends React.Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Modal heading
+             
               
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             
             {mappedChallenges}
-            
+            <Button onClick={this.AddTrackedChallenge} onClick={this.props.onHide}>Accept</Button>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.props.onHide}>Close</Button>
