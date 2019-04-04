@@ -65,7 +65,7 @@ class Edit extends Component {
     }
 
     // handleReset = () => {
-    //     this.setState({ modalShow: true })
+    //     this.setState({ modalShow: true }) 
     // }
 
     handleCancel = () => {
