@@ -6,6 +6,7 @@ import Axios from 'axios';
 import LineGraph from './LineGraph';
 import './History.scss'
 import {averageXP} from './GraphLogic'
+import { Link } from "react-router-dom";
 
 
 
@@ -45,9 +46,7 @@ class History extends Component {
                 {
                     label: "My XP",
                     backgroundColor: '#4280A4',
-                    
                     data: [this.state.xp],
-                   
                     borderWidth: 3,
                     
                 },
@@ -111,6 +110,9 @@ class History extends Component {
 
         return (
             <div className='bckground' >
+            <Link to="/dashboard">
+            <h1>FRealXP</h1>
+          </Link>
                 
                 <LineGraph />
                     < Bar 

@@ -59,6 +59,8 @@ app.post(`/auth/logout`, ac.logout) //destroy user on session
 app.put(`/auth/edit`, ac.editAuth) //edit user info
 app.put(`/auth/password`, ac.editPassword)
 app.get(`/user/history`, ac.getXP)
+app.get(`/auth/all`, ac.getAllUserIDs)
+
 app.get(`/dash/initial`, fc.getInitial) //current xp and tracked challenges
 app.get(`/challenges`, fc.getAllChallenges) //get all active challenges
 app.post(`/challenges/one`, fc.getOneChallenge) //get challenge info for modal
