@@ -6,7 +6,8 @@ import { v4 as randomString } from 'uuid';
 import Dropzone from 'react-dropzone';
 import { GridLoader } from 'react-spinners';
 import { connect } from 'react-redux'
-import SubmitModal from './SubmitModal'
+// import SubmitModal from './SubmitModal'
+import {Link} from 'react-router-dom'
 
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -24,14 +25,18 @@ class Submit extends Component {
             url: '',
             selectedChallenge: null,
             user_id: this.props.user_id,
-            modalShow: false,
+            challengesShow: true,
             challengeID: 0,
+            checked: 'unchecked'
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
 
     //methods
+    componentDidMount(){
+        this.getChallengesButton()
+    }
 
     //This will handle any input values that need to update state. Currently being used to update this.state.description
     handleChange(prop, val) {
@@ -61,7 +66,7 @@ class Submit extends Component {
             .then(res => {
                 this.setState({
                     userChallenges: res.data,
-                    modalShow: true
+                    // challengesShow: !this.state.challengesShow
                 })
             })
     }
@@ -71,7 +76,10 @@ class Submit extends Component {
         console.log('submit challenge button hit')
         const { user_id, description, startDate, challengeID, url } = this.state
         axios.put(`/challenge/submit`, { description, startDate, user_id, url, challengeID })
-            .then(res => { console.log(res.data) })
+            .then(res => { 
+                console.log(res.data) 
+                this.props.history.push('/dashboard')
+            })
     }
 
     getSignedRequest = ([file]) => {
@@ -139,8 +147,8 @@ class Submit extends Component {
     render() {
         console.log("this is the user's tracked challenges: ", this.state.userChallenges)
         const { url, isUploading } = this.state;
-        let modalClose = () => this.setState({ modalShow: false });
-        
+        // let modalClose = () => this.setState({ modalShow: false });
+
 
         let challengeDisplay = this.state.userChallenges.map((val, ind) => {
             console.log(val)
@@ -149,10 +157,11 @@ class Submit extends Component {
             // })
             return (
                 <div
-                 key={val.challenge_id}
-                 id={val.challenge_id}
-                 onClick={() => this.setState({challengeID: val.challenge_id})} >
-                    <span style={{'color': 'white', 'fontSize': '20px', 'lineHeight': '30px', 'textAlign':'center'}}> - {val.title}</span>
+                    key={val.challenge_id}
+                    id={val.challenge_id}
+                    onClick={() => this.setState({ challengeID: val.challenge_id, selectedChallenge: val.title})} >
+                    <button className='selected-challenges'> - {val.title} - </button>
+
                     {/* <div>{val.user_id}</div>
                     <div>{val.challenge_id}</div>
                     <div>{val.completion_date}</div>
@@ -161,6 +170,7 @@ class Submit extends Component {
                     <div>{val.description}</div>
                     <div>{val.judge_feedback}</div> */}
                     {/* <button onClick={this.setState({challengeID: val.challenge_id})}>Select</button> */}
+
                 </div>
             )
         })
@@ -169,44 +179,19 @@ class Submit extends Component {
 
         return (
             <div className="submit-main">
-                <h1>FRealXP</h1>
+                <Link to='/dashboard'><h1>FRealXP</h1></Link>
+                <p className='date-title'>Selected Challenge: {this.state.selectedChallenge}</p>
                 <div>
                     <div className="select-challenge" >
 
-                        <button onClick={this.getChallengesButton} >select your challenge</button>
+                        <button className='challenge-button' onClick={this.getChallengesButton} >Select Challenge to Submit</button>
 
-                        {/* <SubmitModal
-                            show={this.state.modalShow}
-                            onHide={modalClose}
-                            userchallenges={this.state.userChallenges}
-                        /> */}
+                        {challengeDisplay}
 
                     </div>
 
-                    {challengeDisplay}
-
-                    <div className="date" >
-                        <DatePicker
-                            selected={this.state.startDate}
-                            onChange={this.handleCalendarChange}
-                            dateFormat="MMMM d, yyyy h:mm aa"
-                            timeInputLabel="Time:"
-                            showTimeInput
-                        />
-
-                    </div>
-
-                    <div className="description-box" >
-                        <textarea
-
-                            className="text-box-input"
-                            cols="33"
-                            type="text"
-                            placeholder="description"
-                            onChange={e => this.handleChange('description', e.target.value)}
-
-                        />
-                    </div>
+                    
+                    <div>
                     {!url
                         ? <div className='dropzone'>
                             <Dropzone
@@ -240,15 +225,38 @@ class Submit extends Component {
 
                         </div>
                         : <img className='dropzone' src={url} alt="" />
-
-
-
                     }
+                    </div>
+                    
+                    <p className='date-title'>Select Date:</p>
+                    <div className="date" >
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.handleCalendarChange}
+                            dateFormat="MMMM d, yyyy h:mm aa"
+                            timeInputLabel="Time:"
+                            // showTimeInput
+                        />
+
+                    </div>
+
+                    <div className="description-box" >
+                        <textarea
+
+                            className="text-box-input"
+                            cols="33"
+                            type="text"
+                            placeholder="description"
+                            onChange={e => this.handleChange('description', e.target.value)}
+
+                        />
+                    </div>
+
 
 
 
                     <div className="upload-submit" >
-                        <button onClick={this.handleSubmitChallenge}>submit challenge</button>
+                        <button className='challenge-button' onClick={this.handleSubmitChallenge}>Submit Challenge</button>
                     </div>
                 </div>
                 <div>

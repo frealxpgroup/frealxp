@@ -55,7 +55,7 @@ class Dashboard extends Component {
                         <Link to='/auth/edit'><h3>Edit Account Info</h3></Link>
                         <Link to='/history'><h3>My History</h3></Link>
                         <Link to='/challenge/board'><h3>Challenge Board</h3></Link>
-                        <Link to='/shop'><h3>Shop</h3></Link>
+                        <Link to='/shop'><h3>Visit Shop</h3></Link>
                         {this.props.judge
                             ? <Link to='/challenge/review'><h3>Review a Challenge</h3></Link>
                             : null

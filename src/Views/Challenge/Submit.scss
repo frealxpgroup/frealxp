@@ -14,12 +14,13 @@ $ourFont: 'Open Sans', sans-serif;
     align-items: center;
     
     h1{
-        font-size: 40px;
+        font-size: 48px;
         display: flex;
         justify-content: center;
         padding-top: 10px;  
         color: white;     
-        margin-bottom: 20px; 
+        margin-bottom: 40px; 
+ 
     }
 
     
@@ -30,8 +31,11 @@ $ourFont: 'Open Sans', sans-serif;
 
     .select-challenge{
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        padding: 10px;
+        align-items: center;
+        margin-bottom: 25px;
+        // padding: 10px;
     }
     
     .text-box-input{
@@ -51,7 +55,8 @@ $ourFont: 'Open Sans', sans-serif;
         justify-content: center;
         padding: 10px 0px 10px 0px;
         height: 200px;  
-        
+        margin-top: 20px;
+        margin-bottom: 20px;
 
     }
     .dropzone{
@@ -66,7 +71,7 @@ $ourFont: 'Open Sans', sans-serif;
         align-items: center;
         text-align: center;
         width: 250px;
-        margin: 20px;
+        margin: 35px;
         height: auto;
         font-size: 30px;
         font-weight: 600;
@@ -89,7 +94,36 @@ $ourFont: 'Open Sans', sans-serif;
         padding: 10px;
     }
 
-    button {
+    .selected-challenges{
+        bottom: 10%;
+        right: 28%;
+        border: white 1px solid;
+        background-color: color;
+        color: black;
+        height: 65px;
+        width: 280px;
+        font-size: 24px;
+        justify-content: center;
+    }
+
+    .selected-challenges:focus{
+        background-color: red;
+    }
+
+    .selected-challenges:hover{
+        cursor: pointer;
+    }
+
+    .date-title{
+        color: white; 
+        font-size: 20px; 
+        line-height: 30px;
+        text-align: center; 
+        margin-bottom: 5px;
+
+    }
+
+    .challenge-button {
         // position: absolute;
         bottom: 10%;
         right: 28%;
@@ -97,7 +131,7 @@ $ourFont: 'Open Sans', sans-serif;
         background-color: transparent;
         color: white;
         height: 65px;
-        width: 250px;
+        width: 280px;
         font-size: 24px;
     }
 
