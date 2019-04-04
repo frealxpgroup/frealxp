@@ -27,6 +27,7 @@ $ourFont: 'Open Sans', sans-serif;
         border-radius: 5px;
         border: none;
         margin: 10px;
+        
     }
 
     .right{
@@ -35,7 +36,7 @@ $ourFont: 'Open Sans', sans-serif;
         flex-direction: column;
         bottom: 10px;
         right: 10px;
-        height: 70%;
+        height: auto;
         width: 23%;
         justify-content: space-between;
         // background-color: red;
@@ -45,34 +46,34 @@ $ourFont: 'Open Sans', sans-serif;
 
     .top{
         // position: absolute;
-        height: 28%;
+        height: auto;
         width: 100%;
         right: 0px;
         border-radius: 5px;
         text-align: center;
         padding: 2% 7%;
     }
-    .middle{
-        display: flex;
-        flex-direction: column;
-        height: 43%;
-        width: 100%;
-        top: 30%;
-        justify-content: center;
-        align-items: center;
+    // .middle{
+    //     display: flex;
+    //     flex-direction: column;
+    //     height: 43%;
+    //     width: 100%;
+    //     top: 30%;
+    //     justify-content: center;
+    //     align-items: center;
 
-        .photo{
-            width: auto;
-            height: 80%;
-        }
-    }
+    //     .photo{
+    //         width: auto;
+    //         height: 80%;
+    //     }
+    // }
     .bottom{
         bottom: 0px;
         right: 0px;
-        height: 25%;
+        height: auto;
         width: 100%;
         border-radius: 5px;
-        padding: 5%;
+        padding: 5px;
         color: black;
         p{
             font-size: 20px;
@@ -82,10 +83,21 @@ $ourFont: 'Open Sans', sans-serif;
 
     .left{
         height: 70%;
-        width: 33%;
+        width: 23%;
         position: absolute;
         bottom: 0px;
         margin: 20px;
+        line-height: 40px;
+        padding: 10px;
+        button{
+            border: black 1px solid;
+            background-color: transparent;
+            color: black;
+            height: 45px;
+            width: 200px;
+            font-size: 20px;
+            margin: 10px;
+        }
     }
 
 
