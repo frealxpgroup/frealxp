@@ -152,7 +152,7 @@ class Submit extends Component {
                  key={val.challenge_id}
                  id={val.challenge_id}
                  onClick={() => this.setState({challengeID: val.challenge_id})} >
-                    <button>{val.title}</button>
+                    <span style={{'color': 'white', 'fontSize': '20px', 'lineHeight': '30px', 'textAlign':'center'}}> - {val.title}</span>
                     {/* <div>{val.user_id}</div>
                     <div>{val.challenge_id}</div>
                     <div>{val.completion_date}</div>

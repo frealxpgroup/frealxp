@@ -178,7 +178,7 @@ class Edit extends Component {
                                             {({ getRootProps }) => (
                                                 <div {...getRootProps()}>
                                                     {isUploading ? <GridLoader
-                                                    /> : <p>Drop Challenge Image Here</p>}
+                                                    /> : <p>Profile Image Here</p>}
                                                 </div>
                                             )}
                                         </Dropzone>
