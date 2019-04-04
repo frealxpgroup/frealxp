@@ -12,6 +12,7 @@ import {Link} from 'react-router-dom'
 
 import "react-datepicker/dist/react-datepicker.css";
 
+    
 
 
 class Submit extends Component {
@@ -32,11 +33,15 @@ class Submit extends Component {
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
+<<<<<<< HEAD
+    //START OF METHODS
+=======
 
     //methods
     componentDidMount(){
         this.getChallengesButton()
     }
+>>>>>>> master
 
     //This will handle any input values that need to update state. Currently being used to update this.state.description
     handleChange(prop, val) {
@@ -45,19 +50,16 @@ class Submit extends Component {
             [prop]: val
         })
     }
-
     //handles date selection
     handleCalendarChange(date) {
         this.setState({
             startDate: date
         });
     }
-
     //this will handle the user's image upload
     handleImageUpload = () => {
         console.log("Upload image button hit")
     }
-
     //this button will get all the challenges that the user has accepted. 
     //The data from the database is put on state.
     getChallengesButton = () => {
@@ -81,12 +83,10 @@ class Submit extends Component {
                 this.props.history.push('/dashboard')
             })
     }
-
     getSignedRequest = ([file]) => {
         this.setState({ isUploading: true });
         // We are creating a file name that consists of a random string, and the name of the file that was just uploaded with the spaces removed and hyphens inserted instead. This is done using the .replace function with a specific regular expression. This will ensure that each file uploaded has a unique name which will prevent files from overwriting other files due to duplicate names.
         const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`;
-
         // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
         axios
             .get('/sign-s3', {
@@ -103,14 +103,12 @@ class Submit extends Component {
                 console.log(err);
             });
     };
-
     uploadFile = (file, signedRequest, url) => {
         const options = {
             headers: {
                 'Content-Type': file.type,
             },
         };
-
         axios
             .put(signedRequest, file, options)
             .then(response => {
@@ -190,8 +188,26 @@ class Submit extends Component {
 
                     </div>
 
-                    
-                    <div>
+                    {challengeDisplay}
+
+                    <div className="date" >
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.handleCalendarChange}
+                            dateFormat="MMMM d, yyyy h:mm aa"
+                            timeInputLabel="Time:"
+                            showTimeInput
+                        />
+                    </div>
+                    <div className="description-box" >
+                        <textarea
+                            className="text-box-input"
+                            cols="33"
+                            type="text"
+                            placeholder="description"
+                            onChange={e => this.handleChange('description', e.target.value)}
+                        />
+                    </div>
                     {!url
                         ? <div className='dropzone'>
                             <Dropzone
@@ -221,8 +237,6 @@ class Submit extends Component {
                                     </div>
                                 )}
                             </Dropzone>
-
-
                         </div>
                         : <img className='dropzone' src={url} alt="" />
                     }
@@ -260,9 +274,6 @@ class Submit extends Component {
                     </div>
                 </div>
                 <div>
-
-
-
                 </div>
             </div>
         )
