@@ -32,5 +32,3 @@ const Product = props => {
 };
 
 export default Product;
-
-// ternary for precense of add item to cart button or the plus and minus buttons.
