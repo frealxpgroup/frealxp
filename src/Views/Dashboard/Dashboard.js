@@ -40,8 +40,8 @@ class Dashboard extends Component {
                 <Logout className='logout' />
                 <div className='box left'>
                     <h2>Welcome, {this.props.first_name}!</h2>
-                    <h2>My XP: {this.props.xp}</h2>
-                    <h2>My Challenges:</h2>
+                    <h2>XP: {this.props.xp}</h2>
+                    <h2>Challenges:</h2>
                     {this.state.challenges[0]
                         ? mappedChallenges
                         : <span>No challenges selected!</span>
