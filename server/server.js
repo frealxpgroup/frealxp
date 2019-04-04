@@ -72,7 +72,8 @@ app.get(`/challenge/review`, fc.judgementDay)//get first challenge from tracker 
 
 
 app.put(`/challenge/submit`, fc.submitChallenge) //create challenge for review
-app.put(`/challenge/review/:id`, fc.reviewChallenge) //add feedback or approve challenge
+app.put(`/challenge/approved`, fc.challengeApproved) // approves a challenge submission
+app.put(`/challenge/denied`, fc.challengeDenied) //denies a challenge submission
 app.get(`/shop/initial`, sc.intial) //get all active products
 app.post(`/shop/addToCart`, sc.addToCart) // if needed, generate a new cart, then add selcted item to cart
 app.put(`/shop/changeQuantity`, sc.changeQuantity)

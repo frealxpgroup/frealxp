@@ -76,6 +76,20 @@ module.exports = {
     },
     judgementDay: async (req, res) => {
         const db = req.app.get('db')
+        const newReviewArray = await db.trackedChallenges.getOneReview()
+        const newReview = newReviewArray[0]
 
+
+        res.status(200).send(newReview)
+    }, 
+    challengeDenied: (req, res) => {
+        const db = req.app.get('db')
+        const {feedback, userID, challengeID } = req.body
+     db.trackedChallenges.challengeDenied([feedback, userID, challengeID]).then(() => {    
+         res.status(200).send('hi from denied')
+        })
+    },
+    challengeApproved: async(req, res) => {
+        const db = req.app.get('db')
     }
 }
