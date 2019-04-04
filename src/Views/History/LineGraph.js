@@ -59,6 +59,7 @@ class LineGraph extends Component {
     }
     componentDidMount = () => {
         this.doBoth()
+        console.log('its working?')
     }
 
 
