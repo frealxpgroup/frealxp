@@ -49,9 +49,16 @@ module.exports = {
     getApproved: (req, res) => {
         //For User History
     },
-    submitChallenge: (req, res) => {
+    submitChallenge: async (req, res) => {
         //POST user submission
         //get data from req.body (like the challenge title, picture, user, etc)
+        const db = req.app.get('db')
+        const {description, startDate, user_id, url, challengeID} = req.body
+        const updatedChallenge = await db.trackedChallenges.updateTracked([startDate, url, description, user_id, challengeID])
+
+        res.status(200).send(updatedChallenge)
+
+
     },
     submitOneChallenge:(req,res) => {
         const db = req.app.get('db')

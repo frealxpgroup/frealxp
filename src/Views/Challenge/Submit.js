@@ -11,6 +11,8 @@ import SubmitModal from './SubmitModal'
 
 import "react-datepicker/dist/react-datepicker.css";
 
+    
+
 
 class Submit extends Component {
     constructor(props) {
@@ -23,7 +25,8 @@ class Submit extends Component {
             url: '',
             selectedChallenge: null,
             user_id: this.props.user_id,
-            modalShow: false
+            modalShow: false,
+            challengeID: 0,
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
@@ -52,18 +55,20 @@ class Submit extends Component {
     getChallengesButton = () => {
         const { user_id } = this.state
         axios.post(`/challenge/tracked/one`, { user_id })
-            .then(res => { 
-                this.setState({ 
+            .then(res => {
+                this.setState({
                     userChallenges: res.data,
                     modalShow: true
-                }) 
+                })
             })
     }
-    //this will be a post request to send the data over to the db tracker table
+
+    //Submit button for user. This will send applicable data to backend/db
     handleSubmitChallenge = () => {
         console.log('submit challenge button hit')
-        const {user_id, description, startDate, selectedChallenge } = this.state
-        axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
+        const { user_id, description, startDate, challengeID, url } = this.state
+        axios.put(`/challenge/submit`, { description, startDate, user_id, url, challengeID })
+            .then(res => { console.log(res.data) })
     }
     getSignedRequest = ([file]) => {
         this.setState({ isUploading: true });
@@ -112,24 +117,66 @@ class Submit extends Component {
                 }
             });
     };
-        
-    //END OF METHODS, START OF RENDER
+
+
+    // handleButtonClick = (v) => {
+    //     this.setState({
+    //         challengeID: v
+    //     })
+    //     console.log(this.state.challengeID)
+    // }
+
+
+
+    //end of methods, start of render
     render() {
         console.log("this is the user's tracked challenges: ", this.state.userChallenges)
         const { url, isUploading } = this.state;
         let modalClose = () => this.setState({ modalShow: false });
+        
+
+        let challengeDisplay = this.state.userChallenges.map((val, ind) => {
+            console.log(val)
+            // this.setState({
+            //     challengeID: val.challenge_id
+            // })
+            return (
+                <div
+                 key={val.challenge_id}
+                 id={val.challenge_id}
+                 onClick={() => this.setState({challengeID: val.challenge_id})} >
+                    <button>{val.title}</button>
+                    {/* <div>{val.user_id}</div>
+                    <div>{val.challenge_id}</div>
+                    <div>{val.completion_date}</div>
+                    <div>{val.approved_date}</div>
+                    <div>{val.image}</div>
+                    <div>{val.description}</div>
+                    <div>{val.judge_feedback}</div> */}
+                    {/* <button onClick={this.setState({challengeID: val.challenge_id})}>Select</button> */}
+                </div>
+            )
+        })
+        console.log(this.state.challengeID)
+
+
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
                 <div>
                     <div className="select-challenge" >
                         <button onClick={this.getChallengesButton} >select your challenge</button>
-                        <SubmitModal
+
+                        {/* <SubmitModal
                             show={this.state.modalShow}
                             onHide={modalClose}
                             userchallenges={this.state.userChallenges}
-                        />
+                        /> */}
+
                     </div>
+
+                    {challengeDisplay}
+
                     <div className="date" >
                         <DatePicker
                             selected={this.state.startDate}
@@ -179,10 +226,13 @@ class Submit extends Component {
                             </Dropzone>
                         </div>
                         : <img className='dropzone' src={url} alt="" />
-                
-                       
+
+
+
                     }
-                    
+
+
+
                     <div className="upload-submit" >
                         <button onClick={this.handleSubmitChallenge}>submit challenge</button>
                     </div>
