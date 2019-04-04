@@ -33,25 +33,33 @@ class Dashboard extends Component {
             return( <div>-{el.title}</div>)
         })
       
-
+        console.log(this.state.challenges)
         return (
             <div className='dash-main'>
                 <h1>FRealXP</h1>
                 <Logout className='logout' />
                 <div className='box left'>
                     <h2>Welcome, {this.props.first_name}!</h2>
-                    <h2>My XP: {this.props.xp}</h2>
-                    <h2>My Challenges:</h2>
-                    {mappedChallenges}
+                    <h2>XP: {this.props.xp}</h2>
+                    <h2>Challenges:</h2>
+                    {this.state.challenges[0]
+                        ? mappedChallenges
+                        : <span>No challenges selected!</span>
+                    }
                     
                     <Link to='/challenge/submit'><button>Submit a Challenge</button></Link>
                 </div>
                 <div className='right'>
                     <div className='top box'>
+                        <h3 style={{'textDecoration':'underline'}}>Quick Links</h3>
                         <Link to='/auth/edit'><h3>Edit Account Info</h3></Link>
                         <Link to='/history'><h3>My History</h3></Link>
                         <Link to='/challenge/board'><h3>Challenge Board</h3></Link>
-                        <Link to='/shop'><h3>Shop</h3></Link>
+                        <Link to='/shop'><h3>Visit Shop</h3></Link>
+                        {this.props.judge
+                            ? <Link to='/challenge/review'><h3>Review a Challenge</h3></Link>
+                            : null
+                        }
                         
                     </div>
                     {/* <div className='middle box'>
@@ -75,9 +83,9 @@ class Dashboard extends Component {
 }
 
 const mapToProps = (reduxState) => {
-    const { first_name, last_name, xp, user_id } = reduxState
+    const { first_name, last_name, xp, judge, user_id } = reduxState
     return {
-        first_name, last_name, xp, user_id
+        first_name, last_name, xp, judge, user_id
     }
 }
 
