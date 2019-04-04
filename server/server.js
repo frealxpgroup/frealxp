@@ -66,6 +66,7 @@ app.get(`/history/initial`, fc.getApproved) //get approved challenges for that u
 app.post(`/challenge/accepted`, fc.challengeAccepted) //add the challenge to the tracked challenges table
 app.post(`/challenge/tracked/one`, fc.getUserChallengeDate) // select the approved date for each challenge that is on tracker based on user
 app.get(`/challenge/tracked/all`, fc.getAllChallengeDates)
+app.get(`/challenge/review`, fc.judgementDay)//get first challenge from tracker for review. Must completion date.
 
 
 app.put(`/challenge/submit`, fc.submitChallenge) //create challenge for review

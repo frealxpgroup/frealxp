@@ -1,0 +1,1 @@
+select * from tracker where approved_date is null and completion_date is not null limit 1;

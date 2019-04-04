@@ -243,10 +243,12 @@ class Submit extends Component {
         )
     }
 }
+
 const mapToProps = (reduxState) => {
     const { user_id } = reduxState
     return {
         user_id
     }
 }
+
 export default connect(mapToProps)(Submit)

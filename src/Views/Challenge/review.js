@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import "./review.scss";
+import {connect} from 'react-redux';
+import axios from 'axios'
 
 class Review extends Component {
   constructor() {
     super();
     this.state = {};
   }
+  //START OF METHODS
+
+  getTrackedChallenges = () => {
+    axios.get(``)
+  }
+ 
+  //END OF METHODS, START OF RENDER
   render() {
     return (
       <div className="review_background">
@@ -33,4 +42,12 @@ class Review extends Component {
     );
   }
 }
-export default Review;
+
+const mapToProps = (reduxState) => {
+  const { user_id } = reduxState
+  return {
+      user_id
+  }
+}
+
+export default connect(mapToProps)(Review)

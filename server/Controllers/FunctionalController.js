@@ -62,6 +62,8 @@ module.exports = {
     },
     submitOneChallenge:(req,res) => {
         const db = req.app.get('db')
+        //don't know if we still need this but we won't delete so that nothing breaks.
+        //Probably not used anyway
         
     },
     reviewChallenge: (req, res) => {
@@ -72,4 +74,8 @@ module.exports = {
     getPrizes: (req, res) => {
         //display all prizes
     },
+    judgementDay: async (req, res) => {
+        const db = req.app.get('db')
+
+    }
 }
