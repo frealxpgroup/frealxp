@@ -5,6 +5,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import './Board.scss'
 import ChallengeModal from '../../Components/Challenge/ChallengeModal'
+import { Link } from "react-router-dom";
 
 class Board extends Component {
     constructor() {
@@ -92,6 +93,9 @@ class Board extends Component {
         })
         return (
             <div className='challengeboardpage'>
+            <Link to="/dashboard">
+            <h1>FRealXP</h1>
+          </Link>
 
                 <Dropdown>
 
@@ -115,7 +119,7 @@ class Board extends Component {
                     challenge_id={this.state.challenges.challenge_id}
                     challenge_title={this.state.challenge_title}
                 />
-
+    
                 {mappedChallenges}
             </div>
 
