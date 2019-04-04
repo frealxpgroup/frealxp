@@ -1,24 +1,37 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import axios from 'axios'
 
 
 class SubmitModal extends React.Component{
-  
-    handleButtonClick = () => {
-        console.log('add button clicked')
+    constructor(props){
+      super(props)
+
+      this.state = {
+        title: ''
+      }
+      this.handleButtonClick = this.handleButtonClick.bind(this)
+    }
+
+    
+
+    handleButtonClick(val){
+       //select that challenge to update the db
+      console.log(this.props.userchallenges)
+      
+      
     }
 
     render(){
-        let challengeDisplay = this.props.userchallenges.map((val, ind) => {
-            return (
-                <div key={ind} >
-                    {console.log(val)}
-                    <div>{val.title}</div>
-                    <div><button onClick={this.handleButtonClick}>Select</button></div>
-                </div>
-            )
-        })
+        // let challengeDisplay = this.props.userchallenges.map((val, ind) => {
+        //     return (
+
+        //         <div key={ind} >
+        //             <div onClick={this.handleButtonClick} >{val.title}</div>
+        //         </div>
+        //     )
+        // })    
 
         return (
             <Modal {...this.props} aria-labelledby="contained-modal-title-vcenter">
@@ -29,7 +42,7 @@ class SubmitModal extends React.Component{
               </Modal.Header>
               <Modal.Body >
                   <div >
-                    {challengeDisplay} 
+              
                   </div>
                 
               </Modal.Body>

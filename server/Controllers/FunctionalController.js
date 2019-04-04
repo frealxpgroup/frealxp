@@ -60,6 +60,12 @@ module.exports = {
 
 
     },
+    submitOneChallenge:(req,res) => {
+        const db = req.app.get('db')
+        //don't know if we still need this but we won't delete so that nothing breaks.
+        //Probably not used anyway
+        
+    },
     reviewChallenge: (req, res) => {
         //PUT request, allows judges to approve or deny submissions
         //get id from req.params
@@ -68,4 +74,22 @@ module.exports = {
     getPrizes: (req, res) => {
         //display all prizes
     },
+    judgementDay: async (req, res) => {
+        const db = req.app.get('db')
+        const newReviewArray = await db.trackedChallenges.getOneReview()
+        const newReview = newReviewArray[0]
+
+
+        res.status(200).send(newReview)
+    }, 
+    challengeDenied: (req, res) => {
+        const db = req.app.get('db')
+        const {feedback, userID, challengeID } = req.body
+     db.trackedChallenges.challengeDenied([feedback, userID, challengeID]).then(() => {    
+         res.status(200).send('hi from denied')
+        })
+    },
+    challengeApproved: async(req, res) => {
+        const db = req.app.get('db')
+    }
 }
