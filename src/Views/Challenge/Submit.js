@@ -251,11 +251,6 @@ class Submit extends Component {
                         <button onClick={this.handleSubmitChallenge}>submit challenge</button>
                     </div>
                 </div>
-                <div>
-
-
-
-                </div>
             </div>
         )
     }
