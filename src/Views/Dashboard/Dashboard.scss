@@ -36,7 +36,7 @@ $ourFont: 'Open Sans', sans-serif;
         flex-direction: column;
         bottom: 10px;
         right: 10px;
-        height: 40%;
+        height: auto;
         width: 23%;
         justify-content: space-between;
         // background-color: red;
@@ -46,7 +46,7 @@ $ourFont: 'Open Sans', sans-serif;
 
     .top{
         // position: absolute;
-        height: 50%;
+        height: auto;
         width: 100%;
         right: 0px;
         border-radius: 5px;
@@ -70,7 +70,7 @@ $ourFont: 'Open Sans', sans-serif;
     .bottom{
         bottom: 0px;
         right: 0px;
-        height: 45%;
+        height: auto;
         width: 100%;
         border-radius: 5px;
         padding: 5px;
