@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 $ourFont: 'Open Sans', sans-serif;
-
 .submit-main{
-    background-image: url(https://files.slack.com/files-pri/T039C2PUY-FH7SJKQ5U/achievements.jpg);
+    background-image: url('https://files.slack.com/files-pri/T039C2PUY-FH7SJKQ5U/achievements.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover; 
     height: 100vh;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
     h1{
         font-size: 40px;
@@ -15,13 +18,11 @@ $ourFont: 'Open Sans', sans-serif;
         justify-content: center;
         padding-top: 10px;        
     }
-
     
     .date{
         display: flex;
         justify-content: center;
     }
-
     .select-challenge{
         display: flex;
         justify-content: center;
@@ -32,7 +33,6 @@ $ourFont: 'Open Sans', sans-serif;
         // padding: 0px 100px 180px 0px ;
         // text-align: left;
         // line-height: 1.5;
-
         padding: 2px;
         line-height: 1.5;
         border-radius: 5px;
@@ -46,14 +46,37 @@ $ourFont: 'Open Sans', sans-serif;
         padding: 10px 0px 10px 0px;
         height: 200px;  
         
-
-    }     
-
+    }
+    .dropzone{
+        display: flex;
+        background-image: url('https://www.prestophoto.com/storage/static/landing/pdf-book-printing/upload-icon.png');
+        background-repeat: no-repeat;
+        background-size: 30%;
+        background-position: center;
+        background-color: white;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 250px;
+        margin: 20px;
+        height: auto;
+        font-size: 30px;
+        font-weight: 600;
+        padding: 5px;
+        border: black 1px dashed;
+        // font-size: 40px;
+        justify-content: center;
+    }
+    // .image{
+    //     display: flex;
+    //     align-content: center;
+    //     justify-content: center;
+    //     // padding-top: 10px;  
+    // }
     .upload-submit{
         display: flex;
         justify-content: center;
         padding: 10px;
     }
-
 }
-

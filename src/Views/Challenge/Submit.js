@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import axios from 'axios'
 import '../../Views/Challenge/Submit.scss'
+import { v4 as randomString } from 'uuid';
+import Dropzone from 'react-dropzone';
+import { GridLoader } from 'react-spinners';
 import { connect } from 'react-redux'
 import SubmitModal from './SubmitModal'
 
 
 import "react-datepicker/dist/react-datepicker.css";
-
 
 
 class Submit extends Component {
@@ -16,89 +18,118 @@ class Submit extends Component {
         this.state = {
             startDate: new Date(),
             userChallenges: [],
-            selectedChallenge: 'select your challenge',
             description: "",
+            isUploading: false,
+            url: '',
+            selectedChallenge: null,
             user_id: this.props.user_id,
-            modalShow: false,
-            title: ''
+            modalShow: false
         };
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
-
     //START OF METHODS
 
-    //Handles input values. Currently being used to update this.state.description
+    //This will handle any input values that need to update state. Currently being used to update this.state.description
     handleChange(prop, val) {
         console.log(val)
         this.setState({
             [prop]: val
         })
     }
-
-    //Handles date selection
+    //handles date selection
     handleCalendarChange(date) {
         this.setState({
             startDate: date
         });
     }
-    
-    //Grabs the user's tracked challenges and puts on state when the pages loads
-    componentDidMount= () => {
+    //this will handle the user's image upload
+    handleImageUpload = () => {
+        console.log("Upload image button hit")
+    }
+    //this button will get all the challenges that the user has accepted. 
+    //The data from the database is put on state.
+    getChallengesButton = () => {
         const { user_id } = this.state
-        
         axios.post(`/challenge/tracked/one`, { user_id })
-        .then(res => {
-            this.setState({ 
-                userChallenges: res.data,
-            }) 
-        })
+            .then(res => { 
+                this.setState({ 
+                    userChallenges: res.data,
+                    modalShow: true
+                }) 
+            })
     }
-    
-    //Shows the modal of the user's tracked challenges
-    getChallengesButton= () => {
-        this.setState({
-            modalShow: true
-        })         
-    }
-
-    //Submit button for user. This will send applicable data to backend/db
+    //this will be a post request to send the data over to the db tracker table
     handleSubmitChallenge = () => {
         console.log('submit challenge button hit')
-        const {user_id, description, startDate, selectedChallenge, } = this.state
-        //axios.post(`/challenge/submit/one`, {descript, startDate, user_id, cid = 7 or 4 or any})
+        const {user_id, description, startDate, selectedChallenge } = this.state
+        axios.post(`/challenge/submit`, {user_id, description, startDate, selectedChallenge})
     }
-
-
+    getSignedRequest = ([file]) => {
+        this.setState({ isUploading: true });
+        // We are creating a file name that consists of a random string, and the name of the file that was just uploaded with the spaces removed and hyphens inserted instead. This is done using the .replace function with a specific regular expression. This will ensure that each file uploaded has a unique name which will prevent files from overwriting other files due to duplicate names.
+        const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`;
+        // We will now send a request to our server to get a "signed url" from Amazon. We are essentially letting AWS know that we are going to upload a file soon. We are only sending the file-name and file-type as strings. We are not sending the file itself at this point.
+        axios
+            .get('/sign-s3', {
+                params: {
+                    'file-name': fileName,
+                    'file-type': file.type,
+                },
+            })
+            .then(response => {
+                const { signedRequest, url } = response.data;
+                this.uploadFile(file, signedRequest, url);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+    uploadFile = (file, signedRequest, url) => {
+        const options = {
+            headers: {
+                'Content-Type': file.type,
+            },
+        };
+        axios
+            .put(signedRequest, file, options)
+            .then(response => {
+                this.setState({ isUploading: false, url });
+                // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
+            })
+            .catch(err => {
+                this.setState({
+                    isUploading: false,
+                });
+                if (err.response.status === 403) {
+                    alert(
+                        `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
+                        err.stack
+                        }`
+                    );
+                } else {
+                    alert(`ERROR: ${err.status}\n ${err.stack}`);
+                }
+            });
+    };
+        
     //END OF METHODS, START OF RENDER
     render() {
+        console.log("this is the user's tracked challenges: ", this.state.userChallenges)
+        const { url, isUploading } = this.state;
         let modalClose = () => this.setState({ modalShow: false });
-        console.log(this.state.userChallenges)
-
-        let challengeDisplay = this.state.userChallenges.map((val, ind) => {
-            return (
-
-                <div key={ind} >
-                    <div onClick={this.handleButtonClick} >{val.title}</div>
-                </div>
-            )
-        })  
-
         return (
             <div className="submit-main">
                 <h1>FRealXP</h1>
                 <div>
                     <div className="select-challenge" >
-                        <button onClick={this.getChallengesButton} >Select Your Challenge</button>
-
+                        <button onClick={this.getChallengesButton} >select your challenge</button>
                         <SubmitModal
                             show={this.state.modalShow}
-                            onHide={modalClose}  
+                            onHide={modalClose}
+                            userchallenges={this.state.userChallenges}
                         />
-
                     </div>
-
-
                     <div className="date" >
                         <DatePicker
                             selected={this.state.startDate}
@@ -107,37 +138,65 @@ class Submit extends Component {
                             timeInputLabel="Time:"
                             showTimeInput
                         />
-
                     </div>
-
                     <div className="description-box" >
                         <textarea
-
                             className="text-box-input"
                             cols="33"
                             type="text"
                             placeholder="description"
                             onChange={e => this.handleChange('description', e.target.value)}
-
                         />
                     </div>
-
+                    {!url
+                        ? <div className='dropzone'>
+                            <Dropzone
+                                onDropAccepted={this.getSignedRequest}
+                                style={{
+                                    position: 'relative',
+                                    width: 250,
+                                    height: 250,
+                                    borderWidth: 7,
+                                    marginTop: 100,
+                                    borderColor: 'rgb(102, 102, 102)',
+                                    borderStyle: 'dashed',
+                                    borderRadius: 5,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    fontSize: 28,
+                                }}
+                                accept="image/*"
+                                multiple={false}
+                            >
+                                {/* {isUploading ? <GridLoader /> : <p>Drop File or Click Here</p>} */}
+                                {({ getRootProps }) => (
+                                    <div {...getRootProps()}>
+                                        {isUploading ? <GridLoader
+                                        /> : <p>Drop Challenge Image Here</p>}
+                                    </div>
+                                )}
+                            </Dropzone>
+                        </div>
+                        : <img className='dropzone' src={url} alt="" />
+                
+                       
+                    }
+                    
                     <div className="upload-submit" >
-                        <button onClick={this.handleImageUpload}>upload image</button>
                         <button onClick={this.handleSubmitChallenge}>submit challenge</button>
                     </div>
-
+                </div>
+                <div>
                 </div>
             </div>
         )
     }
 }
-
 const mapToProps = (reduxState) => {
     const { user_id } = reduxState
     return {
         user_id
     }
 }
-
 export default connect(mapToProps)(Submit)

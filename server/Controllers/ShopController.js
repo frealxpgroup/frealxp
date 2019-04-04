@@ -61,6 +61,12 @@ module.exports = {
     address = address[0];
     res.status(200).send(address);
   },
+  addAddress: async (req, res) => {
+    const {user_id} = req.body
+    const db = req.app.get('db')
+    await db.shop.add_address({user_id})
+    res.sendStatus(200)
+  },
   editAddress: async (req, res) => {
     const {
       shipAddress1,
