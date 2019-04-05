@@ -100,12 +100,10 @@ class Shop extends Component {
         <div className="shop_header">
           <div className="shop_menu">
             <Link to="/shop/cart">
-              <div>cart({this.state.numItemsInCart})</div>
-            </Link>
-            <Link to="/shop/history">
+              <div className='shop_menu_cart'>cart({this.state.numItemsInCart})</div>
             </Link>
           </div>
-          <Link to="/">
+          <Link to="/dashboard">
             <h1>FRealXP</h1>
           </Link>
         </div>

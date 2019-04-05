@@ -134,18 +134,19 @@ class Cart extends Component {
       <div className="cart_background">
         <div className="cart_header">
           <div className="cart_menu">
-            <div>cart({this.state.numItemsInCart})</div>
-            <Checkout
-              grandTotal={this.state.cartSum}
-              cartID={this.state.cartItems[0]}
-            />
-            <Link to="/shop/history" />
+            <div>total items({this.state.numItemsInCart})</div>
+            
           </div>
-          <Link to="/">
+          <Link to="/dashboard">
             <h1>FRealXP</h1>
           </Link>
         </div>
         <div className="cart_body_container">{mappedProducts}</div>
+        <div className='cart_spacer'></div>
+        <Checkout
+              grandTotal={this.state.cartSum}
+              cartID={this.state.cartItems[0]}
+            />
       </div>
     );
   }

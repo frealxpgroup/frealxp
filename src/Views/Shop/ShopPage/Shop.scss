@@ -1,69 +1,93 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-$ourFont: 'Open Sans', sans-serif;
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+$ourFont: "Open Sans", sans-serif;
 
 .shop_background {
-background: #FFFFFF;
-background: -moz-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102)rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
-background: -webkit-linear-gradient(top, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
-background: linear-gradient(to bottom, #FFFFFF 0%, rgb(235, 219, 102) 20%, rgb(235, 219, 102) 100%);
+  background: #ffffff;
+  background: -moz-linear-gradient(
+    top,
+    #ffffff 0%,
+    rgb(235, 219, 102) rgb(235, 219, 102) 20%,
+    rgb(235, 219, 102) 100%
+  );
+  background: -webkit-linear-gradient(
+    top,
+    #ffffff 0%,
+    rgb(235, 219, 102) 20%,
+    rgb(235, 219, 102) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    rgb(235, 219, 102) 20%,
+    rgb(235, 219, 102) 100%
+  );
 
-width: 100vw;
-height: 100vh;
+  width: 100vw;
+  height: 100vh;
 
-display: flex;
-flex-direction: column;
-flex-wrap: nowrap;
-justify-content: flex-start;
-align-items: center;
-align-content: stretch;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
 
-font-family: $ourFont;
-
+  font-family: $ourFont;
 }
 
 .shop_header {
-    display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-end;
-	align-items: center;
-    align-content: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: stretch;
 
-    width: 100vw;
-    height: 50px;
+  width: 100vw;
+  height: 50px;
 
-    margin-right: 25px;
+  margin-right: 25px;
+
 }
 
 .shop_menu {
-    width: 300px;
+  width: 300px;
 
-    display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: flex-end;
-    align-content: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-content: stretch;
 
-    margin-right: 50px;
-    padding-top: 21px;
+  margin-right: 50px;
+  padding-top: 21px;
 }
 
-h1{
-    font-size: 2.5em;
-    font-family: $ourFont;
+.shop_menu_cart {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+h1 {
+    color: black;
+  font-size: 2.5em;
+  font-family: $ourFont;
 }
 
 .shop_body_container {
-    height: calc(100vh - 50px);
-    min-width: 75vw;
+  height: calc(100vh - 50px);
+  min-width: 75vw;
 
-    display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-	align-items: flex-start;
-    align-content: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: stretch;
 
-    padding-top: 70px;
+  padding-top: 70px;
 }
