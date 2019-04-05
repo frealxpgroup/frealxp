@@ -33,15 +33,11 @@ class Submit extends Component {
         //binding handleCalanderChange
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
     }
-<<<<<<< HEAD
-    //START OF METHODS
-=======
 
     //methods
     componentDidMount(){
         this.getChallengesButton()
     }
->>>>>>> master
 
     //This will handle any input values that need to update state. Currently being used to update this.state.description
     handleChange(prop, val) {
