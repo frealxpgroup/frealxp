@@ -10,6 +10,7 @@ const aws = require('aws-sdk');
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, STRIPE_SECRET_KEY} = process.env
 const stripe = require('stripe')(STRIPE_SECRET_KEY)
 const app = express();
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.json());
 app.use(session({
     secret: SESSION_SECRET,
