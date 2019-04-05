@@ -1,0 +1,1 @@
+update tracker set judge_feedback = ${feedback}, approved_date = ${date} where user_id = ${userID} and challenge_id = ${challengeID};

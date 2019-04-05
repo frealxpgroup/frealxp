@@ -27,10 +27,8 @@ module.exports = {
         const acceptedChallenge = await db.trackedChallenges.addTracked({ user: user_id, challenge: id, challengeTitle: challenge_title })
         
         res.status(200).send(acceptedChallenge)
-
     },
     getUserChallengeDate: async (req, res) => {
-        
         const  {user_id}  = req.body
         
         const db = req.app.get('db');
@@ -85,11 +83,16 @@ module.exports = {
     challengeDenied: (req, res) => {
         const db = req.app.get('db')
         const {feedback, userID, challengeID } = req.body
-     db.trackedChallenges.challengeDenied([feedback, userID, challengeID]).then(() => {    
-         res.status(200).send('hi from denied')
+        db.trackedChallenges.challengeDenied({feedback, userID, challengeID}).then(() => {    
+         res.sendStatus(200)
         })
     },
     challengeApproved: async(req, res) => {
         const db = req.app.get('db')
+        const {feedback, userID, challengeID } = req.body
+        let date = new Date()
+        db.trackedChallenges.challengeApproved({feedback, date, userID, challengeID}).then(() => {    
+            res.sendStatus(200)
+           })
     }
 }

@@ -1,1 +1,1 @@
-update tracker set judge_feedback = $1 where user_id = $2 and challenge_id = $3;
+update tracker set judge_feedback = ${feedback} where user_id = ${userID} and challenge_id = ${challengeID};
