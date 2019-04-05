@@ -114,6 +114,7 @@ class Submit extends Component {
         // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
       })
       .catch(err => {
+
         this.setState({
           isUploading: false
         });
